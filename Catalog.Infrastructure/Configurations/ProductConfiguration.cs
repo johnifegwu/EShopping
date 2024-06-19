@@ -2,7 +2,6 @@
 using Catalog.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using static Catalog.Infrastructure.Seeders.CatalogSeeder;
 
 namespace Catalog.Core.Configurations
 {
@@ -11,13 +10,15 @@ namespace Catalog.Core.Configurations
         public void Configure(EntityTypeBuilder<Product> entity)
         {
             entity.Property(e => e.Id).ValueGeneratedOnAdd();
-            entity.Property(entity => entity.Name);
-            entity.Property(entity => entity.Summary);
-            entity.Property(entity=> entity.Description);
-            entity.Property(entity=> entity.ImageFile);
-            entity.OwnsOne(entity => entity.Brands);
-            entity.OwnsOne(entity => entity.Types);
-            entity.Property(entity => entity.Price);
+            entity.Property(e => e.Name);
+            entity.Property(e => e.Summary);
+            entity.Property(e => e.Description);
+            entity.Property(e => e.ImageFile);
+            entity.Property(e => e.BrandId);
+            entity.HasOne(e => e.Brands).WithMany().HasForeignKey(e => e.BrandId);
+            entity.Property(e => e.TypeId);
+            entity.HasOne(e => e.Types).WithMany().HasForeignKey(e => e.TypeId);
+            entity.Property(e => e.Price);
         }
 
         partial void OnConfigurePartial(EntityTypeBuilder<Product> modelBuilder);

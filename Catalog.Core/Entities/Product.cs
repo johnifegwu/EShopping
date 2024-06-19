@@ -11,10 +11,10 @@ namespace Catalog.Core.Entities
         public string Summary { get; set; } = default!;
         public string Description { get; set; } = default!;
         public string ImageFile { get; set; } = default!;
+        public ObjectId? BrandId { get; set; }
         public ProductBrand Brands { get; set; } = default!;
+        public ObjectId? TypeId { get; set; }
         public ProductType Types { get; set; } = default!;
-
-        [BsonRepresentation(BsonType.Decimal128)]
         public decimal Price {  get; set; } = default!;
     }
 }

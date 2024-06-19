@@ -13,17 +13,24 @@ namespace Catalog.Infrastructure.Seeders
         {
             try
             {
-                //ToDo: Initialize Catalog database here after checking if no record exist.
-                if (context.Repository<TestCollection>().Read().First() == null)
+                //Initialize Catalog database here after checking if no record exist.
+                if (context.Repository<ProductType>().Read().First() == null)
                 {
-                    //Create new TestCollections
-                    await context.Repository<TestCollection>().AddRangeAsync(GetTestCollections());
+                    //Create new ProductTypes
+                    await context.Repository<ProductType>().AddRangeAsync(GetProductTypes());
+                }
+                if (context.Repository<ProductBrand>().Read().First() == null)
+                {
+                    //Create new ProductBrands
+                    await context.Repository<ProductBrand>().AddRangeAsync(GetProductBrands());
                 }
             }
-            catch (Exception ex)
+            catch (InvalidOperationException ex)
             {
-                //Create new TestCollections
-                await context.Repository<TestCollection>().AddRangeAsync(GetTestCollections());
+                //Create new ProductTypes
+                await context.Repository<ProductType>().AddRangeAsync(GetProductTypes());
+                //Create new ProductBrands
+                await context.Repository<ProductBrand>().AddRangeAsync(GetProductBrands());
             }
 
             //For SQL Server
@@ -31,34 +38,57 @@ namespace Catalog.Infrastructure.Seeders
             //var canconnect = await context.GetContext().Database.CanConnectAsync();
             //if (canconnect)
             //{
-            //    //ToDo: Initialize Catalog database here after checking if no record exist.
-            //    if (context.Repository<TestCollection>().Read().First() == null)
+            //    //Initialize Catalog database here after checking if no record exist.
+            //    if (context.Repository<ProductType>().Read().First() == null)
             //    {
-            //        //Create new TestCollections
-            //        await context.Repository<TestCollection>().AddRangeAsync(GetTestCollections());
+            //        //Create new ProductTypes
+            //        await context.Repository<ProductType>().AddRangeAsync(GetProductTypes());
+            //    }
+            //    if (context.Repository<ProductBrand>().Read().First() == null)
+            //    {
+            //        //Create new ProductBrands
+            //        await context.Repository<ProductBrand>().AddRangeAsync(GetProductBrands());
             //    }
             //}
         }
 
-        private List<TestCollection> GetTestCollections()
+        private List<ProductType> GetProductTypes()
         {
-            var list = new List<TestCollection>();
-            list.Add(new TestCollection
+            var list = new List<ProductType>();
+            list.Add(new ProductType
             {
-                Name = "Test1",
+                Name = "Electronics"
             });
-            list.Add(new TestCollection
+            list.Add(new ProductType
             {
-                Name = "Test2",
+                Name = "Computers"
+            });
+            list.Add(new ProductType
+            {
+                Name = "Mobile"
             });
 
             return list;
         }
 
-
-        internal partial class TestCollection : BaseEntity
+        private List<ProductBrand> GetProductBrands()
         {
-            public string Name { get; set; } = default!;
+            var list = new List<ProductBrand>();
+            list.Add(new ProductBrand
+            {
+                Name = "Apple"
+            });
+            list.Add(new ProductBrand
+            {
+                Name = "Google"
+            });
+            list.Add(new ProductBrand
+            {
+                Name = "Microsoft"
+            });
+
+            return list;
         }
+
     }
 }
