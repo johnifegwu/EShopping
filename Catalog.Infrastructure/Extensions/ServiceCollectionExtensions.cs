@@ -5,6 +5,8 @@ using Data.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using MongoDB.Driver.Core.Configuration;
+using MongoDB.Driver;
 
 
 namespace Catalog.Infrastructure.Extensions
@@ -13,7 +15,12 @@ namespace Catalog.Infrastructure.Extensions
     {
         public static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<CatalogDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("RestaurantDbConnection")));
+            var envVariable = configuration["ConnectionStrings:EnvironmentVariable"];
+            var conString = Environment.GetEnvironmentVariable(envVariable);
+            var dbName = configuration["ConnectionStrings:DatabaseName"];
+            var client = new MongoClient(conString);
+            var db = client.GetDatabase(dbName);
+            services.AddDbContext<CatalogDbContext>(options => options.UseMongoDB(db.Client, db.DatabaseNamespace.DatabaseName));
             services.AddScoped<IUnitOfWorkCore, UnitOfWorkCatalog>();
             services.AddScoped<ICatalogSeeder, CatalogSeeder>();
         }
