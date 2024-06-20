@@ -22,6 +22,11 @@ namespace Data.Repositories
             return await context.Set<T>().FindAsync(new object[] { id }, cancellationToken: cancellationToken);
         }
 
+        public virtual async Task<T?> GetByNameAsync<TName>(TName name, CancellationToken cancellationToken = default) where TName : notnull
+        {
+            return await context.Set<T>().FindAsync(new object[] { name }, cancellationToken: cancellationToken);
+        }
+
         public virtual IQueryable<T> Read()
         {
             return context.Set<T>().AsNoTracking();
@@ -38,18 +43,18 @@ namespace Data.Repositories
 
         public virtual async Task<T> AddAsync(T entity, CancellationToken cancellationToken = default)
         {
-            await context.Set<T>().AddAsync(entity);
+            await context.Set<T>().AddAsync(entity, cancellationToken);
 
-            await SaveChangesAsync();
+            await SaveChangesAsync(cancellationToken);
 
             return entity;
         }
 
         public virtual async Task<IEnumerable<T>> AddRangeAsync(IEnumerable<T> entities, CancellationToken cancellationToken = default)
         {
-            await context.Set<T>().AddRangeAsync(entities);
+            await context.Set<T>().AddRangeAsync(entities, cancellationToken);
 
-            await SaveChangesAsync();
+            await SaveChangesAsync(cancellationToken);
 
             return entities;
         }
@@ -67,7 +72,7 @@ namespace Data.Repositories
         {
             context.Set<T>().Update(entity);
 
-            await SaveChangesAsync();
+            await SaveChangesAsync(cancellationToken);
 
             return entity;
         }

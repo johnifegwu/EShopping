@@ -9,6 +9,7 @@ namespace Catalog.Infrastructure.Configurations
     {
         public void Configure(EntityTypeBuilder<ProductType> entity)
         {
+            entity.HasKey(p => p.Id);
             entity.Property(e => e.Id).ValueGeneratedOnAdd();
             entity.Property(e => e.Name);
 

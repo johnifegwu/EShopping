@@ -1,6 +1,7 @@
 ﻿
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using System.ComponentModel.DataAnnotations;
 
 namespace Catalog.Core.Entities
 {
@@ -11,10 +12,8 @@ namespace Catalog.Core.Entities
         public string Summary { get; set; } = default!;
         public string Description { get; set; } = default!;
         public string ImageFile { get; set; } = default!;
-        public ObjectId? BrandId { get; set; }
-        public ProductBrand Brands { get; set; } = default!;
-        public ObjectId? TypeId { get; set; }
-        public ProductType Types { get; set; } = default!;
+        public ObjectId? ProductBrandId { get; set; }
+        public ObjectId? ProductTypeId { get; set; }
         public decimal Price {  get; set; } = default!;
     }
 }

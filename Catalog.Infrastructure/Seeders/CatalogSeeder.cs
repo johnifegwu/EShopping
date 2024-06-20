@@ -2,7 +2,6 @@
 
 using Catalog.Core.Entities;
 using Data.Repositories;
-using MongoDB.Bson;
 
 namespace Catalog.Infrastructure.Seeders
 {
@@ -13,41 +12,127 @@ namespace Catalog.Infrastructure.Seeders
         {
             try
             {
+                var productType = context.Repository<ProductType>().Read().First();
+                var productBrand = context.Repository<ProductBrand>().Read().First();
+
                 //Initialize Catalog database here after checking if no record exist.
-                if (context.Repository<ProductType>().Read().First() == null)
+                if (productType  == null)
                 {
                     //Create new ProductTypes
-                    await context.Repository<ProductType>().AddRangeAsync(GetProductTypes());
+                    var productTypes = GetProductTypes();
+                    await context.Repository<ProductType>().AddRangeAsync(productTypes);
+                    productType = productTypes.FirstOrDefault();
                 }
-                if (context.Repository<ProductBrand>().Read().First() == null)
+
+                if (productBrand == null)
                 {
+                    var productBrands = GetProductBrands();
                     //Create new ProductBrands
-                    await context.Repository<ProductBrand>().AddRangeAsync(GetProductBrands());
+                    await context.Repository<ProductBrand>().AddRangeAsync(productBrands);
+                    productBrand = productBrands.FirstOrDefault();
+                }
+                if(productType != null && productBrand != null)
+                {
+                    try
+                    {
+                        var product = context.Repository<Product>().Read().First();
+                        if (product == null)
+                        {
+                            //Create new Product
+                            product = new Product()
+                            {
+                                Name = "MXP Pro-Sound System",
+                                Summary = "World class sound system.",
+                                Description = "MXP Pro-Sound System\nAn award winning World Class Sound System.",
+                                Price = 1000,
+                                ProductTypeId = productType.Id,
+                                ProductBrandId = productBrand.Id
+                            };
+                            await context.Repository<Product>().AddAsync(product);
+                        }
+                    }
+                    catch(Exception ex)
+                    {
+                        //Create new Product
+                        var product = new Product()
+                        {
+                            Name = "MXP Pro-Sound System",
+                            Summary = "World class sound system.",
+                            Description = "MXP Pro-Sound System\nAn award winning World Class Sound System.",
+                            Price = 1000,
+                            ProductTypeId = productType.Id,
+                            ProductBrandId = productBrand.Id
+                        };
+                        await context.Repository<Product>().AddAsync(product);
+                    }
                 }
             }
             catch (InvalidOperationException ex)
             {
                 //Create new ProductTypes
-                await context.Repository<ProductType>().AddRangeAsync(GetProductTypes());
+                var productTypes = GetProductTypes();
+                await context.Repository<ProductType>().AddRangeAsync(productTypes);
+                var productType = productTypes.FirstOrDefault();
+
                 //Create new ProductBrands
-                await context.Repository<ProductBrand>().AddRangeAsync(GetProductBrands());
+                var productBrands = GetProductBrands();
+                await context.Repository<ProductBrand>().AddRangeAsync(productBrands);
+                var productBrand = productBrands.FirstOrDefault();
+
+                //Create new Product
+                var product = new Product()
+                {
+                    Name = "MXP Pro-Sound System",
+                    Summary = "World class sound system.",
+                    Description = "MXP Pro-Sound System\nAn award winning World Class Sound System.",
+                    Price = 1000,
+                    ProductTypeId = productType.Id,
+                    ProductBrandId = productBrand.Id
+                };
+                await context.Repository<Product>().AddAsync(product);
             }
 
-            //For SQL Server
-            //==================================================================================
+            ////For SQL Server
+            ////==================================================================================
             //var canconnect = await context.GetContext().Database.CanConnectAsync();
             //if (canconnect)
             //{
+            //    var productType = context.Repository<ProductType>().Read().First();
+            //    var productBrand = context.Repository<ProductBrand>().Read().First();
+
             //    //Initialize Catalog database here after checking if no record exist.
-            //    if (context.Repository<ProductType>().Read().First() == null)
+            //    if (productType == null)
             //    {
             //        //Create new ProductTypes
-            //        await context.Repository<ProductType>().AddRangeAsync(GetProductTypes());
+            //        var productTypes = GetProductTypes();
+            //        await context.Repository<ProductType>().AddRangeAsync(productTypes);
+            //        productType = productTypes.FirstOrDefault();
             //    }
-            //    if (context.Repository<ProductBrand>().Read().First() == null)
+
+            //    if (productBrand == null)
             //    {
+            //        var productBrands = GetProductBrands();
             //        //Create new ProductBrands
-            //        await context.Repository<ProductBrand>().AddRangeAsync(GetProductBrands());
+            //        await context.Repository<ProductBrand>().AddRangeAsync(productBrands);
+            //        productBrand = productBrands.FirstOrDefault();
+            //    }
+            //    if (productType != null && productBrand != null)
+            //    {
+            //        var product = context.Repository<Product>().Read().First();
+            //        if (product == null)
+            //        {
+            //            //Create new Product
+            //            product = new Product()
+            //            {
+            //                Name = "MXP Pro-Sound System",
+            //                Summary = "World class sound system.",
+            //                Description = "MXP Pro-Sound System\nAn award winning World Class Sound System.",
+            //                Price = 1000,
+            //                ProductTypeId = productType.Id,
+            //                ProductBrandId = productBrand.Id
+            //            };
+            //            await context.Repository<Product>().AddAsync(product);
+            //        }
             //    }
             //}
         }
