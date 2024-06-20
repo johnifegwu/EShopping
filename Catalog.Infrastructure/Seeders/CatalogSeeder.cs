@@ -51,7 +51,7 @@ namespace Catalog.Infrastructure.Seeders
                             await context.Repository<Product>().AddAsync(product);
                         }
                     }
-                    catch(Exception ex)
+                    catch(InvalidOperationException ex)
                     {
                         //Create new Product
                         var product = new Product()

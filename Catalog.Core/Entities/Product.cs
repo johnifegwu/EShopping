@@ -9,9 +9,9 @@ namespace Catalog.Core.Entities
     {
         [BsonElement("Name")]
         public string Name { get; set; } = default!;
-        public string Summary { get; set; } = default!;
-        public string Description { get; set; } = default!;
-        public string ImageFile { get; set; } = default!;
+        public string? Summary { get; set; }
+        public string? Description { get; set; }
+        public string? ImageFile { get; set; }
         public ObjectId? ProductBrandId { get; set; }
         public ObjectId? ProductTypeId { get; set; }
         public decimal Price {  get; set; } = default!;

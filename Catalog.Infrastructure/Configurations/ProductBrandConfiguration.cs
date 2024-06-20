@@ -1,6 +1,7 @@
 ﻿using Catalog.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using MongoDB.EntityFrameworkCore.Extensions;
 
 namespace Catalog.Infrastructure.Configurations
 {
@@ -8,6 +9,7 @@ namespace Catalog.Infrastructure.Configurations
     {
         public void Configure(EntityTypeBuilder<ProductBrand> entity)
         {
+            entity.ToCollection("ProductBrands");
             entity.HasKey(p => p.Id);
             entity.Property(e => e.Id).ValueGeneratedOnAdd();
             entity.Property(e => e.Name);
