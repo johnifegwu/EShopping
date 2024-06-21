@@ -17,6 +17,11 @@ namespace Data.Repositories
             return context.Set<T>();
         }
 
+        public virtual async Task<IEnumerable<T>> GetAllAsync()
+        {
+            return await Task.FromResult(context.Set<T>().ToList());
+        }
+
         public virtual async Task<T?> GetByIdAsync<TId>(TId id, CancellationToken cancellationToken = default) where TId : notnull
         {
             return await context.Set<T>().FindAsync(new object[] { id }, cancellationToken: cancellationToken);
@@ -81,26 +86,25 @@ namespace Data.Repositories
             return entities;
         }
 
-        public virtual void Delete(T entity)
+        public virtual int Delete(T entity)
         {
             context.Set<T>().Remove(entity);
 
-            SaveChanges();
+            return SaveChanges();
         }
 
-        public virtual async Task DeleteAsync(T entity, CancellationToken cancellationToken = default)
+        public virtual async Task<int> DeleteAsync(T entity, CancellationToken cancellationToken = default)
         {
             context.Set<T>().Remove(entity);
 
-            await SaveChangesAsync(cancellationToken);
-
+            return await SaveChangesAsync(cancellationToken);
         }
 
-        public virtual async Task DeleteRangeAsync(IEnumerable<T> entities, CancellationToken cancellationToken = default)
+        public virtual async Task<int> DeleteRangeAsync(IEnumerable<T> entities, CancellationToken cancellationToken = default)
         {
             context.Set<T>().RemoveRange(entities);
 
-            await SaveChangesAsync(cancellationToken);
+            return await SaveChangesAsync(cancellationToken);
         }
 
         public virtual int SaveChanges()
