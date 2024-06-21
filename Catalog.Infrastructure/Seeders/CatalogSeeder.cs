@@ -2,6 +2,7 @@
 
 using Catalog.Core.Entities;
 using Data.Repositories;
+using MongoDB.Bson;
 
 namespace Catalog.Infrastructure.Seeders
 {

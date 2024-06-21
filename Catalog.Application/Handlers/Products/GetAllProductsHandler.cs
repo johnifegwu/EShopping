@@ -1,12 +1,11 @@
-﻿
-using Catalog.Application.Mappers;
-using Catalog.Application.Queries;
+﻿using Catalog.Application.Mappers;
+using Catalog.Application.Queries.Products;
 using Catalog.Application.Responses;
 using Catalog.Core.Entities;
 using Data.Repositories;
 using MediatR;
 
-namespace Catalog.Application.Handlers
+namespace Catalog.Application.Handlers.Products
 {
     public class GetAllProductsHandler : IRequestHandler<GetAllProductsQuery, IList<ProductResponse>>
     {

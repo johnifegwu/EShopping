@@ -17,6 +17,29 @@ namespace Data.Repositories
             return context.Set<T>();
         }
 
+        /// <summary>
+        ///  Fetches data form the database based on Raw Sql command.
+        /// </summary>
+        /// <param name="query">Sql statement or stored procedure.</param>
+        /// <returns>IEnumerable</returns>
+        /// <remarks>Not for MongoDB or Similar Document Database.</remarks>
+        public virtual async Task<IEnumerable<T>> RunSqlAsync(string query)
+        {
+            return await Task.FromResult(context.Set<T>().FromSqlRaw<T>(query).AsEnumerable().ToList());
+        }
+
+        /// <summary>
+        ///  Fetches data form the database based on Raw Sql command.
+        /// </summary>
+        /// <param name="query">Sql statement or stored procedure.</param>
+        /// <param name="parameters">Parameters.</param>
+        /// <returns>IEnumerable</returns>
+        /// <remarks>Not for MongoDB or Similar Document Database.</remarks>
+        public virtual async Task<IEnumerable<T>> RunSqlAsync(string query, params object[] parameters)
+        {
+            return await Task.FromResult(context.Set<T>().FromSqlRaw<T>(query, parameters).AsEnumerable().ToList());
+        }
+
         public virtual async Task<IEnumerable<T>> GetAllAsync()
         {
             return await Task.FromResult(context.Set<T>().ToList());
