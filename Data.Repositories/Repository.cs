@@ -22,11 +22,6 @@ namespace Data.Repositories
             return await context.Set<T>().FindAsync(new object[] { id }, cancellationToken: cancellationToken);
         }
 
-        public virtual async Task<T?> GetByNameAsync<TName>(TName name, CancellationToken cancellationToken = default) where TName : notnull
-        {
-            return await context.Set<T>().FindAsync(new object[] { name }, cancellationToken: cancellationToken);
-        }
-
         public virtual IQueryable<T> Read()
         {
             return context.Set<T>().AsNoTracking();

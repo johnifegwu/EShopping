@@ -10,16 +10,16 @@ namespace Catalog.Infrastructure.Repositories
 
         private readonly Dictionary<Type, object> _repositories = new Dictionary<Type, object>();
 
-        private readonly DbContext Context;
+        private readonly DbContext _context;
 
         public UnitOfWorkCatalog(CatalogDbContext context)
         {
-            this.Context = context;
+            this._context = context;
         }
 
         public DbContext GetContext()
         {
-            return this.Context;
+            return this._context;
         }
 
         public IRepository<T> Repository<T>() where T : class
@@ -39,12 +39,12 @@ namespace Catalog.Infrastructure.Repositories
         }
         private void CreateRepository<T>() where T : class
         {
-            _repositories.Add(typeof(T), new Repository<T>(Context));
+            _repositories.Add(typeof(T), new Repository<T>(_context));
         }
 
         public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
-            return await Context.SaveChangesAsync(cancellationToken);
+            return await _context.SaveChangesAsync(cancellationToken);
         }
 
         private bool disposed = false;
@@ -55,7 +55,7 @@ namespace Catalog.Infrastructure.Repositories
             {
                 if (disposing)
                 {
-                    Context.Dispose();
+                    _context.Dispose();
                 }
             }
             this.disposed = true;

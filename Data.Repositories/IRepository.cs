@@ -6,7 +6,6 @@ namespace Data.Repositories
         IQueryable<T> Get();
         IQueryable<T> Read();
         Task<T?> GetByIdAsync<TId>(TId id, CancellationToken cancellationToken = default) where TId : notnull;
-        Task<T?> GetByNameAsync<TName>(TName name, CancellationToken cancellationToken = default) where TName : notnull;
         T Add(T entity);
         Task<T> AddAsync(T entity, CancellationToken cancellationToken = default);
         Task<IEnumerable<T>> AddRangeAsync(IEnumerable<T> entities, CancellationToken cancellationToken = default);
