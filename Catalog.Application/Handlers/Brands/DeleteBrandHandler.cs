@@ -1,6 +1,7 @@
 ﻿
 using Catalog.Application.Commands.Brands;
 using Catalog.Core.Entities;
+using Catalog.Core.Exceptions;
 using Data.Repositories;
 using MediatR;
 using MongoDB.Bson;
@@ -22,7 +23,7 @@ namespace Catalog.Application.Handlers.Brands
 
             if(brand == null)
             {
-                throw new ArgumentException("Brand not found.");
+                throw new RecordNotFoundException("Brand not found.");
             }
 
             var rowsAffected = await _unitOfWork.Repository<ProductBrand>().DeleteAsync(brand);

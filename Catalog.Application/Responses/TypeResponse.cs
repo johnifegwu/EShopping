@@ -5,7 +5,7 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace Catalog.Application.Responses
 {
-    public class TypesResponse
+    public class TypeResponse
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]

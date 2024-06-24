@@ -2,6 +2,7 @@
 using Catalog.Application.Mappers;
 using Catalog.Application.Responses;
 using Catalog.Core.Entities;
+using Catalog.Core.Exceptions;
 using Data.Repositories;
 using MediatR;
 using MongoDB.Bson;
@@ -33,7 +34,7 @@ namespace Catalog.Application.Handlers.Products
             
             if (product == null)
             {
-                throw new ArgumentException("Product not found.");
+                throw new RecordNotFoundException("Product not found.");
             }
 
             //Update Product
