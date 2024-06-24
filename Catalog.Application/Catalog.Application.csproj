@@ -12,10 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Commands\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Catalog.Core\Catalog.Core.csproj" />
     <ProjectReference Include="..\Data.Repositories\Data.Repositories.csproj" />
   </ItemGroup>

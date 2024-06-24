@@ -6,7 +6,10 @@ namespace Catalog.Application.Responses
 {
     public class BrandResponse
     {
-        public ObjectId Id { get; set; } = default!;
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string? Id { get; set; }
+
         [BsonElement("Name")]
         public string Name { get; set; } = default!;
     }

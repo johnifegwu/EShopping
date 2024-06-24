@@ -1,17 +1,17 @@
-﻿using Catalog.Application.Responses;
+﻿
+using Catalog.Application.Responses;
 using MediatR;
 
 namespace Catalog.Application.Queries.Products
 {
-
     /// <summary>
-    /// Get Products by Name.
+    /// Search Products by Name.
     /// </summary>
-    public class GetProductsByNameQuery : IRequest<IList<ProductResponse>>
+    public class SearchProductsByNameQuery : IRequest<IList<ProductResponse>>
     {
         public string ProductName { get; set; } = default!;
         public int PageIndex { get; set; } = 1;
-        public int PageSize { get; set;} = 20;
+        public int PageSize { get; set; } = 20;
     }
 
 }

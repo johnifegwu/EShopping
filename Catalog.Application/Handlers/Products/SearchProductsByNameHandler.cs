@@ -9,16 +9,18 @@ using MediatR;
 
 namespace Catalog.Application.Handlers.Products
 {
-    public class GetProductsByNameHandler : IRequestHandler<GetProductsByNameQuery, IList<ProductResponse>>
+    public class SearchProductsByNameHandler : IRequestHandler<SearchProductsByNameQuery, IList<ProductResponse>>
     {
         private readonly IUnitOfWorkCore _unitOfWork;
-        public GetProductsByNameHandler(IUnitOfWorkCore unitOfWork)
+
+        public SearchProductsByNameHandler(IUnitOfWorkCore unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
-        public async Task<IList<ProductResponse>> Handle(GetProductsByNameQuery request, CancellationToken cancellationToken)
+
+        public async Task<IList<ProductResponse>> Handle(SearchProductsByNameQuery request, CancellationToken cancellationToken)
         {
-            if(request.PageIndex < 1)
+            if (request.PageIndex < 1)
                 request.PageIndex = 1;
 
             if (request.PageSize < 1)
@@ -28,8 +30,8 @@ namespace Catalog.Application.Handlers.Products
                 request.PageSize = 100;
 
             var productList = await Task.FromResult(_unitOfWork.Repository<Product>().Read()
-                .Where(x => x.Name.ToLower() == request.ProductName.ToLower())
-                .Skip((request.PageIndex -1) * request.PageSize)
+                .Where(x => x.Name.Contains(request.ProductName))
+                .Skip((request.PageIndex - 1) * request.PageSize)
                 .Take(request.PageSize).ToList());
 
             var responseList = CatalogMapper.Mapper.Map<IList<ProductResponse>>(productList);
