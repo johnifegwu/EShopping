@@ -16,4 +16,9 @@
     <ProjectReference Include="..\Data.Repositories\Data.Repositories.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Commands\Brands\" />
+    <Folder Include="Commands\Types\" />
+  </ItemGroup>
+
 </Project>

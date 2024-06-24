@@ -1,5 +1,4 @@
-﻿
-using Catalog.Application.Commands;
+﻿using Catalog.Application.Commands.Products;
 using Catalog.Application.Mappers;
 using Catalog.Application.Responses;
 using Catalog.Core.Entities;

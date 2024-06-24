@@ -1,9 +1,8 @@
-﻿
-using Catalog.Application.Requests;
+﻿using Catalog.Application.Requests;
 using Catalog.Application.Responses;
 using MediatR;
 
-namespace Catalog.Application.Commands
+namespace Catalog.Application.Commands.Products
 {
     public class CreateProductCommand : IRequest<ProductResponse>
     {

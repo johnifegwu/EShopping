@@ -1,5 +1,7 @@
 ﻿
 
+using Catalog.Application.Mappers;
+using Catalog.Application.Responses;
 using Catalog.Core.Entities;
 using Data.Repositories;
 using MongoDB.Bson;
