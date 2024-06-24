@@ -17,7 +17,16 @@ namespace Catalog.Application.Handlers.Products
         }
         public async Task<IList<ProductResponse>> Handle(GetAllProductsQuery request, CancellationToken cancellationToken)
         {
-            var productlist = _unitOfWork.Repository<Product>().GetAllAsync();
+            if (request.PageIndex < 1)
+                request.PageIndex = 1;
+
+            if (request.PageSize < 1)
+                request.PageSize = 15;
+
+            if (request.PageSize > 100)
+                request.PageSize = 100;
+
+            var productlist = await _unitOfWork.Repository<Product>().GetAllAsync(request.PageIndex, request.PageSize);
             var productResponseList = CatalogMapper.Mapper.Map<IList<ProductResponse>>(productlist);
             return productResponseList;
         }

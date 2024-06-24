@@ -22,7 +22,20 @@ namespace Data.Repositories
         /// <returns>IEnumerable</returns>
         /// <remarks>Not for MongoDB or Similar Document Database.</remarks>
         Task<IEnumerable<T>> RunSqlAsync(string query, params object[] parameters);
+
+        /// <summary>
+        /// Fetch All.
+        /// </summary>
+        /// <returns></returns>
         Task<IEnumerable<T>> GetAllAsync();
+
+        /// <summary>
+        /// Fecth All in a pginated formart.
+        /// </summary>
+        /// <param name="PageIndex">Page index, must be greater than zero.</param>
+        /// <param name="PageSize">Page size, must be at least one.</param>
+        /// <returns></returns>
+        Task<IEnumerable<T>> GetAllAsync(int PageIndex, int PageSize);
         Task<T?> GetByIdAsync<TId>(TId id, CancellationToken cancellationToken = default) where TId : notnull;
         T Add(T entity);
         Task<T> AddAsync(T entity, CancellationToken cancellationToken = default);

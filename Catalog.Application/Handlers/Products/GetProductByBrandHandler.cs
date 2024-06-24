@@ -8,7 +8,7 @@ using MongoDB.Bson;
 
 namespace Catalog.Application.Handlers.Products
 {
-    public class GetProductByBrandHandler : IRequestHandler<GetProductByBrandQuery, IList<ProductResponse>>
+    public class GetProductByBrandHandler : IRequestHandler<GetProductsByBrandQuery, IList<ProductResponse>>
     {
         private readonly IUnitOfWorkCore _unitOfWork;
 
@@ -17,9 +17,20 @@ namespace Catalog.Application.Handlers.Products
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<IList<ProductResponse>> Handle(GetProductByBrandQuery request, CancellationToken cancellationToken)
+        public async Task<IList<ProductResponse>> Handle(GetProductsByBrandQuery request, CancellationToken cancellationToken)
         {
-            var productList = await Task.FromResult(_unitOfWork.Repository<Product>().Read().Where(x => x.ProductBrandId == new ObjectId(request.BrandId)));
+            if (request.PageIndex < 1)
+                request.PageIndex = 1;
+
+            if (request.PageSize < 1)
+                request.PageSize = 15;
+
+            if (request.PageSize > 100)
+                request.PageSize = 100;
+
+            var productList = await Task.FromResult(_unitOfWork.Repository<Product>().Read().Where(x => x.ProductBrandId == new ObjectId(request.BrandId))
+                .Skip((request.PageIndex - 1) * request.PageSize)
+                .Take(request.PageSize).ToList());
             var productResponseList = CatalogMapper.Mapper.Map<IList<ProductResponse>>(productList);
             return productResponseList;
         }

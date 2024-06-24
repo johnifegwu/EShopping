@@ -45,6 +45,12 @@ namespace Data.Repositories
             return await Task.FromResult(context.Set<T>().ToList());
         }
 
+        public virtual async Task<IEnumerable<T>> GetAllAsync(int PageIndex, int PageSize)
+        {
+            return await Task.FromResult(context.Set<T>().Skip((PageIndex - 1) * PageSize)
+                .Take(PageSize).ToList());
+        }
+
         public virtual async Task<T?> GetByIdAsync<TId>(TId id, CancellationToken cancellationToken = default) where TId : notnull
         {
             return await context.Set<T>().FindAsync(new object[] { id }, cancellationToken: cancellationToken);
