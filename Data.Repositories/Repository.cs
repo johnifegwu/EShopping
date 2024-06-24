@@ -12,6 +12,10 @@ namespace Data.Repositories
             this.context = context;
         }
 
+        /// <summary>
+        /// Gets the DbSet object.
+        /// </summary>
+        /// <returns></returns>
         public virtual IQueryable<T> Get()
         {
             return context.Set<T>();
@@ -56,6 +60,9 @@ namespace Data.Repositories
             return await context.Set<T>().FindAsync(new object[] { id }, cancellationToken: cancellationToken);
         }
 
+        /// <summary>
+        /// Gets the DbSet object as NonTracking.
+        /// </summary>
         public virtual IQueryable<T> Read()
         {
             return context.Set<T>().AsNoTracking();

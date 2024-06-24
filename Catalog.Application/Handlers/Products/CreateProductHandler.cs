@@ -25,6 +25,11 @@ namespace Catalog.Application.Handlers.Products
                 throw new ArgumentException("Product details not provided.");      
             }
 
+            if (string.IsNullOrWhiteSpace(newProduct.Name))
+            {
+                throw new ArgumentException("Product name not provided.");
+            }
+
             //Create new Product
             await  _unitOfWork.Repository<Product>().AddAsync(newProduct);
 

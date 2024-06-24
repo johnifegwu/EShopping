@@ -1,10 +1,10 @@
 ﻿
-using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using MongoDB.Bson;
 
-namespace Catalog.Application.Responses
+namespace Catalog.Application.Requests
 {
-    public class BrandResponse
+    public class UpdateBrandRequest
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]

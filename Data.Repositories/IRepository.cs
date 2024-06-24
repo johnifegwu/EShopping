@@ -3,7 +3,16 @@ namespace Data.Repositories
 {
     public interface IRepository<T> where T : class
     {
+        /// <summary>
+        /// Gets the DbSet object.
+        /// </summary>
+        /// <returns></returns>
         IQueryable<T> Get();
+
+        /// <summary>
+        /// Gets the DbSet object as NonTracking.
+        /// </summary>
+        /// <returns></returns>
         IQueryable<T> Read();
 
         /// <summary>

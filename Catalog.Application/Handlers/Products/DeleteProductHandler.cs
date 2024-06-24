@@ -27,10 +27,7 @@ namespace Catalog.Application.Handlers.Products
 
             var rowsAffected = await _unitOfWork.Repository<Product>().DeleteAsync(product);
 
-            if(rowsAffected < 1)
-                return false;
-
-            return true;
+            return rowsAffected > 0;
         }
     }
 }
