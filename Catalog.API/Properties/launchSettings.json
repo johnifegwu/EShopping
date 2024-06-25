@@ -6,7 +6,8 @@
       "launchUrl": "swagger",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "CatalogATLASConnection": "mongodb+srv://johnifegwu:AOqTAk4M6tQJelDi@john-mongodb-cluster0.d4r5lbt.mongodb.net/"
+        "CatalogATLASConnection": "mongodb+srv://johnifegwu:AOqTAk4M6tQJelDi@john-mongodb-cluster0.d4r5lbt.mongodb.net/",
+        "CatalogATLASProdConnection": "mongodb+srv://johnifegwu:AOqTAk4M6tQJelDi@john-mongodb-cluster0.d4r5lbt.mongodb.net/"
       },
       "dotnetRunMessages": true,
       "applicationUrl": "http://localhost:9000"
