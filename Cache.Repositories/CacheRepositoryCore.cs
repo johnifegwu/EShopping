@@ -31,18 +31,6 @@ namespace Cache.Repositories
             return entity;
         }
 
-        /// <summary>
-        /// Adds a string value to the cache.
-        /// </summary>
-        /// <param name="entity">String value to be cached.</param>
-        /// <param name="key">Cache key.</param>
-        /// <returns></returns>
-        public string Add(string entity, string key)
-        {
-            _distributedCache.SetString(key, entity, _cacheOptions);
-            return entity;
-        }
-
         public IEnumerable<TEntity> AddRange(IEnumerable<TEntity> entity, string key)
         {
             var jsonString = JsonConvert.SerializeObject(entity);
@@ -59,18 +47,6 @@ namespace Cache.Repositories
         {
             var jsonString = JsonConvert.SerializeObject(entity);
             await _distributedCache.SetStringAsync(key, jsonString, _cacheOptions);
-            return entity;
-        }
-
-        /// <summary>
-        /// Adds a string value to the cache.
-        /// </summary>
-        /// <param name="entity">String value to be cached.</param>
-        /// <param name="key">Cache key.</param>
-        /// <returns></returns>
-        public async Task<string> AddAsync(string entity, string key)
-        {
-            await _distributedCache.SetStringAsync(key, entity, _cacheOptions);
             return entity;
         }
 
@@ -179,41 +155,6 @@ namespace Cache.Repositories
         }
 
         /// <summary>
-        /// Gets a string value from the cache.
-        /// </summary>
-        /// <param name="key">Cache key.</param>
-        /// <returns></returns>
-        public string GetString(string key)
-        {
-            //get entry by key
-            var str = _distributedCache.GetString(key);
-
-            if (!string.IsNullOrEmpty(str))
-            {
-                return str;
-            }
-
-            return default!;
-        }
-
-        /// <summary>
-        /// Gets a string value from the cache.
-        /// </summary>
-        /// <param name="key">Cache key.</param>
-        /// <returns></returns>
-        public async Task<string> GetStringAsync(string key)
-        {
-            var str = await _distributedCache.GetStringAsync(key);
-
-            if (!string.IsNullOrEmpty(str))
-            {
-                return str;
-            }
-
-            return default!;
-        }
-
-        /// <summary>
         /// Replaces an entity in the cache.
         /// </summary>
         /// <param name="entity">Entity.</param>
@@ -237,28 +178,6 @@ namespace Cache.Repositories
         }
 
         /// <summary>
-        /// Replaces a string value in the cache.
-        /// </summary>
-        /// <param name="entity">String value.</param>
-        /// <param name="key">Cache key.</param>
-        /// <returns></returns>
-        public string Update(string entity, string key)
-        {
-            //delete entry by key and insert entry by key
-            try
-            {
-                //delete entry by key
-                _distributedCache.Remove(key);
-            }
-            catch
-            {
-                //do nothing
-            }
-            _distributedCache.SetString(key, entity, _cacheOptions);
-            return entity;
-        }
-
-        /// <summary>
         /// Replaces an entity in the cache.
         /// </summary>
         /// <param name="entity">Entity.</param>
@@ -277,27 +196,6 @@ namespace Cache.Repositories
             }
             var jsonString = await Task.FromResult(JsonConvert.SerializeObject(entity));
             await _distributedCache.SetStringAsync(key, jsonString, _cacheOptions);
-            return entity;
-        }
-
-        /// <summary>
-        /// Replaces a string value in the cache.
-        /// </summary>
-        /// <param name="entity">String value.</param>
-        /// <param name="key">Cache key.</param>
-        /// <returns></returns>
-        public async Task<string> UpdateAsync(string entity, string key)
-        {
-            try
-            {
-                //delete entry by key
-                await _distributedCache.RemoveAsync(key);
-            }
-            catch
-            {
-                //do nothing
-            }
-            await _distributedCache.SetStringAsync(key, entity, _cacheOptions);
             return entity;
         }
 

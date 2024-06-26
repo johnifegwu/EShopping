@@ -34,20 +34,6 @@ namespace Cache.Repositories
         Task<IEnumerable<TEntity>> GetRangeAsync(string key);
 
         /// <summary>
-        /// Gets a string value from the cache.
-        /// </summary>
-        /// <param name="key">Cache key.</param>
-        /// <returns></returns>
-        string GetString(string key);
-
-        /// <summary>
-        /// Gets a string value from the cache.
-        /// </summary>
-        /// <param name="key">Cache key.</param>
-        /// <returns></returns>
-        Task<string> GetStringAsync(string key);
-
-        /// <summary>
         /// Adds a list of entities to the Cache.
         /// </summary>
         /// <param name="key">Cache key.</param>
@@ -154,22 +140,6 @@ namespace Cache.Repositories
         Task<TEntity> AddAsync(TEntity entity, string key);
 
         /// <summary>
-        /// Adds a string value to the cache.
-        /// </summary>
-        /// <param name="entity">String value to be cached.</param>
-        /// <param name="key">Cache key.</param>
-        /// <returns></returns>
-        string Add(string entity, string key);
-
-        /// <summary>
-        /// Adds a string value to the cache.
-        /// </summary>
-        /// <param name="entity">String value to be cached.</param>
-        /// <param name="key">Cache key.</param>
-        /// <returns></returns>
-        Task<string> AddAsync(string entity, string key);
-
-        /// <summary>
         /// Replaces an entity in the cache.
         /// </summary>
         /// <param name="entity">Entity.</param>
@@ -200,22 +170,6 @@ namespace Cache.Repositories
         /// <param name="key">Cache key.</param>
         /// <returns></returns>
         Task<IEnumerable<TEntity>> UpdateRangeAsync(IEnumerable<TEntity> entity, string key);
-
-        /// <summary>
-        /// Replaces a string value in the cache.
-        /// </summary>
-        /// <param name="entity">String value.</param>
-        /// <param name="key">Cache key.</param>
-        /// <returns></returns>
-        string Update(string entity, string key);
-
-        /// <summary>
-        /// Replaces a string value in the cache.
-        /// </summary>
-        /// <param name="entity">String value.</param>
-        /// <param name="key">Cache key.</param>
-        /// <returns></returns>
-        Task<string> UpdateAsync(string entity, string key);
 
         /// <summary>
         /// Removes the cached data from the system.
