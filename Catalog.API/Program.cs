@@ -5,7 +5,6 @@ using Catalog.Infrastructure.Extensions;
 using Catalog.Infrastructure.Seeders;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.OpenApi.Models;
 using System.Reflection;

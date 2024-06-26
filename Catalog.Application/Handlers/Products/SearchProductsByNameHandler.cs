@@ -20,17 +20,8 @@ namespace Catalog.Application.Handlers.Products
 
         public async Task<IList<ProductResponse>> Handle(SearchProductsByNameQuery request, CancellationToken cancellationToken)
         {
-            if (request.PageIndex < 1)
-                request.PageIndex = 1;
-
-            if (request.PageSize < 1)
-                request.PageSize = 15;
-
-            if (request.PageSize > 100)
-                request.PageSize = 100;
-
             var productList = await Task.FromResult(_unitOfWork.Repository<Product>().Read()
-                .Where(x => x.Name.Contains(request.ProductName))
+                .Where(x => x.Name.ToLower().Contains(request.ProductName.ToLower()))
                 .Skip((request.PageIndex - 1) * request.PageSize)
                 .Take(request.PageSize).ToList());
 
