@@ -1,8 +1,7 @@
-﻿
-using Catalog.Application.Queries.Products;
+﻿using Catalog.Application.Queries.Products;
 using FluentValidation;
 
-namespace Catalog.Application.Validators
+namespace Catalog.Application.Validators.Products
 {
     public class GetProductsByBrandQueryValidator : AbstractValidator<GetProductsByBrandQuery>
     {
