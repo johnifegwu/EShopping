@@ -1,5 +1,7 @@
 ﻿using Catalog.API.Constants;
+using Catalog.Application.Commands.Products;
 using Catalog.Application.Queries.Products;
+using Catalog.Application.Requests;
 using Catalog.Application.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -161,6 +163,62 @@ namespace Catalog.API.Controllers
             });
 
             return Ok(result);  
+        }
+
+        #endregion
+
+        #region "Product Command"
+
+        /// <summary>
+        /// Creates a new Product in the system.
+        /// </summary>
+        /// <param name="payload">Create Product request payload.</param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("[action]/", Name = "CreateProduct")]
+        [ProducesResponseType(typeof(ProductResponse), (int)HttpStatusCode.OK)]
+        [SwaggerOperation(Tags = new[] {NameConstants.ProductCommandSwaggerName})]
+        public async Task<ActionResult> CreateProduct([FromBody]CreateProductRequest payload)
+        {
+            var result = await _mediator.Send(new CreateProductCommand
+            {
+                Payload = payload
+            });
+
+            return Ok(result);
+        }
+
+        /// <summary>
+        /// Updates the given Product in the system.
+        /// </summary>
+        /// <param name="payload">Update Product request payload.</param>
+        /// <returns></returns>
+        [HttpPatch]
+        [Route("[action]/", Name = "UpdateProduct")]
+        [ProducesResponseType(typeof(ProductResponse), (int)HttpStatusCode.OK)]
+        [SwaggerOperation(Tags = new[] {NameConstants.ProductCommandSwaggerName})]
+        public async Task<ActionResult> UpdateProduct([FromBody]UpdateProductRequest payload)
+        {
+            var result = await _mediator.Send(new UpdateProductCommand
+            {
+                Payload = payload
+            });
+
+            return Ok(result);
+        }
+
+        [HttpDelete]
+        [Route("[action]/{Id}/", Name = "DeleteProduct")]
+        [ProducesResponseType(typeof(bool), (int)HttpStatusCode.OK)]
+        [SwaggerOperation(Tags = new[] {NameConstants.ProductCommandSwaggerName})]
+        public async Task<ActionResult> DeleteProduct(string Id)
+        {
+            var result = await _mediator.Send(new DeleteProductCommand
+            {
+                ProductId = Id
+            });
+
+            return Ok(result);
         }
 
         #endregion
