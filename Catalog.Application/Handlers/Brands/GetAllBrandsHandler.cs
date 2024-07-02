@@ -18,7 +18,7 @@ namespace Catalog.Application.Handlers.Brands
 
         public async Task<IList<BrandResponse>> Handle(GetAllBrandsQuery request, CancellationToken cancellationToken)
         {
-            var brandList = await _unitOfWork.Repository<ProductBrand>().GetAllAsync();
+            var brandList = await Task.FromResult(_unitOfWork.Repository<ProductBrand>().Read().OrderBy(x => x.Name).ToList());
             var brandResponseList = CatalogMapper.Mapper.Map<IList<BrandResponse>>(brandList);
             return brandResponseList;
         }

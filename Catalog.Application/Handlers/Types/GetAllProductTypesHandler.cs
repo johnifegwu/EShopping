@@ -17,7 +17,7 @@ namespace Catalog.Application.Handlers.Types
         }
         public async Task<IList<TypeResponse>> Handle(GetAllProductTypesQuery request, CancellationToken cancellationToken)
         {
-            var typeList = await _unitOfWork.Repository<ProductType>().GetAllAsync();
+            var typeList = await Task.FromResult(_unitOfWork.Repository<ProductType>().Read().OrderBy(x => x.Name).ToList());
             var typeResponseList = CatalogMapper.Mapper.Map<IList<TypeResponse>>(typeList);
             return typeResponseList;
         }
