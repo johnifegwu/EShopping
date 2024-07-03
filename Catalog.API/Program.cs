@@ -21,8 +21,7 @@ builder.Services.AddApiVersioning(o =>
     o.DefaultApiVersion = new ApiVersion(1, 0);
 });
 
-var envVariable = builder.Configuration["ConnectionStrings:EnvironmentVariable"];
-var conString = Environment.GetEnvironmentVariable(envVariable);
+var conString = builder.Configuration["ConnectionStrings:CatalogDbConnection"];
 builder.Services.AddHealthChecks().AddMongoDb(conString, "Catalog MongoDb Helth Check", HealthStatus.Degraded);
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

@@ -1,0 +1,31 @@
+version: '3.4'
+
+services:
+  catalog.api:
+    image: ${DOCKER_REGISTRY-}catalogapi
+    environment:
+     - ASPNETCORE_HTTPS_PORTS=9001
+     - ASPNETCORE_HTTP_PORTS=9000
+    ports:
+     - "9000:9000"
+     - "9001:9001" 
+    build:
+      context: .
+      dockerfile: Catalog.API/Dockerfile
+  catalog.database:
+    image: mongo:latest
+    container_name: catalog.database
+    environment:
+     - MONGO_DB=eShopping
+     - MONGO_USER=admin
+     - MONGO_PASSWORD=12345678 
+    volumes:
+     - ./.containers/eshopping-db:/var/lib/mongodb/data
+    ports:
+     - 27017:27017
+
+  catalog.cache:
+    image: redis:latest
+    restart: always
+    ports:
+     - 6379:6379 

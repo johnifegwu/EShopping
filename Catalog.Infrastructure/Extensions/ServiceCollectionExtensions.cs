@@ -14,8 +14,7 @@ namespace Catalog.Infrastructure.Extensions
     {
         public static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
-            var envVariable = configuration["ConnectionStrings:EnvironmentVariable"];
-            var conString = Environment.GetEnvironmentVariable(envVariable);
+            var conString = configuration["ConnectionStrings:CatalogDbConnection"];
             var dbName = configuration["ConnectionStrings:DatabaseName"];
             var client = new MongoClient(conString);
             var db = client.GetDatabase(dbName);
