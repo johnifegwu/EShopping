@@ -123,20 +123,20 @@ namespace Catalog.API.Controllers
         /// <summary>
         /// Gets Products from the system by product type.
         /// </summary>
-        /// <param name="type">Product Type.</param>
+        /// <param name="typeId">Product Type.</param>
         /// <returns></returns>
         [HttpGet]
-        [Route("GetProductsByType")]
+        [Route("GetProductsByTypeId")]
         [ProducesResponseType(typeof(List<ProductResponse>), (int)HttpStatusCode.OK)]
         [SwaggerOperation(Tags = new[] { NameConstants.ProductQuerySwaggerName })]
-        public async Task<ActionResult> GetProductsByType(
-            [FromQuery]string type,
+        public async Task<ActionResult> GetProductsByTypeId(
+            [FromQuery]string typeId,
             [FromQuery] int pageIndex = 1,
             [FromQuery] int pageSize = 15)
         {
             var result = await _mediator.Send(new GetProductsByTypeQuery
             {
-                TypeId = type,
+                TypeId = typeId,
                 PageIndex = pageIndex,
                 PageSize = pageSize
             });
