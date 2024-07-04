@@ -12,6 +12,7 @@ services:
     build:
       context: .
       dockerfile: Catalog.API/Dockerfile
+
   catalog.database:
     image: mongo:latest
     container_name: catalog.database
@@ -20,7 +21,7 @@ services:
      - MONGO_USER=admin
      - MONGO_PASSWORD=12345678 
     volumes:
-     - ./.containers/eshopping-db:/var/lib/mongodb/data
+     - ./mongo/data:/data/db
     ports:
      - 27017:27017
 
