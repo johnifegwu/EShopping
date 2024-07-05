@@ -26,7 +26,7 @@ namespace Catalog.Application.Handlers.Brands
                 throw new RecordNotFoundException("Brand not found.");
             }
 
-            var rowsAffected = await _unitOfWork.Repository<ProductBrand>().DeleteAsync(brand);
+            var rowsAffected = await _unitOfWork.Repository<ProductBrand>().DeleteAsync(brand, cancellationToken);
 
             return rowsAffected > 0;
         }

@@ -13,8 +13,8 @@ namespace Catalog.Application.Mappers
                 cfg.ShouldMapProperty = p => p.GetMethod.IsPublic || p.GetMethod.IsAssembly;
                 cfg.AddProfile<CatalogMappingProfile>();
             });
-            var mapper = config.CreateMapper();
-            return mapper;
+
+            return config.CreateMapper();
         });
 
         public static IMapper Mapper => lazy.Value;

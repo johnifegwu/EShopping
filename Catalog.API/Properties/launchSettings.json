@@ -6,8 +6,6 @@
       "launchUrl": "swagger",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "CatalogATLASConnection": "mongodb+srv://johnifegwu:AOqTAk4M6tQJelDi@john-mongodb-cluster0.d4r5lbt.mongodb.net/",
-        "CatalogATLASProdConnection": "mongodb+srv://johnifegwu:AOqTAk4M6tQJelDi@john-mongodb-cluster0.d4r5lbt.mongodb.net/",
         "LocalCatalogDB": "mongodb://localhost:27017"
       },
       "dotnetRunMessages": true,
@@ -19,8 +17,6 @@
       "launchUrl": "swagger",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "CatalogATLASConnection": "mongodb+srv://johnifegwu:AOqTAk4M6tQJelDi@john-mongodb-cluster0.d4r5lbt.mongodb.net/",
-        "CatalogATLASProdConnection": "mongodb+srv://johnifegwu:AOqTAk4M6tQJelDi@john-mongodb-cluster0.d4r5lbt.mongodb.net/",
         "LocalCatalogDB": "mongodb://localhost:27017"
       },
       "dotnetRunMessages": true,
@@ -42,21 +38,20 @@
       "environmentVariables": {
         "ASPNETCORE_HTTPS_PORTS": "9001",
         "ASPNETCORE_HTTP_PORTS": "9000",
-        "CatalogATLASConnection": "mongodb+srv://johnifegwu:AOqTAk4M6tQJelDi@john-mongodb-cluster0.d4r5lbt.mongodb.net/",
-        "CatalogATLASProdConnection": "mongodb+srv://johnifegwu:AOqTAk4M6tQJelDi@john-mongodb-cluster0.d4r5lbt.mongodb.net/",
         "LocalCatalogDB": "mongodb://localhost:27017"
       },
       "publishAllPorts": true,
-      "useSSL": true
+      "useSSL": false
     }
   },
   "$schema": "http://json.schemastore.org/launchsettings.json",
   "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
+    "useSSL": false,
     "iisExpress": {
-      "applicationUrl": "http://localhost:58535",
-      "sslPort": 44323
+      "applicationUrl": "http://localhost:9000",
+      "sslPort": 9001
     }
   }
 }

@@ -31,7 +31,7 @@ namespace Catalog.Application.Handlers.Brands
             }
 
             //Create brand
-            await _unitOfWork.Repository<ProductBrand>().UpdateAsync(brand);
+            await _unitOfWork.Repository<ProductBrand>().UpdateAsync(brand, cancellationToken);
 
             var response = CatalogMapper.Mapper.Map<BrandResponse>(brand);
 

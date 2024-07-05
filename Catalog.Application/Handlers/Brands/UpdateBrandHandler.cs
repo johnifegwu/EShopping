@@ -40,7 +40,7 @@ namespace Catalog.Application.Handlers.Brands
 
             //Update Brand
             brand.Name = request.Payload.Name;
-            await _unitOfWork.Repository<ProductBrand>().UpdateAsync(brand);
+            await _unitOfWork.Repository<ProductBrand>().UpdateAsync(brand, cancellationToken);
 
             var response = CatalogMapper.Mapper.Map<BrandResponse>(brand);
 

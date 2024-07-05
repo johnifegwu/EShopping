@@ -43,10 +43,10 @@ namespace Cache.Repositories
         /// </summary>
         /// <param name="key">Cache key.</param>
         /// <returns></returns>
-        public async Task<TEntity> AddAsync(TEntity entity, string key)
+        public async Task<TEntity> AddAsync(TEntity entity, string key, CancellationToken cancellationToken = default)
         {
             var jsonString = JsonConvert.SerializeObject(entity);
-            await _distributedCache.SetStringAsync(key, jsonString, _cacheOptions);
+            await _distributedCache.SetStringAsync(key, jsonString, _cacheOptions, cancellationToken);
             return entity;
         }
 
@@ -55,10 +55,10 @@ namespace Cache.Repositories
         /// </summary>
         /// <param name="key">Cache key.</param>
         /// <returns></returns>
-        public async Task<IEnumerable<TEntity>> AddRangeAsync(IEnumerable<TEntity> entity, string key)
+        public async Task<IEnumerable<TEntity>> AddRangeAsync(IEnumerable<TEntity> entity, string key, CancellationToken cancellationToken = default)
         {
             var jsonString = JsonConvert.SerializeObject(entity);
-            await _distributedCache.SetStringAsync(key, jsonString, _cacheOptions);
+            await _distributedCache.SetStringAsync(key, jsonString, _cacheOptions, cancellationToken);
             return entity;
         }
 
@@ -113,10 +113,10 @@ namespace Cache.Repositories
         /// </summary>
         /// <param name="key">Cache key.</param>
         /// <returns></returns>
-        public async Task<TEntity> GetAsync(string key)
+        public async Task<TEntity> GetAsync(string key, CancellationToken cancellationToken = default)
         {
             //Get entry by key
-            var jsonString = await _distributedCache.GetStringAsync(key);
+            var jsonString = await _distributedCache.GetStringAsync(key, cancellationToken);
 
             if (string.IsNullOrEmpty(jsonString))
             {
@@ -136,10 +136,10 @@ namespace Cache.Repositories
         /// </summary>
         /// <param name="key">Cache key.</param>
         /// <returns></returns>
-        public async Task<IEnumerable<TEntity>> GetRangeAsync(string key)
+        public async Task<IEnumerable<TEntity>> GetRangeAsync(string key, CancellationToken cancellationToken = default)
         {
             //Get entry by key
-            var jsonString = await _distributedCache.GetStringAsync(key);
+            var jsonString = await _distributedCache.GetStringAsync(key, cancellationToken);
 
             if (string.IsNullOrEmpty(jsonString))
             {
@@ -183,19 +183,19 @@ namespace Cache.Repositories
         /// <param name="entity">Entity.</param>
         /// <param name="key">Cache key.</param>
         /// <returns></returns>
-        public async Task<TEntity> UpdateAsync(TEntity entity, string key)
+        public async Task<TEntity> UpdateAsync(TEntity entity, string key, CancellationToken cancellationToken = default)
         {
             try
             {
                 //delete entry by key
-                await _distributedCache.RemoveAsync(key);
+                await _distributedCache.RemoveAsync(key, cancellationToken);
             }
             catch
             {
                 //do nothing
             }
             var jsonString = await Task.FromResult(JsonConvert.SerializeObject(entity));
-            await _distributedCache.SetStringAsync(key, jsonString, _cacheOptions);
+            await _distributedCache.SetStringAsync(key, jsonString, _cacheOptions, cancellationToken);
             return entity;
         }
 
@@ -228,19 +228,19 @@ namespace Cache.Repositories
         /// <param name="entity">Entity.</param>
         /// <param name="key">Cache key.</param>
         /// <returns></returns>
-        public async Task<IEnumerable<TEntity>> UpdateRangeAsync(IEnumerable<TEntity> entity, string key)
+        public async Task<IEnumerable<TEntity>> UpdateRangeAsync(IEnumerable<TEntity> entity, string key, CancellationToken cancellationToken = default)
         {
             try
             {
                 //delete entry by key
-                await _distributedCache.RemoveAsync(key);
+                await _distributedCache.RemoveAsync(key, cancellationToken);
             }
             catch
             {
                 //do nothing
             }
             var jsonString = await Task.FromResult(JsonConvert.SerializeObject(entity));
-            await _distributedCache.SetStringAsync(key, jsonString, _cacheOptions);
+            await _distributedCache.SetStringAsync(key, jsonString, _cacheOptions, cancellationToken);
             return entity;
         }
 
@@ -294,15 +294,15 @@ namespace Cache.Repositories
         /// <param name="IdFieldName">Id field name.</param>
         /// <param name="key">Cache key.</param>
         /// <returns></returns>
-        public async Task<IEnumerable<TEntity>> AppendUnionRangeAsync(IEnumerable<TEntity> entity, string IdFieldName, string key)
+        public async Task<IEnumerable<TEntity>> AppendUnionRangeAsync(IEnumerable<TEntity> entity, string IdFieldName, string key, CancellationToken cancellationToken = default)
         {
             //Get entry by key
-            var jsonString = await _distributedCache.GetStringAsync(key);
+            var jsonString = await _distributedCache.GetStringAsync(key, cancellationToken);
 
             try
             {
                 //delete entry by key
-                await _distributedCache.RemoveAsync(key);
+                await _distributedCache.RemoveAsync(key, cancellationToken);
             }
             catch
             {
@@ -325,7 +325,7 @@ namespace Cache.Repositories
 
             jsonString = await Task.FromResult(JsonConvert.SerializeObject(unionList));
 
-            await _distributedCache.SetStringAsync(key, jsonString, _cacheOptions);
+            await _distributedCache.SetStringAsync(key, jsonString, _cacheOptions, cancellationToken);
 
             return unionList;
         }
@@ -382,10 +382,10 @@ namespace Cache.Repositories
         /// <param name="IdFieldName">Id field name.</param>
         /// <param name="key">Cache key.</param>
         /// <returns></returns>
-        public async Task<IEnumerable<TEntity>> AppendUnionRangeAsync(IEnumerable<TEntity> entity, string ClassName, string IdFieldName, string key)
+        public async Task<IEnumerable<TEntity>> AppendUnionRangeAsync(IEnumerable<TEntity> entity, string ClassName, string IdFieldName, string key, CancellationToken cancellationToken = default)
         {
             //Get entry by key
-            var jsonString = await _distributedCache.GetStringAsync(key);
+            var jsonString = await _distributedCache.GetStringAsync(key, cancellationToken);
 
             try
             {
@@ -413,7 +413,7 @@ namespace Cache.Repositories
 
             jsonString = await Task.FromResult(JsonConvert.SerializeObject(unionList));
 
-            await _distributedCache.SetStringAsync(key, jsonString, _cacheOptions);
+            await _distributedCache.SetStringAsync(key, jsonString, _cacheOptions, cancellationToken);
 
             return unionList;
         }
@@ -469,15 +469,15 @@ namespace Cache.Repositories
         /// <param name="IdFieldName">Id field name.</param>
         /// <param name="key">Cache key.</param>
         /// <returns></returns>
-        public async Task<IEnumerable<TEntity>> SwapOneAsync(TEntity entity, string IdFieldName, string key)
+        public async Task<IEnumerable<TEntity>> SwapOneAsync(TEntity entity, string IdFieldName, string key, CancellationToken cancellationToken = default)
         {
             //Get entry by key
-            var jsonString = await _distributedCache.GetStringAsync(key);
+            var jsonString = await _distributedCache.GetStringAsync(key, cancellationToken);
 
             try
             {
                 //delete entry by key
-                await _distributedCache.RemoveAsync(key);
+                await _distributedCache.RemoveAsync(key, cancellationToken);
             }
             catch
             {
@@ -501,7 +501,7 @@ namespace Cache.Repositories
 
             jsonString = await Task.FromResult(JsonConvert.SerializeObject(swapedList));
 
-            await _distributedCache.SetStringAsync(key, jsonString, _cacheOptions);
+            await _distributedCache.SetStringAsync(key, jsonString, _cacheOptions, cancellationToken);
 
             return swapedList;
         }
@@ -551,15 +551,15 @@ namespace Cache.Repositories
             return swapList;
         }
 
-        public async Task<IEnumerable<TEntity>> SwapRangeAsync(TEntity entity, string ClassName, string IdFieldName, string key)
+        public async Task<IEnumerable<TEntity>> SwapRangeAsync(TEntity entity, string ClassName, string IdFieldName, string key, CancellationToken cancellationToken = default)
         {
             //Get entry by key
-            var jsonString = await _distributedCache.GetStringAsync(key);
+            var jsonString = await _distributedCache.GetStringAsync(key, cancellationToken);
 
             try
             {
                 //delete entry by key
-                await _distributedCache.RemoveAsync(key);
+                await _distributedCache.RemoveAsync(key, cancellationToken);
             }
             catch
             {
@@ -583,7 +583,7 @@ namespace Cache.Repositories
 
             jsonString = await Task.FromResult(JsonConvert.SerializeObject(swapedList));
 
-            await _distributedCache.SetStringAsync(key, jsonString, _cacheOptions);
+            await _distributedCache.SetStringAsync(key, jsonString, _cacheOptions, cancellationToken);
 
             return swapedList;
         }
@@ -592,20 +592,24 @@ namespace Cache.Repositories
         /// Removes the cached data from the system.
         /// </summary>
         /// <param name="key">Cache key.</param>
-        public void Delete(string key)
+        public bool Delete(string key)
         {
             //delete entry by key
             _distributedCache.Remove(key);
+
+            return true;
         }
 
         /// <summary>
         /// Removes the cached data from the system.
         /// </summary>
         /// <param name="key">Cache key.</param>
-        public async Task DeleteAsync(string key)
+        public async Task<bool> DeleteAsync(string key, CancellationToken cancellationToken = default)
         {
             //delete entry by key
-            await _distributedCache.RemoveAsync(key);
+            await _distributedCache.RemoveAsync(key, cancellationToken);
+
+            return true;
         }
 
         private IEnumerable<TEntity> Swap(IEnumerable<TEntity> list, TEntity entity, string IdFieldName)

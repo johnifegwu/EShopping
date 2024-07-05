@@ -20,16 +20,6 @@ namespace Catalog.Application.Handlers.Products
 
         public async Task<ProductResponse> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
         {
-            if (string.IsNullOrWhiteSpace(request.Payload.Id))
-            {
-                throw new ArgumentException("Id not provided.");
-            }
-
-            if (string.IsNullOrWhiteSpace(request.Payload.Name))
-            {
-                throw new ArgumentException("Name not provided.");
-            }
-
             var product = await Task.FromResult(_unitOfWork.Repository<Product>().Get().Where(x => x.Id == new ObjectId(request.Payload.Id)).FirstOrDefault());
             
             if (product == null)
@@ -46,7 +36,7 @@ namespace Catalog.Application.Handlers.Products
             product.ProductTypeId = (request.Payload.ProductTypeId != null) ? new ObjectId(request.Payload.ProductTypeId) : product.ProductTypeId;
             product.Summary = request.Payload.Summary;
             
-            await _unitOfWork.Repository<Product>().UpdateAsync(product);
+            await _unitOfWork.Repository<Product>().UpdateAsync(product, cancellationToken);
 
             var response = CatalogMapper.Mapper.Map<ProductResponse>(product);
 

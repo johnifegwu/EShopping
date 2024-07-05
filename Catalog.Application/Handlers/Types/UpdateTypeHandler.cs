@@ -40,7 +40,7 @@ namespace Catalog.Application.Handlers.Types
 
             //Update type
             type.Name = request.Payload.Name;
-            await _unitOfWork.Repository<ProductType>().UpdateAsync(type);
+            await _unitOfWork.Repository<ProductType>().UpdateAsync(type, cancellationToken);
 
             var response = CatalogMapper.Mapper.Map<TypeResponse>(type);
 

@@ -4,10 +4,14 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>4913443b-2a11-47c9-b903-800cc0d249a9</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
+    <UserSecretsId>52af3cd0-1d9b-4e9d-949f-74efcd163e54</UserSecretsId>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="aspnetapp.pfx" />
+  </ItemGroup>
 
   <ItemGroup>
     <_ContentIncludedByDefault Remove="appsettings.Production.json" />
@@ -29,6 +33,12 @@
   <ItemGroup>
     <ProjectReference Include="..\Catalog.Application\Catalog.Application.csproj" />
     <ProjectReference Include="..\Catalog.Infrastructure\Catalog.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="aspnetapp.pfx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
 </Project>

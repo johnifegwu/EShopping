@@ -25,7 +25,7 @@ namespace Catalog.Application.Handlers.Types
                 throw new RecordNotFoundException("Type not found.");
             }
 
-            var rowsAffected = await _unitOfWork.Repository<ProductType>().DeleteAsync(type);
+            var rowsAffected = await _unitOfWork.Repository<ProductType>().DeleteAsync(type, cancellationToken);
 
             return rowsAffected > 0;
         }

@@ -1,14 +1,50 @@
-version: '3.4'
+version: '3.9'
 
 services:
   catalog.api:
+    image: ${DOCKER_REGISTRY-}catalogapi
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_HTTP_PORTS=8080
-      - ASPNETCORE_HTTPS_PORTS=8081
+     - ASPNETCORE_ENVIRONMENT=Development
+     - ASPNETCORE_HTTPS_PORTS=9001
+     - ASPNETCORE_HTTP_PORTS=9000
+     - ASPNETCORE_Kestrel__Certificates__Default__Password=12345678
+     - ASPNETCORE_Kestrel__Certificates__Default__Path=aspnetapp.pfx
     ports:
-      - "8080"
-      - "8081"
+     - "9000:9000"
+     - "9001:9001" 
+    build:
+      context: .
+      dockerfile: Catalog.API/Dockerfile
+
+  catalog.database:
+    image: mongo:latest
+    container_name: catalog.database
+    environment:
+     - MONGO_DB=eShopping
+     - MONGO_USER=admin
+     - MONGO_PASSWORD=12345678 
     volumes:
-      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
-      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+     - ./mongo/data:/data/db
+    ports:
+     - 27017:27017
+
+  basket.api:
+    image: ${DOCKER_REGISTRY-}basketapi
+    environment:
+     - ASPNETCORE_ENVIRONMENT=Development
+     - ASPNETCORE_HTTPS_PORTS=9003
+     - ASPNETCORE_HTTP_PORTS=9002
+     - ASPNETCORE_Kestrel__Certificates__Default__Password=12345678
+     - ASPNETCORE_Kestrel__Certificates__Default__Path=aspnetapp.pfx 
+    ports:
+     - "9002:9002"
+     - "9003:9003" 
+    build:
+      context: .
+      dockerfile: Basket.API/Dockerfile
+
+  basket.cache:
+    image: redis:latest
+    restart: always
+    ports:
+     - 6379:6379 

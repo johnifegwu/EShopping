@@ -17,7 +17,7 @@ namespace Cache.Repositories
         /// </summary>
         /// <param name="key">Cache key.</param>
         /// <returns></returns>
-        Task<TEntity> GetAsync(string key);
+        Task<TEntity> GetAsync(string key, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets a list of entities from the Cache.
@@ -31,7 +31,7 @@ namespace Cache.Repositories
         /// </summary>
         /// <param name="key">Cache key.</param>
         /// <returns></returns>
-        Task<IEnumerable<TEntity>> GetRangeAsync(string key);
+        Task<IEnumerable<TEntity>> GetRangeAsync(string key, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Adds a list of entities to the Cache.
@@ -45,7 +45,7 @@ namespace Cache.Repositories
         /// </summary>
         /// <param name="key">Cache key.</param>
         /// <returns></returns>
-        Task<IEnumerable<TEntity>> AddRangeAsync(IEnumerable<TEntity> entity, string key);
+        Task<IEnumerable<TEntity>> AddRangeAsync(IEnumerable<TEntity> entity, string key, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Swaps one entity from a list of enities.
@@ -63,7 +63,7 @@ namespace Cache.Repositories
         /// <param name="IdFieldName">Id field name.</param>
         /// <param name="key">Cache key.</param>
         /// <returns></returns>
-        Task<IEnumerable<TEntity>> SwapOneAsync(TEntity entity, string IdFieldName, string key);
+        Task<IEnumerable<TEntity>> SwapOneAsync(TEntity entity, string IdFieldName, string key, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Swaps one entity from a list of enities.
@@ -83,7 +83,7 @@ namespace Cache.Repositories
         /// <param name="IdFieldName">Id field name.</param>
         /// <param name="key">Cache key.</param>
         /// <returns></returns>
-        Task<IEnumerable<TEntity>> SwapRangeAsync(TEntity entity, string ClassName, string IdFieldName, string key);
+        Task<IEnumerable<TEntity>> SwapRangeAsync(TEntity entity, string ClassName, string IdFieldName, string key, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Appends Union a range of entities to the cache.
@@ -101,7 +101,7 @@ namespace Cache.Repositories
         /// <param name="IdFieldName">Id field name.</param>
         /// <param name="key">Cache key.</param>
         /// <returns></returns>
-        Task<IEnumerable<TEntity>> AppendUnionRangeAsync(IEnumerable<TEntity> entity, string IdFieldName, string key);
+        Task<IEnumerable<TEntity>> AppendUnionRangeAsync(IEnumerable<TEntity> entity, string IdFieldName, string key, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Appends Union a range of entities to the cache.
@@ -121,7 +121,7 @@ namespace Cache.Repositories
         /// <param name="IdFieldName">Id field name.</param>
         /// <param name="key">Cache key.</param>
         /// <returns></returns>
-        Task<IEnumerable<TEntity>> AppendUnionRangeAsync(IEnumerable<TEntity> entity, string ClassName, string IdFieldName, string key);
+        Task<IEnumerable<TEntity>> AppendUnionRangeAsync(IEnumerable<TEntity> entity, string ClassName, string IdFieldName, string key, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Adds an entity to the cache.
@@ -137,7 +137,7 @@ namespace Cache.Repositories
         /// <param name="entity">Entity to be cached.</param>
         /// <param name="key">Cache key.</param>
         /// <returns></returns>
-        Task<TEntity> AddAsync(TEntity entity, string key);
+        Task<TEntity> AddAsync(TEntity entity, string key, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Replaces an entity in the cache.
@@ -153,7 +153,7 @@ namespace Cache.Repositories
         /// <param name="entity">Entity.</param>
         /// <param name="key">Cache key.</param>
         /// <returns></returns>
-        Task<TEntity> UpdateAsync(TEntity entity, string key);
+        Task<TEntity> UpdateAsync(TEntity entity, string key, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Replaces an entity in the cache.
@@ -169,18 +169,18 @@ namespace Cache.Repositories
         /// <param name="entity">Entity.</param>
         /// <param name="key">Cache key.</param>
         /// <returns></returns>
-        Task<IEnumerable<TEntity>> UpdateRangeAsync(IEnumerable<TEntity> entity, string key);
+        Task<IEnumerable<TEntity>> UpdateRangeAsync(IEnumerable<TEntity> entity, string key, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Removes the cached data from the system.
         /// </summary>
         /// <param name="key">Cache key.</param>
-        void Delete(string key);
+        bool Delete(string key);
 
         /// <summary>
         /// Removes the cached data from the system.
         /// </summary>
         /// <param name="key">Cache key.</param>
-        Task DeleteAsync(string key);
+        Task<bool> DeleteAsync(string key, CancellationToken cancellationToken = default);
     }
 }

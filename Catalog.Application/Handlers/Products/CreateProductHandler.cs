@@ -31,7 +31,7 @@ namespace Catalog.Application.Handlers.Products
             }
 
             //Create new Product
-            await  _unitOfWork.Repository<Product>().AddAsync(newProduct);
+            await  _unitOfWork.Repository<Product>().AddAsync(newProduct, cancellationToken);
 
             var productResponse = CatalogMapper.Mapper.Map<ProductResponse>(newProduct);
 

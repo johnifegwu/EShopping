@@ -26,7 +26,7 @@ namespace Catalog.Application.Handlers.Types
 
             var type = CatalogMapper.Mapper.Map<ProductType>(request.Payload);
 
-            await _unitOfWork.Repository<ProductType>().AddAsync(type);
+            await _unitOfWork.Repository<ProductType>().AddAsync(type, cancellationToken);
 
             var response = CatalogMapper.Mapper.Map<TypeResponse>(type);
 
