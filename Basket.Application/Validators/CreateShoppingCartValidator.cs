@@ -4,7 +4,7 @@ using FluentValidation;
 
 namespace Basket.Application.Validators
 {
-    public class CreateShoppingCartValidator : AbstractValidator<CreateShoppingCartCommand>
+    public class CreateShoppingCartValidator : AbstractValidator<CreateOrUpdateShoppingCartCommand>
     {
         public CreateShoppingCartValidator() 
         {

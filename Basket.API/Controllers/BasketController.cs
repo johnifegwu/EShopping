@@ -5,6 +5,7 @@ using Basket.Application.Responses;
 using Basket.Core.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Net;
@@ -70,6 +71,50 @@ namespace Basket.API.Controllers
             {
                 UserName = username,
                 ShoppingCartItem = cartItem
+            });
+
+            return Ok(result);
+        }
+
+
+        /// <summary>
+        /// Create a new shopping cart in the system for the given user 
+        /// or updates it if one already exist.
+        /// </summary>
+        /// <param name="username">Current User.</param>
+        /// <param name="cart">Shopping Cart object.</param>
+        /// <returns cref="ShoppingCartResponse>ShoppingCartResponse</returns>
+        [HttpPost]
+        [Route("[action]/{username}", Name = "CreateOrUpdateShoppingCart")]
+        [ProducesResponseType(typeof(ShoppingCartResponse), (int)HttpStatusCode.OK)]
+        [SwaggerOperation(Tags = new[] {NameConstants.BasketCommandSwaggerName})]
+        public async Task<ActionResult> CreateOrUpdateShoppingCart(
+            string username, 
+            [FromBody]ShoppingCart cart)
+        {
+            var result = await _mediator.Send(new CreateOrUpdateShoppingCartCommand
+            {
+                UserName = username,
+                ShoppingCart = cart
+            });
+
+            return Ok(result);
+        }
+
+        /// <summary>
+        /// Removes the basket that belongs to the provided user from the system if it exist.
+        /// </summary>
+        /// <param name="username">Current user.</param>
+        /// <returns>bool</returns>
+        [HttpPost]
+        [Route("[action]/{username}", Name = "DeleteBasket")]
+        [ProducesResponseType(typeof(bool), (int)HttpStatusCode.OK)]
+        [SwaggerOperation(Tags = new[] {NameConstants.BasketCommandSwaggerName})]
+        public async Task<ActionResult> DeleteBasket(string username)
+        {
+            var result = await _mediator.Send(new DeleteBasketByUserNameCommand
+            {
+                UserName = username
             });
 
             return Ok(result);

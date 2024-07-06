@@ -24,6 +24,11 @@ namespace Basket.Application.Handlers
             if (cart == null)
             {
                 cart = new ShoppingCart(request.UserName);
+
+                //ToDo: I will be calling Discount Service and aply coupons to shopping cart item.
+                //===============================================
+
+                //===============================================
             }
 
             cart.Update(request.ShoppingCartItem);

@@ -37,7 +37,7 @@ builder.Services.AddSwaggerGen(x =>
 var mediatRAssemblies = new[]
 {
   Assembly.GetAssembly(typeof(ShoppingCart)), // Core
-  Assembly.GetAssembly(typeof(CreateShoppingCartCommand)) // Application
+  Assembly.GetAssembly(typeof(CreateOrUpdateShoppingCartCommand)) // Application
 };
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(mediatRAssemblies!));
 builder.Services.AddInfrastructure(builder.Configuration);
