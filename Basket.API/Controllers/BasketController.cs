@@ -5,8 +5,6 @@ using Basket.Application.Responses;
 using Basket.Core.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Formatters;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Net;
 

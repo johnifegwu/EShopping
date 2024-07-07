@@ -45,7 +45,9 @@ namespace Basket.Core.Entities
         }
 
         /// <summary>
-        /// Updates the provided cart item from the list.
+        /// Adds the provided shopping cart item to the users shopping cart if it does not exist, or
+        /// Updates the users Shopping cart with the provided item if the quantity is greater than zero.
+        /// or removes the given item from the shopping cart if the quantity is less than one.
         /// </summary>
         /// <param name="item">Shopping Cart Item.</param>
         public void Update(ShoppingCartItem item)
