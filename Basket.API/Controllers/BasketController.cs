@@ -104,7 +104,7 @@ namespace Basket.API.Controllers
         /// </summary>
         /// <param name="username">Current user.</param>
         /// <returns>bool</returns>
-        [HttpPost]
+        [HttpDelete]
         [Route("[action]/{username}", Name = "DeleteBasket")]
         [ProducesResponseType(typeof(bool), (int)HttpStatusCode.OK)]
         [SwaggerOperation(Tags = new[] {NameConstants.BasketCommandSwaggerName})]

@@ -9,7 +9,7 @@
         "LocalCatalogDB": "mongodb://localhost:27017"
       },
       "dotnetRunMessages": true,
-      "applicationUrl": "http://localhost:9000"
+      "applicationUrl": "http://localhost:8001"
     },
     "https": {
       "commandName": "Project",
@@ -20,7 +20,7 @@
         "LocalCatalogDB": "mongodb://localhost:27017"
       },
       "dotnetRunMessages": true,
-      "applicationUrl": "http://localhost:9000"
+      "applicationUrl": "http://localhost:8001"
     },
     "IIS Express": {
       "commandName": "IISExpress",
@@ -37,7 +37,7 @@
       "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/swagger",
       "environmentVariables": {
         "ASPNETCORE_HTTPS_PORTS": "9001",
-        "ASPNETCORE_HTTP_PORTS": "9000",
+        "ASPNETCORE_HTTP_PORTS": "8001",
         "LocalCatalogDB": "mongodb://localhost:27017"
       },
       "publishAllPorts": true,
@@ -50,7 +50,7 @@
     "anonymousAuthentication": true,
     "useSSL": false,
     "iisExpress": {
-      "applicationUrl": "http://localhost:9000",
+      "applicationUrl": "http://localhost:8001",
       "sslPort": 9001
     }
   }

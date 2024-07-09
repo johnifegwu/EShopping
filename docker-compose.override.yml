@@ -6,12 +6,12 @@ services:
     environment:
      - ASPNETCORE_ENVIRONMENT=Development
      - ASPNETCORE_HTTPS_PORTS=9001
-     - ASPNETCORE_HTTP_PORTS=9000
+     - ASPNETCORE_HTTP_PORTS=8001
      - ASPNETCORE_Kestrel__Certificates__Default__Password=12345678
      - ASPNETCORE_Kestrel__Certificates__Default__Path=aspnetapp.pfx
     ports:
-     - "9000:9000"
-     - "9001:9001" 
+     - "9001:9001"
+     - "8001:8001" 
     build:
       context: .
       dockerfile: Catalog.API/Dockerfile
@@ -32,13 +32,13 @@ services:
     image: ${DOCKER_REGISTRY-}basketapi
     environment:
      - ASPNETCORE_ENVIRONMENT=Development
-     - ASPNETCORE_HTTPS_PORTS=9003
-     - ASPNETCORE_HTTP_PORTS=9002
+     - ASPNETCORE_HTTPS_PORTS=9002
+     - ASPNETCORE_HTTP_PORTS=8002
      - ASPNETCORE_Kestrel__Certificates__Default__Password=12345678
      - ASPNETCORE_Kestrel__Certificates__Default__Path=aspnetapp.pfx 
     ports:
      - "9002:9002"
-     - "9003:9003" 
+     - "8002:8002" 
     build:
       context: .
       dockerfile: Basket.API/Dockerfile
@@ -48,3 +48,17 @@ services:
     restart: always
     ports:
      - 6379:6379 
+
+  portainer:
+    image: portainer/portainer-ce:latest
+    container_name: portainer
+    restart: always
+    ports:
+      - 9000:9000
+      - 8000:8000
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+
+volumes:
+  portainer_data:
