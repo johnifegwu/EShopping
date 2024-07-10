@@ -10,4 +10,8 @@
     <PackageReference Include="MongoDB.Bson" Version="2.26.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\eShopping.Exceptions\eShopping.Exceptions.csproj" />
+  </ItemGroup>
+
 </Project>

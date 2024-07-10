@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\eShopping.Exceptions\eShopping.Exceptions.csproj" />
+  </ItemGroup>
+
 </Project>

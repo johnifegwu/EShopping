@@ -1,4 +1,6 @@
 ﻿
+using Discount.Core.Entities;
+using Discount.Infrastructure.Configurations;
 using Microsoft.EntityFrameworkCore;
 
 namespace Discount.Infrastructure.Persistence
@@ -11,12 +13,13 @@ namespace Discount.Infrastructure.Persistence
             
         }
 
+        public DbSet<Coupon> Coupons { get; init; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            //ToDo: Apply table configurations here
-
+            modelBuilder.ApplyConfiguration(new CouponConfiguration());
         }
     }
 }

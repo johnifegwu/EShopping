@@ -1,7 +1,7 @@
 ﻿
 using Catalog.Application.Commands.Products;
 using Catalog.Core.Entities;
-using Catalog.Core.Exceptions;
+using eShopping.Exceptions;
 using Data.Repositories;
 using MediatR;
 using MongoDB.Bson;

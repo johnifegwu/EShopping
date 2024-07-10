@@ -14,10 +14,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Data.Repositories\Data.Repositories.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Configurations\" />
+    <ProjectReference Include="..\Discount.Application\Discount.Application.csproj" />
+    <ProjectReference Include="..\Discount.Core\Discount.Core.csproj" />
   </ItemGroup>
 
 </Project>

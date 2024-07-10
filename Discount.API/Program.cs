@@ -4,6 +4,8 @@ using System.Reflection;
 using Discount.Infrastructure.Extensions;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using HealthChecks.UI.Client;
+using Discount.Core.Entities;
+using Discount.Application.Commands;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,8 +35,8 @@ builder.Services.AddSwaggerGen(x =>
 //=====================================================================================================
 var mediatRAssemblies = new[]
 {
-  Assembly.GetAssembly(typeof(ProductType)), // Core
-  Assembly.GetAssembly(typeof(CreateBrandCommand)) // Application
+  Assembly.GetAssembly(typeof(Coupon)), // Core
+  Assembly.GetAssembly(typeof(CreateCouponCommand)) // Application
 };
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(mediatRAssemblies!));
 builder.Services.AddInfrastructure(builder.Configuration);
