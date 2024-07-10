@@ -55,6 +55,7 @@ if (app.Environment.IsDevelopment())
         x.SwaggerEndpoint("/swagger/v1/swagger.json", "eShopping Discount ® API");
     });
     app.UseDeveloperExceptionPage();
+    app.ApplyMigrations();
 }
 
 app.UseHttpsRedirection();

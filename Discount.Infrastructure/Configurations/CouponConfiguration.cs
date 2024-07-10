@@ -9,13 +9,13 @@ namespace Discount.Infrastructure.Configurations
     {
         public void Configure(EntityTypeBuilder<Coupon> entity)
         {
-            entity.ToTable(nameof(Coupon));
+            entity.ToTable("coupon");
             entity.HasKey(x => x.Id);
-            entity.Property(x => x.Id).ValueGeneratedOnAdd();
-            entity.Property(x => x.ProductId);
-            entity.Property(x => x.ProductName);
-            entity.Property(x => x.Description);
-            entity.Property(x => x.Amount);
+            entity.Property(x => x.Id).HasColumnName("coupon_id").ValueGeneratedOnAdd();
+            entity.Property(x => x.ProductId).HasColumnName("product_id").HasMaxLength(255);
+            entity.Property(x => x.ProductName).HasColumnName("product_name").HasMaxLength(255);
+            entity.Property(x => x.Description).HasColumnName("description").HasMaxLength(255);
+            entity.Property(x => x.Amount).HasColumnName("amount");
 
             OnConfigurePartial(entity);
         }

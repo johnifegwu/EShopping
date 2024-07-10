@@ -10,13 +10,18 @@
 	 <PackageReference Include="Grpc.AspNetCore" Version="2.63.0" />
 	 <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
 	 <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
-    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.4" />
+     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.4" />
+	 <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.6" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Data.Repositories\Data.Repositories.csproj" />
     <ProjectReference Include="..\Discount.Application\Discount.Application.csproj" />
     <ProjectReference Include="..\Discount.Core\Discount.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>
