@@ -1,5 +1,6 @@
 using Asp.Versioning;
 using Basket.Application.Commands;
+using Basket.Application.Configurations;
 using Basket.Core.Entities;
 using Basket.Infrastructure.Extensions;
 using HealthChecks.UI.Client;
@@ -19,6 +20,9 @@ builder.Services.AddApiVersioning(o =>
     o.AssumeDefaultVersionWhenUnspecified = true;
     o.DefaultApiVersion = new ApiVersion(1, 0);
 });
+
+//Add default config
+builder.Services.Configure<DefaultConfig>(builder.Configuration.GetSection("configs"));
 
 var conString = builder.Configuration["configs:redisurl"];
 builder.Services.AddHealthChecks().AddRedis(conString, "Basket Redis Helth Check", HealthStatus.Degraded);

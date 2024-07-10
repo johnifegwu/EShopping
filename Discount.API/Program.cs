@@ -28,11 +28,6 @@ builder.Services.AddGrpc();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(x =>
-{
-    x.EnableAnnotations();
-    x.SwaggerDoc("v1", new OpenApiInfo() { Title = "eShopping Discount ® API", Version = "v1" });
-});
 //=====================================================================================================
 
 // Add depencies
@@ -52,18 +47,9 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI(x =>
-    {
-        x.RoutePrefix = "swagger";
-        x.SwaggerEndpoint("/swagger/v1/swagger.json", "eShopping Discount ® API");
-    });
     app.UseDeveloperExceptionPage();
     app.ApplyMigrations();
 }
-
-// Configure the HTTP request pipeline.
-app.MapGrpcService<DiscountGrpcService>();
 
 app.UseHttpsRedirection();
 
@@ -80,5 +66,9 @@ app.UseStaticFiles();
 app.UseAuthorization();
 
 app.MapControllers();
+
+// Configure the HTTP request pipeline.
+app.MapGrpcService<DiscountService>();
+app.MapGet("/", () => "Communication with gRPC endpoints must be made through a gRPC client. To learn how to create a client");
 
 app.Run();

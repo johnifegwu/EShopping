@@ -1,10 +1,14 @@
 ﻿using Basket.API.Constants;
 using Basket.Application.Commands;
+using Basket.Application.Configurations;
 using Basket.Application.Queries;
 using Basket.Application.Responses;
+using Basket.Application.RpcClients;
 using Basket.Core.Entities;
+using Discount.Grpc.Protos;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Net;
 
@@ -16,10 +20,12 @@ namespace Basket.API.Controllers
     public class BasketController : BaseController
     {
         private readonly IMediator _mediator;
+        private readonly IOptions<DefaultConfig> _config;
 
-        public BasketController(IMediator mediator)
+        public BasketController(IMediator mediator, IOptions<DefaultConfig> config)
         {
             this._mediator = mediator;
+            this._config = config;
         }
 
 
@@ -115,6 +121,74 @@ namespace Basket.API.Controllers
                 UserName = username
             });
 
+            return Ok(result);
+        }
+
+        #endregion
+
+        #region "Coupon Query"
+
+        /// <summary>
+        /// Gets coupon by product Id from the system.
+        /// </summary>
+        /// <param name="productId">Product Id</param>
+        /// <returns>DiscountModel</returns>
+        [HttpGet]
+        [Route("[action]/{productId}", Name = "GetCouponByProductId")]
+        [ProducesResponseType(typeof(DiscountModel), (int)HttpStatusCode.OK)]
+        [SwaggerOperation(Tags = new[] { NameConstants.DiscountQuerySwaggerName })]
+        public async Task<ActionResult> GetCouponByProductId(string productId)
+        {
+            var result = await DiscountRpcClient.GetDiscountAsync(productId, _config);
+            return Ok(result);
+        }
+
+        #endregion
+
+        #region "Coupon Command"
+
+        /// <summary>
+        /// Creates a coupon in the system.
+        /// </summary>
+        /// <param name="payload">Payload</param>
+        /// <returns>DiscountModel</returns>
+        [HttpPost]
+        [Route("CreateCoupon")]
+        [ProducesResponseType(typeof(DiscountModel), (int)HttpStatusCode.OK)]
+        [SwaggerOperation(Tags = new[] { NameConstants.DiscountCommandSwaggerName })]
+        public async Task<ActionResult> CreateCoupon([FromBody] CreateDiscountModel payload)
+        {
+            var result = await DiscountRpcClient.CreateDiscountAsync(payload, _config);
+            return Ok(result);
+        }
+
+        /// <summary>
+        /// Updates a coupon in the system.
+        /// </summary>
+        /// <param name="payload">Payload</param>
+        /// <returns>DiscountModel</returns>
+        [HttpPatch]
+        [Route("UpdateCoupon")]
+        [ProducesResponseType(typeof(DiscountModel), (int)HttpStatusCode.OK)]
+        [SwaggerOperation(Tags = new[] { NameConstants.DiscountCommandSwaggerName })]
+        public async Task<ActionResult> UpdateCoupon([FromBody] DiscountModel payload)
+        {
+            var result = await DiscountRpcClient.UpdateDiscountAsync(payload, _config);
+            return Ok(result);
+        }
+
+        /// <summary>
+        /// Deletes a coupon from the system.
+        /// </summary>
+        /// <param name="productId">Product Id</param>
+        /// <returns>bool</returns>
+        [HttpDelete]
+        [Route("[action]/{productId}", Name = "DeleteCoupon")]
+        [ProducesResponseType(typeof(bool), (int)HttpStatusCode.OK)]
+        [SwaggerOperation(Tags = new[] { NameConstants.DiscountCommandSwaggerName })]
+        public async Task<ActionResult> DeleteCoupon(string productId)
+        {
+            var result = await DiscountRpcClient.DeleteDiscountAsync(productId, _config);
             return Ok(result);
         }
 

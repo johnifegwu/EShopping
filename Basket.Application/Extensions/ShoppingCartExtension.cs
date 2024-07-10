@@ -1,9 +1,7 @@
-﻿using Basket.Core.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Basket.Application.Configurations;
+using Basket.Application.RpcClients;
+using Basket.Core.Entities;
+using Microsoft.Extensions.Options;
 
 namespace Basket.Application.Extensions
 {
@@ -16,23 +14,23 @@ namespace Basket.Application.Extensions
         /// <param name="cart">Shopping cart.</param>
         /// <param name="exemptionList">A list of Product Ids to exclude.</param>
         /// <returns>The updataed ShoppingCart.</returns>
-        public static async Task<ShoppingCart> ApplyCoupons(this ShoppingCart cart, List<string> exemptionList)
+        public static async Task<ShoppingCart> ApplyCoupons(this ShoppingCart cart, List<string> exemptionList, IOptions<DefaultConfig> config)
         {
-            if (cart == null)
+            if (cart != null)
             {
                 if(exemptionList == null)
                     exemptionList = new List<string>();
-
-                //ToDo: Call Coupon Service and get all relevant coupons here
-                //==============================================================================
-
-
-                //==============================================================================
 
                 foreach (var item in cart.Items)
                 {
                     if (!exemptionList.Contains(item.ProductId)){
 
+                        //Call Coupon Service and get all relevant coupons here
+                        //==============================================================================
+
+                        var discount = DiscountRpcClient.GetDiscountAsync(item.ProductId, config).Result;
+
+                        //==============================================================================
                         //ToDo: Apply coupons here
 
 

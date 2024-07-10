@@ -1,21 +1,25 @@
 ﻿
 using Basket.Application.Commands;
+using Basket.Application.Configurations;
 using Basket.Application.Extensions;
 using Basket.Application.Mappers;
 using Basket.Application.Responses;
 using Basket.Core.Entities;
 using Cache.Repositories;
 using MediatR;
+using Microsoft.Extensions.Options;
 
 namespace Basket.Application.Handlers
 {
     public class AddUpdateDeleteShoppingCartItemHandler : IRequestHandler<AddUpdateDeleteShoppingCartItemCommand, ShoppingCartResponse>
     {
         private readonly ICacheUnitOfWork _cacheUnitOfWork;
+        private readonly IOptions<DefaultConfig> _config;
 
-        public AddUpdateDeleteShoppingCartItemHandler(ICacheUnitOfWork cacheUnitOfWork)
+        public AddUpdateDeleteShoppingCartItemHandler(ICacheUnitOfWork cacheUnitOfWork, IOptions<DefaultConfig> config)
         {
             this._cacheUnitOfWork = cacheUnitOfWork;
+            this._config = config;
         }
         public async Task<ShoppingCartResponse> Handle(AddUpdateDeleteShoppingCartItemCommand request, CancellationToken cancellationToken)
         {
@@ -35,7 +39,7 @@ namespace Basket.Application.Handlers
             cart.Update(request.ShoppingCartItem);
 
             //Apply coupons
-            await cart.ApplyCoupons(exemptList);
+            await cart.ApplyCoupons(exemptList, _config);
 
             //This will delete the old cart if it exit and save the new one.
             await _cacheUnitOfWork.Repository<ShoppingCart>().UpdateAsync(cart, request.UserName, cancellationToken);

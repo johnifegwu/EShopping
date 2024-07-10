@@ -6,6 +6,7 @@ using Discount.Grpc.Protos;
 using Discount.Core.Entities;
 using eShopping.Exceptions;
 using MediatR;
+using Grpc.Core;
 
 namespace Discount.Application.Handlers
 {
@@ -23,7 +24,7 @@ namespace Discount.Application.Handlers
             
             if (coupon == null)
             {
-                throw new RecordNotFoundException("Coupon not found.");
+                throw new RpcException(new Status(StatusCode.NotFound, $"Discount {request.Payload.ProductId} not found"));
             }
 
             //Update fileds

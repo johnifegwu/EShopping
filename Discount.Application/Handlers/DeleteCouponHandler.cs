@@ -3,6 +3,7 @@ using Data.Repositories;
 using Discount.Application.Commands;
 using Discount.Core.Entities;
 using eShopping.Exceptions;
+using Grpc.Core;
 using MediatR;
 
 namespace Discount.Application.Handlers
@@ -26,7 +27,7 @@ namespace Discount.Application.Handlers
                 return true;
             }
 
-            throw new RecordNotFoundException("Coupon not found.");
+            throw new RpcException(new Status(StatusCode.NotFound, $"Discount {request.ProductId} not found"));
         }
     }
 }
