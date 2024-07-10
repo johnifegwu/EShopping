@@ -1,12 +1,11 @@
 ﻿
-using Discount.Application.Requests;
-using Discount.Application.Responses;
+using Discount.Grpc.Protos;
 using MediatR;
 
 namespace Discount.Application.Commands
 {
-    public class UpdateCouponCommand : IRequest<CouponResponse>
+    public class UpdateCouponCommand : IRequest<DiscountModel>
     {
-        public UpdateCouponRequest Payload { get; set; } = default!;
+        public DiscountModel Payload { get; set; } = default!;
     }
 }

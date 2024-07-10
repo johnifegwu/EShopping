@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using HealthChecks.UI.Client;
 using Discount.Core.Entities;
 using Discount.Application.Commands;
+using Discount.Application.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +22,9 @@ builder.Services.AddApiVersioning(o =>
 
 var conString = builder.Configuration["ConnectionStrings:DiscountDbConnection"];
 builder.Services.AddHealthChecks().AddNpgSql(conString, name:"Catalog PostgreSql Helth Check", tags: new[] { "Discount"});
+
+//Add gRPC
+builder.Services.AddGrpc();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -57,6 +61,9 @@ if (app.Environment.IsDevelopment())
     app.UseDeveloperExceptionPage();
     app.ApplyMigrations();
 }
+
+// Configure the HTTP request pipeline.
+app.MapGrpcService<DiscountGrpcService>();
 
 app.UseHttpsRedirection();
 

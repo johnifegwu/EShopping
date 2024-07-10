@@ -1,7 +1,6 @@
 ﻿
 using AutoMapper;
-using Discount.Application.Requests;
-using Discount.Application.Responses;
+using Discount.Grpc.Protos;
 using Discount.Core.Entities;
 
 namespace Discount.Application.Mappers
@@ -10,9 +9,8 @@ namespace Discount.Application.Mappers
     {
         public DiscountMappingProfile()
         {
-            CreateMap<Coupon, CouponResponse>().ReverseMap();
-            CreateMap<Coupon, CreateCouponRequest>().ReverseMap();
-            CreateMap<Coupon, UpdateCouponRequest>().ReverseMap();
+            CreateMap<Coupon, DiscountModel>().ReverseMap();
+            CreateMap<Coupon, CreateDiscountModel>().ReverseMap();
         }
     }
 }

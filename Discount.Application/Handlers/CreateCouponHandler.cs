@@ -2,13 +2,13 @@
 using Data.Repositories;
 using Discount.Application.Commands;
 using Discount.Application.Mappers;
-using Discount.Application.Responses;
+using Discount.Grpc.Protos;
 using Discount.Core.Entities;
 using MediatR;
 
 namespace Discount.Application.Handlers
 {
-    public class CreateCouponHandler : IRequestHandler<CreateCouponCommand, CouponResponse>
+    public class CreateCouponHandler : IRequestHandler<CreateCouponCommand, DiscountModel>
     {
         private readonly IUnitOfWorkCore _unitOfWork;
 
@@ -17,7 +17,7 @@ namespace Discount.Application.Handlers
             this._unitOfWork = unitOfWork;
         }
 
-        public async Task<CouponResponse> Handle(CreateCouponCommand request, CancellationToken cancellationToken)
+        public async Task<DiscountModel> Handle(CreateCouponCommand request, CancellationToken cancellationToken)
         {
             var coupon = await Task.FromResult(_unitOfWork.Repository<Coupon>().Read().Where(x => x.ProductId == request.Payload.ProductId).FirstOrDefault());
             
@@ -28,7 +28,7 @@ namespace Discount.Application.Handlers
                 await _unitOfWork.Repository<Coupon>().AddAsync(coupon, cancellationToken);
             }
 
-            return DiscountMapper.Mapper.Map<CouponResponse>(coupon);
+            return DiscountMapper.Mapper.Map<DiscountModel>(coupon);
         }
     }
 }
