@@ -43,6 +43,21 @@ services:
       context: .
       dockerfile: Basket.API/Dockerfile
 
+  discount.api:
+    image: ${DOCKER_REGISTRY-}discountapi
+    environment:
+     - ASPNETCORE_ENVIRONMENT=Development
+     - ASPNETCORE_HTTPS_PORTS=9003
+     - ASPNETCORE_HTTP_PORTS=8003
+     - ASPNETCORE_Kestrel__Certificates__Default__Password=12345678
+     - ASPNETCORE_Kestrel__Certificates__Default__Path=aspnetapp.pfx 
+    ports:
+     - "9002:9003"
+     - "8002:8003" 
+    build:
+      context: .
+      dockerfile: Discount.API/Dockerfile
+
   basket.cache:
     image: redis:latest
     restart: always
@@ -59,6 +74,18 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - portainer_data:/data
+
+  discount.database:
+    container_name: discount.database
+    image: postgres:latest
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: 12345678
+      POSTGRES_DB: discountDb
+    ports:
+      - 5434:5432
 
 volumes:
   portainer_data:

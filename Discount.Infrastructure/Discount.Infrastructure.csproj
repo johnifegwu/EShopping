@@ -16,4 +16,8 @@
     <ProjectReference Include="..\Data.Repositories\Data.Repositories.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Configurations\" />
+  </ItemGroup>
+
 </Project>
