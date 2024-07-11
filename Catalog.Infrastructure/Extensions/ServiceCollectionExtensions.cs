@@ -18,7 +18,7 @@ namespace Catalog.Infrastructure.Extensions
             var dbName = configuration["ConnectionStrings:DatabaseName"];
             var client = new MongoClient(conString);
             var db = client.GetDatabase(dbName);
-            services.AddDbContext<CatalogDbContext>(options => options.UseMongoDB(db.Client, db.DatabaseNamespace.DatabaseName), ServiceLifetime.Transient);
+            services.AddDbContextPool<CatalogDbContext>(options => options.UseMongoDB(db.Client, db.DatabaseNamespace.DatabaseName));
             services.AddTransient<IUnitOfWorkCore, UnitOfWorkCatalog>();
             services.AddScoped<ICatalogSeeder, CatalogSeeder>();
         }

@@ -13,7 +13,7 @@ namespace Discount.Infrastructure.Extensions
         public static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
             var conString = configuration["ConnectionStrings:DiscountDbConnection"];
-            services.AddDbContext<DiscountDbContext>(options => options.UseNpgsql(conString), ServiceLifetime.Transient);
+            services.AddDbContextPool<DiscountDbContext>(options => options.UseNpgsql(conString));
             services.AddTransient<IUnitOfWorkCore, UnitOfWorkDiscount>();
         }
     }

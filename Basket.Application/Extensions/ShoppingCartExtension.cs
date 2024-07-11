@@ -34,7 +34,10 @@ namespace Basket.Application.Extensions
                         //==============================================================================
                         //ToDo: Apply coupons here
 
+                        if(discount != null)
+                        {
 
+                        }
                     }
                 }
             }
