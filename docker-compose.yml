@@ -79,12 +79,12 @@ services:
     image: ${DOCKER_REGISTRY-}discountapi
     environment:
      - ASPNETCORE_ENVIRONMENT=Development
-     - ASPNETCORE_HTTPS_PORTS=9003
+     - ASPNETCORE_HTTPS_PORTS=5001
      - ASPNETCORE_HTTP_PORTS=8003
      - ASPNETCORE_Kestrel__Certificates__Default__Password=12345678
      - ASPNETCORE_Kestrel__Certificates__Default__Path=aspnetapp.pfx 
     ports:
-     - "9003:9003"
+     - "5001:5001"
      - "8003:8003" 
     build:
       context: .

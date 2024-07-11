@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Net;
+using static Discount.Grpc.Protos.DiscountProtoService;
 
 namespace Basket.API.Controllers
 {
@@ -20,12 +21,12 @@ namespace Basket.API.Controllers
     public class BasketController : BaseController
     {
         private readonly IMediator _mediator;
-        private readonly IOptions<DefaultConfig> _config;
+        private readonly DiscountProtoServiceClient _client;
 
-        public BasketController(IMediator mediator, IOptions<DefaultConfig> config)
+        public BasketController(IMediator mediator,  DiscountProtoServiceClient client)
         {
             this._mediator = mediator;
-            this._config = config;
+            this._client = client;
         }
 
 
@@ -139,7 +140,7 @@ namespace Basket.API.Controllers
         [SwaggerOperation(Tags = new[] { NameConstants.DiscountQuerySwaggerName })]
         public async Task<ActionResult> GetCouponByProductId(string productId)
         {
-            var result = await DiscountRpcClient.GetDiscountAsync(productId, _config);
+            var result = await DiscountRpcClient.GetDiscountAsync(productId, _client);
             return Ok(result);
         }
 
@@ -158,7 +159,7 @@ namespace Basket.API.Controllers
         [SwaggerOperation(Tags = new[] { NameConstants.DiscountCommandSwaggerName })]
         public async Task<ActionResult> CreateCoupon([FromBody] CreateDiscountModel payload)
         {
-            var result = await DiscountRpcClient.CreateDiscountAsync(payload, _config);
+            var result = await DiscountRpcClient.CreateDiscountAsync(payload, _client);
             return Ok(result);
         }
 
@@ -173,7 +174,7 @@ namespace Basket.API.Controllers
         [SwaggerOperation(Tags = new[] { NameConstants.DiscountCommandSwaggerName })]
         public async Task<ActionResult> UpdateCoupon([FromBody] DiscountModel payload)
         {
-            var result = await DiscountRpcClient.UpdateDiscountAsync(payload, _config);
+            var result = await DiscountRpcClient.UpdateDiscountAsync(payload, _client);
             return Ok(result);
         }
 
@@ -188,7 +189,7 @@ namespace Basket.API.Controllers
         [SwaggerOperation(Tags = new[] { NameConstants.DiscountCommandSwaggerName })]
         public async Task<ActionResult> DeleteCoupon(string productId)
         {
-            var result = await DiscountRpcClient.DeleteDiscountAsync(productId, _config);
+            var result = await DiscountRpcClient.DeleteDiscountAsync(productId, _client);
             return Ok(result);
         }
 

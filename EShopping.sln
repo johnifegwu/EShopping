@@ -45,7 +45,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Discount.Infrastructure", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Discount.API", "Discount.API\Discount.API.csproj", "{4DC15744-6E31-4E5B-B110-A894F49AEE06}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eShopping.Exceptions", "eShopping.Exceptions\eShopping.Exceptions.csproj", "{FAB25EE4-C6F9-4D51-884F-13C45E2966B3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eShopping.Exceptions", "eShopping.Exceptions\eShopping.Exceptions.csproj", "{FAB25EE4-C6F9-4D51-884F-13C45E2966B3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -2,6 +2,7 @@
 using Basket.Application.RpcClients;
 using Basket.Core.Entities;
 using Microsoft.Extensions.Options;
+using static Discount.Grpc.Protos.DiscountProtoService;
 
 namespace Basket.Application.Extensions
 {
@@ -14,7 +15,7 @@ namespace Basket.Application.Extensions
         /// <param name="cart">Shopping cart.</param>
         /// <param name="exemptionList">A list of Product Ids to exclude.</param>
         /// <returns>The updataed ShoppingCart.</returns>
-        public static async Task<ShoppingCart> ApplyCoupons(this ShoppingCart cart, List<string> exemptionList, IOptions<DefaultConfig> config)
+        public static async Task<ShoppingCart> ApplyCoupons(this ShoppingCart cart, List<string> exemptionList, DiscountProtoServiceClient client)
         {
             if (cart != null)
             {
@@ -28,7 +29,7 @@ namespace Basket.Application.Extensions
                         //Call Coupon Service and get all relevant coupons here
                         //==============================================================================
 
-                        var discount = DiscountRpcClient.GetDiscountAsync(item.ProductId, config).Result;
+                        var discount = DiscountRpcClient.GetDiscountAsync(item.ProductId, client).Result;
 
                         //==============================================================================
                         //ToDo: Apply coupons here

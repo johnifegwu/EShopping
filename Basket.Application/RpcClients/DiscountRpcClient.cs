@@ -9,10 +9,8 @@ namespace Basket.Application.RpcClients
 {
     public class DiscountRpcClient
     {
-        public static async Task<DiscountModel> GetDiscountAsync(string productId, IOptions<DefaultConfig> config)
+        public static async Task<DiscountModel> GetDiscountAsync(string productId, DiscountProtoServiceClient client)
         {
-            var client = GetClient(config);
-
             var request = new GetDiscountRequest
             {
                 ProductId = productId,
@@ -21,10 +19,8 @@ namespace Basket.Application.RpcClients
             return await client.GetDiscountAsync(request);
         }
 
-        public static async Task<DiscountModel> CreateDiscountAsync(CreateDiscountModel payload, IOptions<DefaultConfig> config)
+        public static async Task<DiscountModel> CreateDiscountAsync(CreateDiscountModel payload, DiscountProtoServiceClient client)
         {
-            var client = GetClient(config);
-
             var request = new CreateDiscountRequest
             {
                 Payload = payload,
@@ -33,10 +29,8 @@ namespace Basket.Application.RpcClients
             return await client.CreateDiscountAsync(request);
         }
 
-        public static async Task<DiscountModel> UpdateDiscountAsync(DiscountModel payload, IOptions<DefaultConfig> config)
+        public static async Task<DiscountModel> UpdateDiscountAsync(DiscountModel payload, DiscountProtoServiceClient client)
         {
-            var client = GetClient(config);
-
             var request = new UpdateDiscountRequest
             {
                 Payload = payload,
@@ -45,24 +39,14 @@ namespace Basket.Application.RpcClients
             return await client.UpdateDiscountAsync(request);
         }
 
-        public static async Task<DeleteDiscountResponse> DeleteDiscountAsync(string productId, IOptions<DefaultConfig> config)
+        public static async Task<DeleteDiscountResponse> DeleteDiscountAsync(string productId, DiscountProtoServiceClient client)
         {
-            var client = GetClient(config);
-
             var request = new DeleteDiscountRequest
             {
                 ProductId = productId,
             };
 
             return await client.DeleteDiscountAsync(request);
-        }
-
-
-        private static DiscountProtoServiceClient GetClient(IOptions<DefaultConfig> config)
-        {
-            var channel = GrpcChannel.ForAddress($"https://{config.Value.DiscountRpcHost}");
-            var client = new DiscountProtoServiceClient(channel);
-            return client;
         }
     }
 }

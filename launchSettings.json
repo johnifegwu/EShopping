@@ -4,13 +4,16 @@
       "commandName": "DockerCompose",
       "commandVersion": "1.0",
       "composeLaunchAction": "LaunchBrowser",
-      "composeLaunchServiceName": "catalog.api",
-      "composeLaunchUrl": "{Scheme}://localhost:{ServicePort}/swagger",
+      "composeLaunchServiceName": "discount.api",
+      "composeLaunchUrl": "{Scheme}://localhost:{ServicePort}/",
       "serviceActions": {
         "catalog.api": "StartDebugging",
         "basket.api": "StartDebugging",
         "basket.cache": "StartWithoutDebugging",
-        "catalog.database": "StartWithoutDebugging"
+        "catalog.database": "StartWithoutDebugging",
+        "discount.api": "StartDebugging",
+        "discount.database": "StartWithoutDebugging",
+        "portainer": "StartWithoutDebugging"
       }
     }
   }
