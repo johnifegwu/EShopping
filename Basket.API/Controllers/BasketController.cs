@@ -41,6 +41,10 @@ namespace Basket.API.Controllers
         [HttpGet]
         [Route("[action]/{username}", Name = "GetShoppingCartByName")]
         [ProducesResponseType(typeof(ShoppingCartResponse), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.InternalServerError)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.Unauthorized)]
         [SwaggerOperation(Tags = new[] {NameConstants.BasketQuerySwaggerName})]
         public async Task<ActionResult> GetShoppingCartByName(string username)
         {
@@ -67,6 +71,10 @@ namespace Basket.API.Controllers
         [HttpPost]
         [Route("[action]/{username}", Name = "AddUpdateDeleteShoppingCartItem")]
         [ProducesResponseType(typeof(ShoppingCartResponse), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.InternalServerError)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.Unauthorized)]
         [SwaggerOperation(Tags = new[] {NameConstants.BasketCommandSwaggerName})]
         public async Task<ActionResult> AddUpdateDeleteShoppingCartItem(
             string username,
@@ -92,6 +100,10 @@ namespace Basket.API.Controllers
         [HttpPost]
         [Route("[action]/{username}", Name = "CreateOrUpdateShoppingCart")]
         [ProducesResponseType(typeof(ShoppingCartResponse), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.InternalServerError)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.Unauthorized)]
         [SwaggerOperation(Tags = new[] {NameConstants.BasketCommandSwaggerName})]
         public async Task<ActionResult> CreateOrUpdateShoppingCart(
             string username, 
@@ -114,6 +126,10 @@ namespace Basket.API.Controllers
         [HttpDelete]
         [Route("[action]/{username}", Name = "DeleteBasket")]
         [ProducesResponseType(typeof(bool), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.InternalServerError)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.Unauthorized)]
         [SwaggerOperation(Tags = new[] {NameConstants.BasketCommandSwaggerName})]
         public async Task<ActionResult> DeleteBasket(string username)
         {
@@ -137,6 +153,10 @@ namespace Basket.API.Controllers
         [HttpGet]
         [Route("[action]/{productId}", Name = "GetCouponByProductId")]
         [ProducesResponseType(typeof(DiscountModel), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.InternalServerError)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.Unauthorized)]
         [SwaggerOperation(Tags = new[] { NameConstants.DiscountQuerySwaggerName })]
         public async Task<ActionResult> GetCouponByProductId(string productId)
         {
@@ -156,6 +176,10 @@ namespace Basket.API.Controllers
         [HttpPost]
         [Route("CreateCoupon")]
         [ProducesResponseType(typeof(DiscountModel), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.InternalServerError)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.Unauthorized)]
         [SwaggerOperation(Tags = new[] { NameConstants.DiscountCommandSwaggerName })]
         public async Task<ActionResult> CreateCoupon([FromBody] CreateDiscountModel payload)
         {
@@ -171,6 +195,10 @@ namespace Basket.API.Controllers
         [HttpPatch]
         [Route("UpdateCoupon")]
         [ProducesResponseType(typeof(DiscountModel), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.InternalServerError)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.Unauthorized)]
         [SwaggerOperation(Tags = new[] { NameConstants.DiscountCommandSwaggerName })]
         public async Task<ActionResult> UpdateCoupon([FromBody] DiscountModel payload)
         {
@@ -186,6 +214,10 @@ namespace Basket.API.Controllers
         [HttpDelete]
         [Route("[action]/{productId}", Name = "DeleteCoupon")]
         [ProducesResponseType(typeof(bool), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.InternalServerError)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.Unauthorized)]
         [SwaggerOperation(Tags = new[] { NameConstants.DiscountCommandSwaggerName })]
         public async Task<ActionResult> DeleteCoupon(string productId)
         {

@@ -38,6 +38,10 @@ namespace Catalog.API.Controllers
         [HttpGet]
         [Route("GetAllProducts")]
         [ProducesResponseType(typeof(List<ProductResponse>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.InternalServerError)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.Unauthorized)]
         [SwaggerOperation(Tags = new[] { NameConstants.ProductQuerySwaggerName })]
         public async Task<ActionResult> GetAllProducts(
             [FromQuery]int pageIndex = 1, 
@@ -60,6 +64,10 @@ namespace Catalog.API.Controllers
         [HttpGet]
         [Route("[action]/{Id}", Name = "GetProductById")]
         [ProducesResponseType(typeof(ProductResponse), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.InternalServerError)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.Unauthorized)]
         [SwaggerOperation(Tags = new[] { NameConstants.ProductQuerySwaggerName })]
         public async Task<ActionResult> GetProductById(string Id)
         {
@@ -80,6 +88,10 @@ namespace Catalog.API.Controllers
         [HttpGet]
         [Route("GetProductsByBrandId")]
         [ProducesResponseType(typeof(List<ProductResponse>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.InternalServerError)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.Unauthorized)]
         [SwaggerOperation(Tags = new[] { NameConstants.ProductQuerySwaggerName })]
         public async Task<ActionResult> GetProductsByBrandId(
             [FromQuery]string brandId,
@@ -104,6 +116,10 @@ namespace Catalog.API.Controllers
         [HttpGet]
         [Route("GetProductsByName")]
         [ProducesResponseType(typeof(List<ProductResponse>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.InternalServerError)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.Unauthorized)]
         [SwaggerOperation(Tags = new[] {NameConstants.ProductQuerySwaggerName})]
         public async Task<ActionResult> GetProductsByName(
             [FromQuery]string name,
@@ -128,6 +144,10 @@ namespace Catalog.API.Controllers
         [HttpGet]
         [Route("GetProductsByTypeId")]
         [ProducesResponseType(typeof(List<ProductResponse>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.InternalServerError)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.Unauthorized)]
         [SwaggerOperation(Tags = new[] { NameConstants.ProductQuerySwaggerName })]
         public async Task<ActionResult> GetProductsByTypeId(
             [FromQuery]string typeId,
@@ -153,6 +173,10 @@ namespace Catalog.API.Controllers
         [HttpGet]
         [Route("SearchProductsByName")]
         [ProducesResponseType(typeof(List<ProductResponse>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.InternalServerError)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.Unauthorized)]
         [SwaggerOperation(Tags = new[] {NameConstants.ProductQuerySwaggerName})]
         public async Task<ActionResult> SearchProductsByName(
             [FromQuery]string namePart,
@@ -181,6 +205,10 @@ namespace Catalog.API.Controllers
         [HttpPost]
         [Route("CreateProduct")]
         [ProducesResponseType(typeof(ProductResponse), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.InternalServerError)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.Unauthorized)]
         [SwaggerOperation(Tags = new[] {NameConstants.ProductCommandSwaggerName})]
         public async Task<ActionResult> CreateProduct([FromBody]CreateProductRequest payload)
         {
@@ -200,6 +228,10 @@ namespace Catalog.API.Controllers
         [HttpPatch]
         [Route("UpdateProduct")]
         [ProducesResponseType(typeof(ProductResponse), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.InternalServerError)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.Unauthorized)]
         [SwaggerOperation(Tags = new[] {NameConstants.ProductCommandSwaggerName})]
         public async Task<ActionResult> UpdateProduct([FromBody]UpdateProductRequest payload)
         {
@@ -219,6 +251,10 @@ namespace Catalog.API.Controllers
         [HttpDelete]
         [Route("[action]/{Id}/", Name = "DeleteProduct")]
         [ProducesResponseType(typeof(bool), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.InternalServerError)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.Unauthorized)]
         [SwaggerOperation(Tags = new[] {NameConstants.ProductCommandSwaggerName})]
         public async Task<ActionResult> DeleteProduct(string Id)
         {
@@ -241,6 +277,10 @@ namespace Catalog.API.Controllers
         [HttpGet]
         [Route("GetAllBrands")]
         [ProducesResponseType(typeof(List<BrandResponse>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.InternalServerError)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.Unauthorized)]
         [SwaggerOperation(Tags = new[] {NameConstants.BrandQuerySwaggerName})]
         public async Task<ActionResult> GetAllBrands()
         {
@@ -261,6 +301,10 @@ namespace Catalog.API.Controllers
         [HttpPost]
         [Route("CreateBrand")]
         [ProducesResponseType(typeof(BrandResponse), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.InternalServerError)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.Unauthorized)]
         [SwaggerOperation(Tags = new[] {NameConstants.BrandCommandSwaggerName})]
         public async Task<ActionResult> CreateBrand([FromBody]CreateBrandRequest payload)
         {
@@ -280,6 +324,10 @@ namespace Catalog.API.Controllers
         [HttpPatch]
         [Route("UpdateBrand")]
         [ProducesResponseType(typeof(BrandResponse), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.InternalServerError)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.Unauthorized)]
         [SwaggerOperation(Tags = new[] {NameConstants.BrandCommandSwaggerName})]
         public async Task<ActionResult> UpdateBrand([FromBody]UpdateBrandRequest payload)
         {
@@ -299,6 +347,10 @@ namespace Catalog.API.Controllers
         [HttpDelete]
         [Route("[action]/{id}", Name = "DeleteBrand")]
         [ProducesResponseType(typeof(bool), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.InternalServerError)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.Unauthorized)]
         [SwaggerOperation(Tags = new[] {NameConstants.BrandCommandSwaggerName})]
         public async Task<ActionResult> DeleteBrand(string id)
         {
@@ -322,6 +374,10 @@ namespace Catalog.API.Controllers
         [HttpGet]
         [Route("GetAllTypes")]
         [ProducesResponseType(typeof(List<TypeResponse>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.InternalServerError)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.Unauthorized)]
         [SwaggerOperation(Tags = new[] {NameConstants.TypeQuerySwaggerName})]
         public async Task<ActionResult> GetAllTypes()
         {
@@ -342,6 +398,10 @@ namespace Catalog.API.Controllers
         [HttpPost]
         [Route("CreateType")]
         [ProducesResponseType(typeof(TypeResponse), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.InternalServerError)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.Unauthorized)]
         [SwaggerOperation(Tags = new[] {NameConstants.TypeCommandSwaggerName})]
         public async Task<ActionResult> CreateType([FromBody] CreateTypeRequest payload)
         {
@@ -362,6 +422,10 @@ namespace Catalog.API.Controllers
         [HttpPatch]
         [Route("UpdateType")]
         [ProducesResponseType(typeof(TypeResponse), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.InternalServerError)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.Unauthorized)]
         [SwaggerOperation(Tags = new[] {NameConstants.TypeCommandSwaggerName})]
         public async Task<ActionResult> UpdateType([FromBody] UpdateTypeRequest payload)
         {
@@ -382,6 +446,10 @@ namespace Catalog.API.Controllers
         [HttpDelete]
         [Route("[action]/{id}", Name = "DeleteType")]
         [ProducesResponseType(typeof(bool), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.InternalServerError)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.Unauthorized)]
         [SwaggerOperation(Tags = new[] {NameConstants.TypeCommandSwaggerName})]
         public async Task<ActionResult> DeleteType(string id)
         {
