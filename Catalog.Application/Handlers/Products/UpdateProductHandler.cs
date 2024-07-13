@@ -24,7 +24,7 @@ namespace Catalog.Application.Handlers.Products
             
             if (product == null)
             {
-                throw new RecordNotFoundException("Product not found.");
+                throw new NotFoundException("Product not found.");
             }
 
             //Update Product

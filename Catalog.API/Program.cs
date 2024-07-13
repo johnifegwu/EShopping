@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
-
+using eShopping.ExceptionHandling;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -20,6 +20,9 @@ builder.Services.AddApiVersioning(o =>
     o.AssumeDefaultVersionWhenUnspecified = true;
     o.DefaultApiVersion = new ApiVersion(1, 0);
 });
+
+//Add Exception handlers
+builder.Services.AddExceptionHadlers();
 
 var conString = builder.Configuration["ConnectionStrings:CatalogDbConnection"];
 builder.Services.AddHealthChecks().AddMongoDb(conString, "Catalog MongoDb Helth Check", HealthStatus.Degraded);

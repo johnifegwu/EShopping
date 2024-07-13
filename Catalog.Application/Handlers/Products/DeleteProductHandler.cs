@@ -23,7 +23,7 @@ namespace Catalog.Application.Handlers.Products
 
             if (product == null)
             {
-                throw new RecordNotFoundException("Product not found.");
+                throw new NotFoundException("Product not found.");
             }
 
             var rowsAffected = await _unitOfWork.Repository<Product>().DeleteAsync(product, cancellationToken);

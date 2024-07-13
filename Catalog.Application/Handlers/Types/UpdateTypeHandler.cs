@@ -35,7 +35,7 @@ namespace Catalog.Application.Handlers.Types
 
             if(type == null)
             {
-                throw new RecordNotFoundException("Type not found.");
+                throw new NotFoundException("Type not found.");
             }
 
             //Update type

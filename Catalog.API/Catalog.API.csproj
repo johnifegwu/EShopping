@@ -33,6 +33,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Catalog.Application\Catalog.Application.csproj" />
     <ProjectReference Include="..\Catalog.Infrastructure\Catalog.Infrastructure.csproj" />
+    <ProjectReference Include="..\eShopping.ExceptionHandling\eShopping.AspNetCore.ExceptionHandling.csproj" />
   </ItemGroup>
 
   <ItemGroup>
