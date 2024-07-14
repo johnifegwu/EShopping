@@ -1,6 +1,7 @@
 ﻿using Basket.Application.Configurations;
 using Basket.Application.RpcClients;
 using Basket.Core.Entities;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using static Discount.Grpc.Protos.DiscountProtoService;
 
@@ -15,7 +16,7 @@ namespace Basket.Application.Extensions
         /// <param name="cart">Shopping cart.</param>
         /// <param name="exemptionList">A list of Product Ids to exclude.</param>
         /// <returns>The updataed ShoppingCart.</returns>
-        public static async Task<ShoppingCart> ApplyCoupons(this ShoppingCart cart, List<string> exemptionList, DiscountProtoServiceClient client)
+        public static async Task<ShoppingCart> ApplyCoupons(this ShoppingCart cart, List<string> exemptionList, DiscountProtoServiceClient client, ILogger logger)
         {
             if (cart != null)
             {
@@ -37,6 +38,7 @@ namespace Basket.Application.Extensions
                         if(discount != null)
                         {
                             item.Price -= (decimal)discount.Amount;
+                            logger.LogInformation($"coupon {discount.ProductName} with amount:{discount.Amount} applied to {cart.UserName}'s cart.", discount);
                         }
                     }
                 }

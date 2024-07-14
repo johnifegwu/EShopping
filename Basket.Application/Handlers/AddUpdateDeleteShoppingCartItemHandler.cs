@@ -6,6 +6,7 @@ using Basket.Application.Responses;
 using Basket.Core.Entities;
 using Cache.Repositories;
 using MediatR;
+using Microsoft.Extensions.Logging;
 using static Discount.Grpc.Protos.DiscountProtoService;
 
 namespace Basket.Application.Handlers
@@ -14,11 +15,13 @@ namespace Basket.Application.Handlers
     {
         private readonly ICacheUnitOfWork _cacheUnitOfWork;
         private readonly DiscountProtoServiceClient _client;
+        private readonly ILogger<AddUpdateDeleteShoppingCartItemHandler> _logger;
 
-        public AddUpdateDeleteShoppingCartItemHandler(ICacheUnitOfWork cacheUnitOfWork, DiscountProtoServiceClient client)
+        public AddUpdateDeleteShoppingCartItemHandler(ICacheUnitOfWork cacheUnitOfWork, DiscountProtoServiceClient client, ILogger<AddUpdateDeleteShoppingCartItemHandler> logger)
         {
             this._cacheUnitOfWork = cacheUnitOfWork;
             this._client = client;
+            this._logger = logger;
         }
         public async Task<ShoppingCartResponse> Handle(AddUpdateDeleteShoppingCartItemCommand request, CancellationToken cancellationToken)
         {
@@ -38,7 +41,7 @@ namespace Basket.Application.Handlers
             cart.Update(request.ShoppingCartItem);
 
             //Apply coupons
-            await cart.ApplyCoupons(exemptList, _client);
+            await cart.ApplyCoupons(exemptList, _client, _logger);
 
             //This will delete the old cart if it exit and save the new one.
             await _cacheUnitOfWork.Repository<ShoppingCart>().UpdateAsync(cart, request.UserName, cancellationToken);
