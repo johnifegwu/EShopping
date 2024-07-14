@@ -5,6 +5,7 @@ using Discount.Application.Commands;
 using Discount.Application.Services;
 using System.Net;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
+using Discount.Infrastructure.Seeders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -40,6 +41,9 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.ApplyMigrations();
+    var scope = app.Services.CreateScope();
+    var seed = scope.ServiceProvider.GetRequiredService<IDiscountSeeder>();
+    await seed.Seed();
 }
 
 // Configure the HTTP request pipeline.

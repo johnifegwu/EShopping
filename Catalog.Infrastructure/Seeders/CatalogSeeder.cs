@@ -16,7 +16,7 @@ namespace Catalog.Infrastructure.Seeders
                 var productBrand = context.Repository<ProductBrand>().Read().First();
 
                 //Initialize Catalog database here after checking if no record exist.
-                if (productType  == null)
+                if (productType == null)
                 {
                     //Create new ProductTypes
                     var productTypes = GetProductTypes();
@@ -31,39 +31,71 @@ namespace Catalog.Infrastructure.Seeders
                     await context.Repository<ProductBrand>().AddRangeAsync(productBrands);
                     productBrand = productBrands.FirstOrDefault();
                 }
-                if(productType != null && productBrand != null)
+                if (productType != null && productBrand != null)
                 {
                     try
                     {
                         var product = context.Repository<Product>().Read().First();
+
                         if (product == null)
                         {
-                            //Create new Product
-                            product = new Product()
+                            //Create new Products
+                            var products = new List<Product>
                             {
-                                Name = "MXP Pro-Sound System",
-                                Summary = "World class sound system.",
-                                Description = "MXP Pro-Sound System\nAn award winning World Class Sound System.",
-                                Price = 1000,
-                                ProductTypeId = productType.Id,
-                                ProductBrandId = productBrand.Id
+                               new Product()
+                               {
+                                  Id = new MongoDB.Bson.ObjectId("668029f91e14c6c6e38205f9"),
+                                  Name = "MXP Pro-Sound System",
+                                  Summary = "World class sound system.",
+                                  Description = "MXP Pro-Sound System\nAn award winning World Class Sound System.",
+                                  Price = 1000,
+                                  ImageFile = "https://m.media-amazon.com/images/I/61BJsQnsk0L._AC_SL1500_.jpg",
+                                  ProductTypeId = productType.Id,
+                                  ProductBrandId = productBrand.Id
+                               },
+                               new Product()
+                               {
+                                  Id = new MongoDB.Bson.ObjectId("66802d3e1e14c6c6e38205fa"),
+                                  Name = "TSQ 100 Pro-Sound System",
+                                  Summary = "World class sound system.",
+                                  Description = "TSQ 100 Pro-Sound System\nAn award winning World Class Sound System.",
+                                  Price = 1200,
+                                  ImageFile = "https://m.media-amazon.com/images/I/71EZZ+PB6OL._AC_SL1500_.jpg",
+                                  ProductTypeId = productType.Id,
+                                  ProductBrandId = productBrand.Id
+                               }
                             };
-                            await context.Repository<Product>().AddAsync(product);
                         }
                     }
-                    catch(InvalidOperationException ex)
+                    catch (InvalidOperationException ex)
                     {
-                        //Create new Product
-                        var product = new Product()
+                        //Create new Products
+                        var products = new List<Product>
                         {
-                            Name = "MXP Pro-Sound System",
-                            Summary = "World class sound system.",
-                            Description = "MXP Pro-Sound System\nAn award winning World Class Sound System.",
-                            Price = 1000,
-                            ProductTypeId = productType.Id,
-                            ProductBrandId = productBrand.Id
-                        };
-                        await context.Repository<Product>().AddAsync(product);
+                            new Product()
+                            {
+                               Id = new MongoDB.Bson.ObjectId("668029f91e14c6c6e38205f9"),
+                               Name = "MXP Pro-Sound System",
+                               Summary = "World class sound system.",
+                               Description = "MXP Pro-Sound System\nAn award winning World Class Sound System.",
+                               Price = 1000,
+                               ImageFile = "https://m.media-amazon.com/images/I/61BJsQnsk0L._AC_SL1500_.jpg",
+                               ProductTypeId = productType.Id,
+                               ProductBrandId = productBrand.Id
+                            },
+                            new Product()
+                            {
+                               Id = new MongoDB.Bson.ObjectId("66802d3e1e14c6c6e38205fa"),
+                               Name = "TSQ 100 Pro-Sound System",
+                               Summary = "World class sound system.",
+                               Description = "TSQ 100 Pro-Sound System\nAn award winning World Class Sound System.",
+                               Price = 1200,
+                               ImageFile = "https://m.media-amazon.com/images/I/71EZZ+PB6OL._AC_SL1500_.jpg",
+                               ProductTypeId = productType.Id,
+                               ProductBrandId = productBrand.Id
+                            }
+                         };
+                        await context.Repository<Product>().AddRangeAsync(products);
                     }
                 }
             }
@@ -79,17 +111,32 @@ namespace Catalog.Infrastructure.Seeders
                 await context.Repository<ProductBrand>().AddRangeAsync(productBrands);
                 var productBrand = productBrands.FirstOrDefault();
 
-                //Create new Product
-                var product = new Product()
-                {
-                    Name = "MXP Pro-Sound System",
-                    Summary = "World class sound system.",
-                    Description = "MXP Pro-Sound System\nAn award winning World Class Sound System.",
-                    Price = 1000,
-                    ProductTypeId = productType.Id,
-                    ProductBrandId = productBrand.Id
+                //Create new Products
+                var products = new List<Product>{
+                    new Product()
+                    {
+                       Id = new MongoDB.Bson.ObjectId("668029f91e14c6c6e38205f9"),
+                       Name = "MXP Pro-Sound System",
+                       Summary = "World class sound system.",
+                       Description = "MXP Pro-Sound System\nAn award winning World Class Sound System.",
+                       Price = 1000,
+                       ImageFile = "https://m.media-amazon.com/images/I/61BJsQnsk0L._AC_SL1500_.jpg",
+                       ProductTypeId = productType.Id,
+                       ProductBrandId = productBrand.Id
+                    },
+                    new Product()
+                    {
+                       Id = new MongoDB.Bson.ObjectId("66802d3e1e14c6c6e38205fa"),
+                       Name = "TSQ 100 Pro-Sound System",
+                       Summary = "World class sound system.",
+                       Description = "TSQ 100 Pro-Sound System\nAn award winning World Class Sound System.",
+                       Price = 1200,
+                       ImageFile = "https://m.media-amazon.com/images/I/71EZZ+PB6OL._AC_SL1500_.jpg",
+                       ProductTypeId = productType.Id,
+                       ProductBrandId = productBrand.Id
+                    }
                 };
-                await context.Repository<Product>().AddAsync(product);
+                await context.Repository<Product>().AddRangeAsync(products);
             }
 
             ////For SQL Server

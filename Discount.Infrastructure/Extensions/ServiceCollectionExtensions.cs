@@ -2,6 +2,7 @@
 using Data.Repositories;
 using Discount.Infrastructure.Persistence;
 using Discount.Infrastructure.Repositories;
+using Discount.Infrastructure.Seeders;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,6 +16,7 @@ namespace Discount.Infrastructure.Extensions
             var conString = configuration["ConnectionStrings:DiscountDbConnection"];
             services.AddDbContextPool<DiscountDbContext>(options => options.UseNpgsql(conString));
             services.AddTransient<IUnitOfWorkCore, UnitOfWorkDiscount>();
+            services.AddScoped<IDiscountSeeder, DiscountSeeder>();
         }
     }
 }

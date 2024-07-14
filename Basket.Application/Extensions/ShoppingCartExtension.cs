@@ -32,11 +32,11 @@ namespace Basket.Application.Extensions
                         var discount = DiscountRpcClient.GetDiscountAsync(item.ProductId, client).Result;
 
                         //==============================================================================
-                        //ToDo: Apply coupons here
+                        //Apply coupons here
 
                         if(discount != null)
                         {
-
+                            item.Price -= (decimal)discount.Amount;
                         }
                     }
                 }

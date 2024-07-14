@@ -1,8 +1,4 @@
-﻿
-using Basket.Application.Configurations;
-using Discount.Grpc.Protos;
-using Grpc.Net.Client;
-using Microsoft.Extensions.Options;
+﻿using Discount.Grpc.Protos;
 using static Discount.Grpc.Protos.DiscountProtoService;
 
 namespace Basket.Application.RpcClients
