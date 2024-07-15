@@ -2,6 +2,7 @@
 using Data.Repositories;
 using eShopping.Exceptions;
 using MediatR;
+using Ordering.Application.Extensions;
 using Ordering.Application.Mappers;
 using Ordering.Application.Queries;
 using Ordering.Application.Responses;
@@ -20,25 +21,11 @@ namespace Ordering.Application.Handlers
 
         public async Task<IList<OrderResponse>> Handle(GetOrdersByUserNameQuery request, CancellationToken cancellationToken)
         {
-            var orders = await Task.FromResult(
-                (from o in _unitOfWork.Repository<Order>().Read()
-                 where o.UserName == request.UserName
-                 orderby o.LastModifiedDate descending
-                 select new
-                 {
-                     Order = o,
-                     OrderDetails = _unitOfWork.Repository<OrderDetail>().Read().Where(x => x.OrderId == o.Id).ToList()
-                 })
-                .Skip((request.PageIndex - 1) * request.PageSize)
-                .Take(request.PageSize).ToList());
+            var result = await _unitOfWork.GetOrdersByUserName(request.UserName, request.PageIndex, request.PageSize);
 
-            if(orders.Count > 0)
+            if(result != null || result.Count > 0)
             {
-                foreach (var item in orders)
-                {
-                    item.Order.OrderDetails = item.OrderDetails;
-                }
-                return  OrderingMapper.Mapper.Map<IList<OrderResponse>>(orders.Order());
+                return result;
             }
 
             throw new NotFoundException($"No order found for {request.UserName}.");

@@ -22,6 +22,17 @@ namespace Ordering.Core.Entities
         public string? Expiration {  get; set; }
         public string? CVV { get; set; }
         public int? PaymentMethod { get; set; }
-        public List<OrderDetail> OrderDetails { get; set; } = new();
+        public List<OrderDetail>? OrderDetails { get; set; }
+
+        public void UpdateChildWithId()
+        {
+            if(OrderDetails != null && OrderDetails.Count > 0)
+            {
+                foreach(var item in OrderDetails)
+                {
+                    item.OrderId = this.Id;
+                }
+            }
+        }
     }
 }
