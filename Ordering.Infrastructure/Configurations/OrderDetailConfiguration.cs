@@ -17,7 +17,7 @@ namespace Ordering.Infrastructure.Configurations
             entity.Property(x => x.ProductName).HasColumnName("product_name").HasMaxLength(255);
             entity.Property(x => x.Quantity).HasColumnName("quantity");
             entity.Property(x => x.Price).HasColumnName("price").HasColumnType("decimal(18,4)");
-
+            
             OnConfigurePartial(entity);
         }
 

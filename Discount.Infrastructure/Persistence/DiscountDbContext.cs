@@ -26,7 +26,7 @@ namespace Discount.Infrastructure.Persistence
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.ApplyConfiguration(new CouponConfiguration());
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(CouponConfiguration).Assembly);
         }
     }
 }

@@ -10,6 +10,7 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["Basket.API/Basket.API.csproj", "Basket.API/"]
+COPY ["eShopping.ExceptionHandling/eShopping.AspNetCore.ExceptionHandling.csproj", "eShopping.ExceptionHandling/"]
 COPY ["Basket.Application/Basket.Application.csproj", "Basket.Application/"]
 COPY ["Basket.Core/Basket.Core.csproj", "Basket.Core/"]
 COPY ["Cache.Repositories/Cache.Repositories.csproj", "Cache.Repositories/"]

@@ -70,10 +70,12 @@ namespace Ordering.Infrastructure.Migrations
                         .HasColumnName("country");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("created_by");
 
                     b.Property<DateTime?>("CreatedDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime2")
+                        .HasColumnName("created_date");
 
                     b.Property<string>("EmailAddress")
                         .HasMaxLength(255)
@@ -91,10 +93,12 @@ namespace Ordering.Infrastructure.Migrations
                         .HasColumnName("first_name");
 
                     b.Property<string>("LastModifiedBy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("last_modified_by");
 
                     b.Property<DateTime?>("LastModifiedDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime2")
+                        .HasColumnName("last_modified_date");
 
                     b.Property<string>("LastName")
                         .HasMaxLength(255)
@@ -102,8 +106,7 @@ namespace Ordering.Infrastructure.Migrations
                         .HasColumnName("last_name");
 
                     b.Property<int?>("PaymentMethod")
-                        .HasColumnType("int")
-                        .HasColumnName("payment_method");
+                        .HasColumnType("int");
 
                     b.Property<string>("State")
                         .HasMaxLength(255)
@@ -144,7 +147,7 @@ namespace Ordering.Infrastructure.Migrations
                         .HasColumnName("order_id");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)")
+                        .HasColumnType("decimal(18,4)")
                         .HasColumnName("price");
 
                     b.Property<string>("ProductId")

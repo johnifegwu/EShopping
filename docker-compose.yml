@@ -107,5 +107,21 @@ services:
       context: .
       dockerfile: Discount.API/Dockerfile
 
+  ordering.api:
+    image: ${DOCKER_REGISTRY-}orderingapi
+    environment:
+     - ASPNETCORE_ENVIRONMENT=Development
+     - ASPNETCORE_HTTPS_PORTS=9004
+     - ASPNETCORE_HTTP_PORTS=8004
+     - ASPNETCORE_Kestrel__Certificates__Default__Password=12345678
+     - ASPNETCORE_Kestrel__Certificates__Default__Path=aspnetapp.pfx 
+    ports:
+     - "9004:9004"
+     - "8004:8004" 
+    build:
+      context: .
+      dockerfile: Ordering.API/Dockerfile
+
+
 volumes:
   portainer_data:
