@@ -1,0 +1,57 @@
+{
+  "profiles": {
+    "http": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "launchUrl": "swagger",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "LocalCatalogDB": "mongodb://localhost:27017"
+      },
+      "dotnetRunMessages": true,
+      "applicationUrl": "http://localhost:8001"
+    },
+    "https": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "launchUrl": "swagger",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "LocalCatalogDB": "mongodb://localhost:27017"
+      },
+      "dotnetRunMessages": true,
+      "applicationUrl": "http://localhost:8001"
+    },
+    "IIS Express": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "launchUrl": "swagger",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        " LocalCatalogDB": "mongodb:/localhost:27017"
+      }
+    },
+    "Container (Dockerfile)": {
+      "commandName": "Docker",
+      "launchBrowser": true,
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/swagger",
+      "environmentVariables": {
+        "ASPNETCORE_HTTPS_PORTS": "9001",
+        "ASPNETCORE_HTTP_PORTS": "8001",
+        "LocalCatalogDB": "mongodb://localhost:27017"
+      },
+      "publishAllPorts": true,
+      "useSSL": false
+    }
+  },
+  "$schema": "http://json.schemastore.org/launchsettings.json",
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "useSSL": false,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:8001",
+      "sslPort": 9001
+    }
+  }
+}
