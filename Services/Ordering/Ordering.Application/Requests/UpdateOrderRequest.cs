@@ -1,6 +1,4 @@
 ﻿
-using Ordering.Core.Entities;
-
 namespace Ordering.Application.Requests
 {
     public class UpdateOrderRequest
@@ -23,6 +21,5 @@ namespace Ordering.Application.Requests
         public string? Expiration { get; set; }
         public string? CVV { get; set; }
         public int? PaymentMethod { get; set; }
-        public List<OrderDetail> OrderDetails { get; set; } = new();
     }
 }

@@ -33,6 +33,10 @@ namespace Ordering.Application.Handlers
                     //Update order details with the newly aquired order id.
                     order.UpdateChildWithId();
 
+                    //Set Audit fields
+                    order.CreatedDate = DateTime.UtcNow;
+                    order.CreatedBy = request.UserName;
+
                     await _unitOfWork.Repository<OrderDetail>().AddRangeAsync(order.OrderDetails, cancellationToken);
                 }
 

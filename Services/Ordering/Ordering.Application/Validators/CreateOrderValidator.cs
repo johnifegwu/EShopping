@@ -2,7 +2,6 @@
 using FluentValidation;
 using Ordering.Application.Commands;
 using Ordering.Application.Requests;
-using Ordering.Core.Entities;
 
 namespace Ordering.Application.Validators
 {
