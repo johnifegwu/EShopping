@@ -22,6 +22,13 @@ namespace Ordering.Application.Responses
         public string? Expiration { get; set; }
         public string? CVV { get; set; }
         public int? PaymentMethod { get; set; }
+        public bool? IsPaid { get; set; } = false;
+        public string? PaymentReference { get; set; }
+        public string? PaymentProviderUsed { get; set; }
+        public bool? IsDeleted { get; set; } = false;
+        public bool? IsCanceled { get; set; } = false;
+        public bool? IsShipped { get; set; } = false;
+        public string? ShippingDetails { get; set; }
         public string? CreatedBy { get; set; }
         public DateTime? CreatedDate { get; set; }
         public string? LastModifiedBy { get; set; }

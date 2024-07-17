@@ -50,16 +50,34 @@ namespace Ordering.Application.Extensions
         /// </summary>
         /// <param name="_unitOfWork">IUnitOfWork object.</param>
         /// <param name="OrderId">Order id.</param>
+        /// <param name="UserName">Username of the owner of the order to fetch.</param>
         /// <returns>Order object.</returns>
-        public static async Task<Order> GetOrderById(this IUnitOfWorkCore _unitOfWork, int OrderId)
+        public static async Task<Order> GetOrderById(this IUnitOfWorkCore _unitOfWork, int OrderId, string UserName)
         {
             var order = await Task.FromResult(
                (from o in _unitOfWork.Repository<Order>().Get()
-                where o.Id == OrderId
+                where o.Id == OrderId && o.UserName == UserName
+                select o).FirstOrDefault()
+               );
+
+            return order;
+        }
+
+        /// <summary>
+        /// Gets customer Order by Id.
+        /// </summary>
+        /// <param name="_unitOfWork">IUnitOfWork object.</param>
+        /// <param name="OrderId">Order id.</param>
+        /// <returns>Order object.</returns>
+        public static async Task<Order> GetOrderByIdWithDetails(this IUnitOfWorkCore _unitOfWork, int OrderId, string UserName)
+        {
+            var order = await Task.FromResult(
+               (from o in _unitOfWork.Repository<Order>().Get()
+                where o.Id == OrderId && o.UserName == UserName
                 select new
                 {
-                  Order = o,
-                  OrderDetails = _unitOfWork.Repository<OrderDetail>().Read().Where(x => x.OrderId == o.Id).ToList()
+                    Order = o,
+                    OrderDetails = _unitOfWork.Repository<OrderDetail>().Read().Where(x => x.OrderId == o.Id).ToList()
                 }).FirstOrDefault());
 
             if (order != null)

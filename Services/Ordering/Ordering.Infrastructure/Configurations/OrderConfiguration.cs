@@ -29,6 +29,14 @@ namespace Ordering.Infrastructure.Configurations
             entity.Property(x => x.CardType).HasColumnName("card_type").HasMaxLength(30);
             entity.Property(x => x.Expiration).HasColumnName("expiration").HasMaxLength(20);
             entity.Property(x => x.CVV).HasColumnName("cvv").HasMaxLength(20);
+            entity.Property(x => x.PaymentMethod).HasColumnName("payment_method");
+            entity.Property(x => x.IsPaid).HasColumnName("is_paid").HasDefaultValue(false);
+            entity.Property(x => x.PaymentReference).HasColumnName("payment_reference").HasColumnType("nvarchar(max)");
+            entity.Property(x => x.PaymentProviderUsed).HasColumnName("payment_provider_used").HasColumnType("nvarchar(max)");
+            entity.Property(x => x.IsCanceled).HasColumnName("is_canceled").HasDefaultValue(false);
+            entity.Property(x => x.IsShipped).HasColumnName("is_shipped").HasDefaultValue(false);
+            entity.Property(x => x.ShippingDetails).HasColumnName("shipping_details").HasColumnType("nvarchar(max)");
+            entity.Property(x => x.IsDeleted).HasColumnName("is_deleted").HasDefaultValue(false);
             entity.Property(x => x.CreatedBy).HasColumnName("created_by").HasColumnType("nvarchar(max)");
             entity.Property(x => x.CreatedDate).HasColumnName("created_date");
             entity.Property(x => x.LastModifiedBy).HasColumnName("last_modified_by").HasColumnType("nvarchar(max)");

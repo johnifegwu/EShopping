@@ -22,7 +22,7 @@ namespace Ordering.Application.Handlers
         {
             var order = OrderingMapper.Mapper.Map<Order>(request);
 
-            if (order == null)
+            if (order != null)
             {
                 //Save order.
                 await _unitOfWork.Repository<Order>().AddAsync(order, cancellationToken);

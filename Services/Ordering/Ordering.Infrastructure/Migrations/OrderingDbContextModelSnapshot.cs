@@ -92,6 +92,30 @@ namespace Ordering.Infrastructure.Migrations
                         .HasColumnType("nvarchar(255)")
                         .HasColumnName("first_name");
 
+                    b.Property<bool?>("IsCanceled")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false)
+                        .HasColumnName("is_canceled");
+
+                    b.Property<bool?>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false)
+                        .HasColumnName("is_deleted");
+
+                    b.Property<bool?>("IsPaid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false)
+                        .HasColumnName("is_paid");
+
+                    b.Property<bool?>("IsShipped")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false)
+                        .HasColumnName("is_shipped");
+
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("last_modified_by");
@@ -106,7 +130,20 @@ namespace Ordering.Infrastructure.Migrations
                         .HasColumnName("last_name");
 
                     b.Property<int?>("PaymentMethod")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("payment_method");
+
+                    b.Property<string>("PaymentProviderUsed")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("payment_provider_used");
+
+                    b.Property<string>("PaymentReference")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("payment_reference");
+
+                    b.Property<string>("ShippingDetails")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("shipping_details");
 
                     b.Property<string>("State")
                         .HasMaxLength(255)
