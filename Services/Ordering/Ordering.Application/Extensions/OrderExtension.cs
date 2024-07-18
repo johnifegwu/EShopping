@@ -25,10 +25,10 @@ namespace Ordering.Application.Extensions
                 (from o in _unitOfWork.Repository<Order>().Read()
                  where o.UserName == UserName
                  orderby o.LastModifiedDate descending
-                 select new
+                 select new OrderQueryResponse
                  {
                    Order = o,
-                   OrderDetails = _unitOfWork.Repository<OrderDetail>().Read().Where(x => x.OrderId == o.Id).ToList()
+                   Details = _unitOfWork.Repository<OrderDetail>().Read().Where(x => x.OrderId == o.Id).ToList()
                 })
                 .Skip((PageIndex - 1) * PageSize)
                 .Take(PageSize).ToList());
@@ -37,7 +37,7 @@ namespace Ordering.Application.Extensions
             {
                 foreach (var item in orders)
                 {
-                    item.Order.OrderDetails = item.OrderDetails;
+                    item.MapOrderWithDetails();
                 }
                 return OrderingMapper.Mapper.Map<IList<OrderResponse>>(orders.Order());
             }
@@ -63,32 +63,54 @@ namespace Ordering.Application.Extensions
             return order;
         }
 
-        /// <summary>
-        /// Gets customer Order by Id.
-        /// </summary>
-        /// <param name="_unitOfWork">IUnitOfWork object.</param>
-        /// <param name="OrderId">Order id.</param>
-        /// <returns>Order object.</returns>
-        public static async Task<Order> GetOrderByIdWithDetails(this IUnitOfWorkCore _unitOfWork, int OrderId, string UserName)
-        {
-            var order = await Task.FromResult(
-               (from o in _unitOfWork.Repository<Order>().Get()
-                where o.Id == OrderId && o.UserName == UserName
-                select new
-                {
-                    Order = o,
-                    OrderDetails = _unitOfWork.Repository<OrderDetail>().Read().Where(x => x.OrderId == o.Id).ToList()
-                }).FirstOrDefault());
 
-            if (order != null)
+        /// <summary>
+        /// Gets Orders from the system according to the provided search parameters.
+        /// </summary>
+        /// <param name="_unitOfWork">UnitWork object.</param>
+        /// <param name="OptionalUserName">Username (optional).</param>
+        /// <param name="IsShipped">If the order is shipped or not.</param>
+        /// <param name="IsPaid">If the order has been paid for or not.</param>
+        /// <param name="IsCanceled">If the order has been canceled or not.</param>
+        /// <param name="IsDeleted">If the order has been marked as deleted or not.</param>
+        /// <param name="PageIndex">Page index.</param>
+        /// <param name="PageSize">Page size.</param>
+        /// <returns></returns>
+        public static async Task<IList<OrderResponse>> GetOrdersByFlags(this IUnitOfWorkCore _unitOfWork, string? OptionalUserName, bool IsShipped, bool IsPaid, bool IsCanceled, bool IsDeleted, int PageIndex, int PageSize)
+        {
+            var query = _unitOfWork.Repository<Order>().Read()
+            .Where(o => o.IsShipped == IsShipped
+                    && o.IsPaid == IsPaid
+                    && o.IsCanceled == IsCanceled
+                    && o.IsDeleted == IsDeleted);
+
+            if (!string.IsNullOrEmpty(OptionalUserName))
             {
-                order.Order.OrderDetails = order.OrderDetails;
-                return order.Order;
+                query = query.Where(o => o.UserName == OptionalUserName);
             }
 
-            return null;
-        }
+            var orders = await Task.FromResult(query
+                .OrderBy(o => o.LastModifiedDate)
+                .Select(o => new OrderQueryResponse
+                {
+                    Order = o,
+                    Details = _unitOfWork.Repository<OrderDetail>().Read().Where(x => x.OrderId == o.Id).ToList()
+                })
+                .Skip((PageIndex - 1) * PageSize)
+                .Take(PageSize)
+                .ToList());
 
+            if (orders.Count > 0)
+            {
+                foreach (var item in orders)
+                {
+                    item.MapOrderWithDetails();
+                }
+                return OrderingMapper.Mapper.Map<IList<OrderResponse>>(orders.Order());
+            }
+
+            return new List<OrderResponse>();
+        }
 
         /// <summary>
         /// An extention for updating Order fields with the provided changes.
@@ -127,6 +149,22 @@ namespace Ordering.Application.Extensions
             order.PaymentMethod = request.PaymentMethod;
 
             return order;
+        }
+    }
+
+    public class OrderQueryResponse
+    {
+        public Order Order { get; set; } = default!;
+        public List<OrderDetail> Details { get; set; } = default!;
+
+        public Order MapOrderWithDetails()
+        {
+            if (Order != null)
+            {
+                Order.OrderDetails = Details;
+            }
+
+            return Order;
         }
     }
 }

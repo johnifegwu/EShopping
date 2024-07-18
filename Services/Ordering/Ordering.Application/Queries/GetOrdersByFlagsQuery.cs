@@ -6,6 +6,7 @@ namespace Ordering.Application.Queries
 {
     public class GetOrdersByFlagsQuery : IRequest<IList<OrderResponse>>
     {
+        public string? OptionalUserName {  get; set; }
         public bool IsShipped {  get; set; } 
         public bool IsPaid {  get; set; }
         public bool IsCanceled { get; set; }
