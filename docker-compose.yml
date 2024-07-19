@@ -13,6 +13,8 @@ services:
       POSTGRES_DB: discountDb
     ports:
       - 5432:5432
+    networks:
+      - eshopproxybackend
 
   catalog.database:
     image: mongo:latest
@@ -25,6 +27,8 @@ services:
      - ./mongo/data:/data/db
     ports:
      - 27017:27017
+    networks:
+      - eshopproxybackend
 
   ordering.database:
     container_name: ordering.database
@@ -42,6 +46,8 @@ services:
       - ./data:/var/opt/mssql/data
       - ./log:/var/opt/mssql/log
       - ./secrets:/var/opt/mssql/secrets
+    networks:
+      - eshopproxybackend
 
   basket.cache:
     image: redis:latest
@@ -49,6 +55,8 @@ services:
     restart: always
     ports:
      - 6379:6379 
+    networks:
+      - eshopproxybackend
 
   portainer:
     image: portainer/portainer-ce:latest
@@ -60,7 +68,25 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - portainer_data:/data
+    networks:
+      - eshopproxybackend
 
+  gateway.api:
+    image: ${DOCKER_REGISTRY-}gatwayapi
+    environment:
+     - ASPNETCORE_ENVIRONMENT=Development
+     - ASPNETCORE_HTTPS_PORTS=8081
+     - ASPNETCORE_HTTP_PORTS=8080
+     - ASPNETCORE_Kestrel__Certificates__Default__Password=12345678
+     - ASPNETCORE_Kestrel__Certificates__Default__Path=aspnetapp.pfx
+    ports:
+     - "8081:8081"
+     - "8080:8080" 
+    build:
+      context: .
+      dockerfile: Gateway/Gateway.API/Dockerfile
+    networks:
+      - eshopproxybackend
 
   catalog.api:
     image: ${DOCKER_REGISTRY-}catalogapi
@@ -76,6 +102,8 @@ services:
     build:
       context: .
       dockerfile: Services/Catalog/Catalog.API/Dockerfile
+    networks:
+      - eshopproxybackend
 
   basket.api:
     image: ${DOCKER_REGISTRY-}basketapi
@@ -91,6 +119,8 @@ services:
     build:
       context: .
       dockerfile: Services/Basket/Basket.API/Dockerfile
+    networks:
+      - eshopproxybackend
 
   discount.api:
     image: ${DOCKER_REGISTRY-}discountapi
@@ -106,6 +136,8 @@ services:
     build:
       context: .
       dockerfile: Services/Discount/Discount.API/Dockerfile
+    networks:
+      - eshopproxybackend
 
   ordering.api:
     image: ${DOCKER_REGISTRY-}orderingapi
@@ -121,7 +153,14 @@ services:
     build:
       context: .
       dockerfile: Services/Ordering/Ordering.API/Dockerfile
+    networks:
+      - eshopproxybackend
 
+
+networks:
+  eshopproxybackend:
+    name: eshopproxybackend
+    driver: bridge
 
 volumes:
   portainer_data:
