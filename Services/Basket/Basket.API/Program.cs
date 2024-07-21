@@ -1,6 +1,5 @@
 using Asp.Versioning;
 using Basket.Application.Commands;
-using Basket.Application.Configurations;
 using Basket.Core.Entities;
 using Basket.Infrastructure.Extensions;
 using HealthChecks.UI.Client;

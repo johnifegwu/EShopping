@@ -1,5 +1,5 @@
 ﻿
-namespace Basket.Application.Configurations
+namespace Basket.Core.Entities
 {
     public class DefaultConfig
     {

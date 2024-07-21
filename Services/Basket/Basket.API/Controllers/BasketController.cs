@@ -1,14 +1,13 @@
 ﻿using Basket.API.Constants;
 using Basket.Application.Commands;
-using Basket.Application.Configurations;
 using Basket.Application.Queries;
 using Basket.Application.Responses;
 using Basket.Application.RpcClients;
 using Basket.Core.Entities;
 using Discount.Grpc.Protos;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Net;
 using static Discount.Grpc.Protos.DiscountProtoService;
@@ -46,6 +45,7 @@ namespace Basket.API.Controllers
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.InternalServerError)]
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.Unauthorized)]
         [SwaggerOperation(Tags = new[] {NameConstants.BasketQuerySwaggerName})]
+        [Authorize(Roles = "Customer")]
         public async Task<ActionResult> GetShoppingCartByName(string username)
         {
             var result = await _mediator.Send(new GetBasketByUserNameQuery
@@ -76,6 +76,7 @@ namespace Basket.API.Controllers
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.InternalServerError)]
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.Unauthorized)]
         [SwaggerOperation(Tags = new[] {NameConstants.BasketCommandSwaggerName})]
+        [Authorize(Roles = "Customer")]
         public async Task<ActionResult> AddUpdateDeleteShoppingCartItem(
             string username,
             [FromBody]ShoppingCartItem cartItem)
@@ -105,6 +106,7 @@ namespace Basket.API.Controllers
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.InternalServerError)]
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.Unauthorized)]
         [SwaggerOperation(Tags = new[] {NameConstants.BasketCommandSwaggerName})]
+        [Authorize(Roles = "Customer")]
         public async Task<ActionResult> CreateOrUpdateShoppingCart(
             string username, 
             [FromBody]ShoppingCart cart)
@@ -131,6 +133,7 @@ namespace Basket.API.Controllers
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.InternalServerError)]
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.Unauthorized)]
         [SwaggerOperation(Tags = new[] {NameConstants.BasketCommandSwaggerName})]
+        [Authorize(Roles = "Customer")]
         public async Task<ActionResult> DeleteBasket(string username)
         {
             var result = await _mediator.Send(new DeleteBasketByUserNameCommand
@@ -158,6 +161,7 @@ namespace Basket.API.Controllers
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.InternalServerError)]
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.Unauthorized)]
         [SwaggerOperation(Tags = new[] { NameConstants.DiscountQuerySwaggerName })]
+        [Authorize(Roles = "Admin,Customer")]
         public async Task<ActionResult> GetCouponByProductId(string productId)
         {
             var result = await DiscountRpcClient.GetDiscountAsync(productId, _client);
@@ -181,6 +185,7 @@ namespace Basket.API.Controllers
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.InternalServerError)]
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.Unauthorized)]
         [SwaggerOperation(Tags = new[] { NameConstants.DiscountCommandSwaggerName })]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> CreateCoupon([FromBody] CreateDiscountModel payload)
         {
             var result = await DiscountRpcClient.CreateDiscountAsync(payload, _client);
@@ -200,6 +205,7 @@ namespace Basket.API.Controllers
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.InternalServerError)]
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.Unauthorized)]
         [SwaggerOperation(Tags = new[] { NameConstants.DiscountCommandSwaggerName })]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> UpdateCoupon([FromBody] DiscountModel payload)
         {
             var result = await DiscountRpcClient.UpdateDiscountAsync(payload, _client);
@@ -219,6 +225,7 @@ namespace Basket.API.Controllers
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.InternalServerError)]
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.Unauthorized)]
         [SwaggerOperation(Tags = new[] { NameConstants.DiscountCommandSwaggerName })]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> DeleteCoupon(string productId)
         {
             var result = await DiscountRpcClient.DeleteDiscountAsync(productId, _client);

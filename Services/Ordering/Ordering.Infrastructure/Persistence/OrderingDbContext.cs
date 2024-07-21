@@ -12,8 +12,8 @@ namespace Ordering.Infrastructure.Persistence
 
         }
 
-        public DbSet<Order> Orders { get; set; }
-        public DbSet<OrderDetail> OrderDetails { get; set; }
+        public DbSet<Order> Orders { get; init; }
+        public DbSet<OrderDetail> OrderDetails { get; init; }
 
         //For migrations only
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

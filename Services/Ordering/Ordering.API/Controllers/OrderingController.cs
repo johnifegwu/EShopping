@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Ordering.API.Constants;
 using Ordering.Application.Queries;
@@ -8,6 +9,9 @@ using System.Net;
 
 namespace Ordering.API.Controllers
 {
+    /// <summary>
+    /// A controller for handling Product Order Commands and Queries.
+    /// </summary>
     public class OrderingController : BaseController
     {
         private readonly IMediator _mediator;
@@ -35,6 +39,7 @@ namespace Ordering.API.Controllers
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.InternalServerError)]
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.Unauthorized)]
         [SwaggerOperation(Tags = new[] { NameConstants.OrderingQuerySwaggerName })]
+        [Authorize(Roles = "Admin,Customer")]
         public async Task<ActionResult> GetOrdersByUserName(
             string userName,
             [FromQuery]int pageindex,
@@ -69,6 +74,7 @@ namespace Ordering.API.Controllers
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.InternalServerError)]
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.Unauthorized)]
         [SwaggerOperation(Tags = new[] { NameConstants.OrderingQuerySwaggerName })]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> GetOrdersByFlags(
             [FromQuery]string optionalUsername,
             [FromQuery]bool isPaid,

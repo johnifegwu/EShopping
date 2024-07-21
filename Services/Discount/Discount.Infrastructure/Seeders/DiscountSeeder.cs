@@ -15,17 +15,15 @@ namespace Discount.Infrastructure.Seeders
             {
                 var coupon = context.Repository<Coupon>().Read().First();
 
-                //Initialize Discount database here after checking if no record exist.
                 if (coupon == null)
                 {
-                    //Create new ProductTypes
                     var coupons = GetCoupon();
                     await context.Repository<Coupon>().AddRangeAsync(coupons);
                     coupon = coupons.FirstOrDefault();
                 }
             }
 
-            static List<Coupon> GetCoupon()
+            List<Coupon> GetCoupon()
             {
                 return new List<Coupon>
                 {

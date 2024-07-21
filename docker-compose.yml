@@ -49,6 +49,22 @@ services:
     networks:
       - eshopproxybackend
 
+  users.database:
+    image: mysql:latest
+    container_name: users.database
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: eshopping
+      MYSQL_USER: eshop_admin
+      MYSQL_PASSWORD: eshop_admin_password
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - eshopproxybackend
+
   basket.cache:
     image: redis:latest
     container_name: basket.cache
@@ -101,7 +117,7 @@ services:
      - "8001:8001" 
     build:
       context: .
-      dockerfile: Services/Catalog/Catalog.API/Dockerfile
+      dockerfile: Catalog/Catalog.API/Dockerfile
     networks:
       - eshopproxybackend
 
@@ -118,7 +134,7 @@ services:
      - "8002:8002" 
     build:
       context: .
-      dockerfile: Services/Basket/Basket.API/Dockerfile
+      dockerfile: Basket/Basket.API/Dockerfile
     networks:
       - eshopproxybackend
 
@@ -135,7 +151,7 @@ services:
      - "8003:8003" 
     build:
       context: .
-      dockerfile: Services/Discount/Discount.API/Dockerfile
+      dockerfile: Discount/Discount.API/Dockerfile
     networks:
       - eshopproxybackend
 
@@ -152,10 +168,26 @@ services:
      - "8004:8004" 
     build:
       context: .
-      dockerfile: Services/Ordering/Ordering.API/Dockerfile
+      dockerfile: Ordering/Ordering.API/Dockerfile
     networks:
       - eshopproxybackend
 
+  users.api:
+    image: ${DOCKER_REGISTRY-}usersapi
+    environment:
+     - ASPNETCORE_ENVIRONMENT=Development
+     - ASPNETCORE_HTTPS_PORTS=9005
+     - ASPNETCORE_HTTP_PORTS=8005
+     - ASPNETCORE_Kestrel__Certificates__Default__Password=12345678
+     - ASPNETCORE_Kestrel__Certificates__Default__Path=aspnetapp.pfx 
+    ports:
+     - "9005:9005"
+     - "8005:8005" 
+    build:
+      context: .
+      dockerfile: Users/Users.API/Dockerfile
+    networks:
+      - eshopproxybackend
 
 networks:
   eshopproxybackend:
@@ -164,3 +196,5 @@ networks:
 
 volumes:
   portainer_data:
+  mysql_data:
+
