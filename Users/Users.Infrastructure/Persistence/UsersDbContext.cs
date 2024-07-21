@@ -7,7 +7,7 @@ namespace Users.Infrastructure.Persistence
 {
     internal class UsersDbContext : DbContext
     {
-        public UsersDbContext(DbContextOptions<UsersDbContext> options):base(options) { }
+        public UsersDbContext(DbContextOptions<UsersDbContext> options) : base(options) { }
 
         public DbSet<User> Users { get; init; }
         public DbSet<UserRoleJoin> UserRoles { get; init; }

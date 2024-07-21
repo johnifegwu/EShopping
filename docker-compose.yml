@@ -117,7 +117,7 @@ services:
      - "8001:8001" 
     build:
       context: .
-      dockerfile: Catalog/Catalog.API/Dockerfile
+      dockerfile: Services/Catalog/Catalog.API/Dockerfile
     networks:
       - eshopproxybackend
 
@@ -134,7 +134,7 @@ services:
      - "8002:8002" 
     build:
       context: .
-      dockerfile: Basket/Basket.API/Dockerfile
+      dockerfile: Services/Basket/Basket.API/Dockerfile
     networks:
       - eshopproxybackend
 
@@ -151,7 +151,7 @@ services:
      - "8003:8003" 
     build:
       context: .
-      dockerfile: Discount/Discount.API/Dockerfile
+      dockerfile: Services/Discount/Discount.API/Dockerfile
     networks:
       - eshopproxybackend
 
@@ -168,7 +168,7 @@ services:
      - "8004:8004" 
     build:
       context: .
-      dockerfile: Ordering/Ordering.API/Dockerfile
+      dockerfile: Services/Ordering/Ordering.API/Dockerfile
     networks:
       - eshopproxybackend
 

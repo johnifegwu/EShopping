@@ -10,7 +10,7 @@ using System.Net;
 namespace Ordering.API.Controllers
 {
     /// <summary>
-    /// A controller for handling Product Order Commands and Queries.
+    /// A controller for handling all Product Order Commands and Queries.
     /// </summary>
     public class OrderingController : BaseController
     {

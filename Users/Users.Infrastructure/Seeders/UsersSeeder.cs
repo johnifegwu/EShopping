@@ -1,9 +1,9 @@
 ﻿
 using Data.Repositories;
+using eShopping.Models;
 using Microsoft.Extensions.Options;
 using Users.Application.Extensions;
 using Users.Core.Entities;
-using Users.Core.Models;
 
 namespace Users.Infrastructure.Seeders
 {
@@ -31,7 +31,7 @@ namespace Users.Infrastructure.Seeders
                     await context.Repository<Role>().AddRangeAsync(roles);
                 }
 
-                var addresstype = context.Repository<AddressType>().Read().First();
+                var addresstype = context.Repository<AddressType>().Read().FirstOrDefault();
 
                 if (addresstype == null)
                 {
@@ -40,7 +40,7 @@ namespace Users.Infrastructure.Seeders
                     addresstype = addresstypes.Where(x => x.AddressTypeName == BillingAddressType).FirstOrDefault();
                 }
 
-                var defaultUser = context.Repository<User>().Read().Where(x => x.UserName == _config.DefaultUserName);
+                var defaultUser = context.Repository<User>().Read().Where(x => x.UserName == _config.DefaultUserName).FirstOrDefault();
 
                 if(defaultUser == null)
                 {
@@ -57,14 +57,12 @@ namespace Users.Infrastructure.Seeders
                         new UserRoleJoin()
                         {
                             UserId = user.Id,
-                            RoleId = adminrole.Id,
-                            Role = adminrole
+                            RoleId = adminrole.Id
                         },
                         new UserRoleJoin()
                         {
                             UserId = user.Id,
-                            RoleId = customerrole.Id,
-                            Role = customerrole
+                            RoleId = customerrole.Id
                         }
                     };
 

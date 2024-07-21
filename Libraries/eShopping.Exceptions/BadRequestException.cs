@@ -1,6 +1,7 @@
 ﻿
 namespace eShopping.Exceptions
 {
+    [Serializable]
     public class BadRequestException : Exception
     {
         public BadRequestException() : base("Bad request.")

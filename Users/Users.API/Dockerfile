@@ -15,6 +15,7 @@ COPY ["Libraries/eShopping.Exceptions/eShopping.Exceptions.csproj", "Libraries/e
 COPY ["Users/Users.Application/Users.Application.csproj", "Users/Users.Application/"]
 COPY ["Users/Users.Core/Users.Core.csproj", "Users/Users.Core/"]
 COPY ["Libraries/Data.IRepositories/Data.IRepositories.csproj", "Libraries/Data.IRepositories/"]
+COPY ["Libraries/eShopping.Models/eShopping.Models.csproj", "Libraries/eShopping.Models/"]
 COPY ["Users/Users.Infrastructure/Users.Infrastructure.csproj", "Users/Users.Infrastructure/"]
 COPY ["Libraries/Data.Repositories/Data.Repositories.csproj", "Libraries/Data.Repositories/"]
 RUN dotnet restore "./Users/Users.API/Users.API.csproj"

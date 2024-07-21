@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Libraries\Cache.IRepositories\Cache.IRepositories.csproj" />
+    <ProjectReference Include="..\..\..\Libraries\eShopping.Models\eShopping.Models.csproj" />
   </ItemGroup>
 
 </Project>

@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Users.Infrastructure.Persistence;
 using Users.Infrastructure.Repositories;
+using Users.Infrastructure.Seeders;
 
 
 namespace Users.Infrastructure.Extensions
@@ -16,6 +17,7 @@ namespace Users.Infrastructure.Extensions
             var conString = configuration["ConnectionStrings:UsersDbConnection"];
             services.AddDbContextPool<UsersDbContext>(options => options.UseMySQL(conString));
             services.AddTransient<IUnitOfWorkCore, UnitOfWorkUsers>();
+            services.AddScoped<IUsersSeeder, UsersSeeder>();
         }
     }
 }

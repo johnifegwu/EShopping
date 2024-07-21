@@ -1,11 +1,11 @@
 using Asp.Versioning;
 using eShopping.ExceptionHandling;
+using eShopping.Models;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using System.Reflection;
 using Users.Application.Commands;
 using Users.Core.Entities;
-using Users.Core.Models;
 using Users.Infrastructure.Extensions;
 using Users.Infrastructure.Seeders;
 
@@ -37,7 +37,7 @@ builder.Services.AddHealthChecks().AddMySql(conString, "Users MySql Helth Check"
 var mediatRAssemblies = new[]
 {
   Assembly.GetAssembly(typeof(User)), // Core
-  Assembly.GetAssembly(typeof(CreateAdminUserCommand)) // Application
+  Assembly.GetAssembly(typeof(AuthenticateUserCommand)) // Application
 };
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(mediatRAssemblies!));
 builder.Services.AddInfrastructure(builder.Configuration);
@@ -65,17 +65,19 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseStaticFiles();
+
 app.UseRouting();
+
+app.UseAuthentication(); // Add the authentication middleware
+
+app.UseAuthorization(); // Add the authorization middleware
 
 app.MapHealthChecks("/health", new HealthCheckOptions
 {
     Predicate = _ => true,
     ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
 });
-
-app.UseStaticFiles();
-
-app.UseAuthorization();
 
 app.MapControllers();
 

@@ -1,6 +1,5 @@
 ﻿
 using Basket.Application.Commands;
-using Basket.Application.Configurations;
 using Basket.Application.Extensions;
 using Basket.Application.Mappers;
 using Basket.Application.Responses;

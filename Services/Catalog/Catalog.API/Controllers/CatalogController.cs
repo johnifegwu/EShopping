@@ -8,6 +8,7 @@ using Catalog.Application.Queries.Types;
 using Catalog.Application.Requests;
 using Catalog.Application.Responses;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
@@ -210,6 +211,7 @@ namespace Catalog.API.Controllers
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.InternalServerError)]
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.Unauthorized)]
         [SwaggerOperation(Tags = new[] {NameConstants.ProductCommandSwaggerName})]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> CreateProduct([FromBody]CreateProductRequest payload)
         {
             var result = await _mediator.Send(new CreateProductCommand
@@ -233,6 +235,7 @@ namespace Catalog.API.Controllers
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.InternalServerError)]
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.Unauthorized)]
         [SwaggerOperation(Tags = new[] {NameConstants.ProductCommandSwaggerName})]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> UpdateProduct([FromBody]UpdateProductRequest payload)
         {
             var result = await _mediator.Send(new UpdateProductCommand
@@ -256,6 +259,7 @@ namespace Catalog.API.Controllers
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.InternalServerError)]
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.Unauthorized)]
         [SwaggerOperation(Tags = new[] {NameConstants.ProductCommandSwaggerName})]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> DeleteProduct(string Id)
         {
             var result = await _mediator.Send(new DeleteProductCommand
@@ -306,6 +310,7 @@ namespace Catalog.API.Controllers
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.InternalServerError)]
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.Unauthorized)]
         [SwaggerOperation(Tags = new[] {NameConstants.BrandCommandSwaggerName})]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> CreateBrand([FromBody]CreateBrandRequest payload)
         {
             var result = await _mediator.Send(new CreateBrandCommand
@@ -329,6 +334,7 @@ namespace Catalog.API.Controllers
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.InternalServerError)]
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.Unauthorized)]
         [SwaggerOperation(Tags = new[] {NameConstants.BrandCommandSwaggerName})]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> UpdateBrand([FromBody]UpdateBrandRequest payload)
         {
             var result = await _mediator.Send(new UpdateBrandCommand
@@ -352,6 +358,7 @@ namespace Catalog.API.Controllers
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.InternalServerError)]
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.Unauthorized)]
         [SwaggerOperation(Tags = new[] {NameConstants.BrandCommandSwaggerName})]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> DeleteBrand(string id)
         {
             var result = await _mediator.Send(new DeleteBrandCommand
@@ -403,6 +410,7 @@ namespace Catalog.API.Controllers
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.InternalServerError)]
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.Unauthorized)]
         [SwaggerOperation(Tags = new[] {NameConstants.TypeCommandSwaggerName})]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> CreateType([FromBody] CreateTypeRequest payload)
         {
             var result = await _mediator.Send(new CreateTypeCommand
@@ -427,6 +435,7 @@ namespace Catalog.API.Controllers
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.InternalServerError)]
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.Unauthorized)]
         [SwaggerOperation(Tags = new[] {NameConstants.TypeCommandSwaggerName})]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> UpdateType([FromBody] UpdateTypeRequest payload)
         {
             var result = await _mediator.Send(new UpdateTypeCommand
@@ -451,6 +460,7 @@ namespace Catalog.API.Controllers
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.InternalServerError)]
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.Unauthorized)]
         [SwaggerOperation(Tags = new[] {NameConstants.TypeCommandSwaggerName})]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> DeleteType(string id)
         {
             var result = await _mediator.Send(new DeleteTypeCommand

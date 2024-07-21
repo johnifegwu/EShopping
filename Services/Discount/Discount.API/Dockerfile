@@ -3,26 +3,27 @@
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 USER app
 WORKDIR /app
-EXPOSE 8003
 EXPOSE 5001
+EXPOSE 8003
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["Services/Discount/Discount.API/Discount.API.csproj", "Discount.API/"]
-COPY ["Services/Discount/Discount.Application/Discount.Application.csproj", "Discount.Application/"]
-COPY ["Services/Discount/Discount.Core/Discount.Core.csproj", "Discount.Core/"]
-COPY ["Libraries/Data.IRepositories/Data.IRepositories.csproj", "Data.IRepositories/"]
-COPY ["Libraries/Data.Repositories/Data.Repositories.csproj", "Data.Repositories/"]
-COPY ["Services/Discount/Discount.Infrastructure/Discount.Infrastructure.csproj", "Discount.Infrastructure/"]
+COPY ["Services/Discount/Discount.API/Discount.API.csproj", "Services/Discount/Discount.API/"]
+COPY ["Services/Discount/Discount.Application/Discount.Application.csproj", "Services/Discount/Discount.Application/"]
+COPY ["Services/Discount/Discount.Core/Discount.Core.csproj", "Services/Discount/Discount.Core/"]
+COPY ["Libraries/Data.IRepositories/Data.IRepositories.csproj", "Libraries/Data.IRepositories/"]
+COPY ["Libraries/eShopping.Exceptions/eShopping.Exceptions.csproj", "Libraries/eShopping.Exceptions/"]
+COPY ["Services/Discount/Discount.Infrastructure/Discount.Infrastructure.csproj", "Services/Discount/Discount.Infrastructure/"]
+COPY ["Libraries/Data.Repositories/Data.Repositories.csproj", "Libraries/Data.Repositories/"]
 RUN dotnet restore "./Services/Discount/Discount.API/Discount.API.csproj"
 COPY . .
-WORKDIR "/src/Discount.API"
-RUN dotnet build "./Services/Discount/Discount.API.csproj" -c $BUILD_CONFIGURATION -o /app/build
+WORKDIR "/src/Services/Discount/Discount.API"
+RUN dotnet build "./Discount.API.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./Services/Discount/Discount.API.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "./Discount.API.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app

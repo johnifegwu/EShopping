@@ -7,6 +7,7 @@
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
     <UserSecretsId>8bc29631-b71b-4cc0-bb2d-0b656184f886</UserSecretsId>
+    <DockerfileContext>..\..\..</DockerfileContext>
   </PropertyGroup>
 
   <ItemGroup>
@@ -20,6 +21,7 @@
 	<PackageReference Include="AutoMapper" Version="13.0.1" />
 	<PackageReference Include="Grpc.Net.ClientFactory" Version="2.63.0" />
 	<PackageReference Include="MediatR" Version="12.3.0" />
+	<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.7" />
 	<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
 	<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.1" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.20.1" />

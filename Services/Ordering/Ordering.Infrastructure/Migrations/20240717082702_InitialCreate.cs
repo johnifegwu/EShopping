@@ -11,6 +11,10 @@ namespace Ordering.Infrastructure.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            // Raw SQL to create database if it does not exist
+            migrationBuilder.Sql(@"CREATE DATABASE IF NOT EXISTS eShopping;
+            USE eShopping;");
+
             migrationBuilder.CreateTable(
                 name: "order",
                 columns: table => new

@@ -1,5 +1,4 @@
-﻿using Basket.Application.Configurations;
-using Basket.Application.RpcClients;
+﻿using Basket.Application.RpcClients;
 using Basket.Core.Entities;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
