@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Libraries\eShopping.Constants\eShopping.Constants.csproj" />
     <ProjectReference Include="..\Ordering.Core\Ordering.Core.csproj" />
   </ItemGroup>
 

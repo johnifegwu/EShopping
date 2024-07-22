@@ -6,6 +6,7 @@ using Ordering.Application.Queries;
 using Ordering.Application.Responses;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Net;
+using eShopping.Security;
 
 namespace Ordering.API.Controllers
 {
@@ -39,14 +40,19 @@ namespace Ordering.API.Controllers
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.InternalServerError)]
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.Unauthorized)]
         [SwaggerOperation(Tags = new[] { NameConstants.OrderingQuerySwaggerName })]
-        [Authorize(Roles = "Admin,Customer")]
+        [Authorize(Roles = "Admin, Customer")]
         public async Task<ActionResult> GetOrdersByUserName(
             string userName,
             [FromQuery]int pageindex,
             [FromQuery]int pagesize)
         {
+            // Extract user claims
+            var userClaims = User.GetUser();
+
             var result = await _mediator.Send(new GetOrdersByUserNameQuery
             {
+                CurrentUserName = userClaims.UserName,
+                CurrentUserRole = (userClaims.AdminRole != null) ? userClaims.AdminRole : userClaims.CustomerRole,
                 UserName = userName,
                 PageIndex = pageindex,
                 PageSize = pagesize

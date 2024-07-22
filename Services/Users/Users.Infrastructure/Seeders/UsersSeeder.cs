@@ -4,17 +4,12 @@ using eShopping.Models;
 using Microsoft.Extensions.Options;
 using Users.Application.Extensions;
 using Users.Core.Entities;
+using eShopping.Constants;
 
 namespace Users.Infrastructure.Seeders
 {
     internal class UsersSeeder(IUnitOfWorkCore context, IOptions<DefaultConfig> config) : IUsersSeeder
     {
-        private const string AdminRoleName = "Admin";
-        private const string CustomerRoleName = "Customer";
-
-        private const string BillingAddressType = "Billing Address";
-        private const string ShippingAddressType = "Shipping Address";
-
         public async Task Seed()
         {
             ////==================================================================================
@@ -37,7 +32,7 @@ namespace Users.Infrastructure.Seeders
                 {
                     var addresstypes = GetAddressTypes();
                     await context.Repository<AddressType>().AddRangeAsync(addresstypes);
-                    addresstype = addresstypes.Where(x => x.AddressTypeName == BillingAddressType).FirstOrDefault();
+                    addresstype = addresstypes.Where(x => x.AddressTypeName == NameConstants.BillingAddressType).FirstOrDefault();
                 }
 
                 var defaultUser = context.Repository<User>().Read().Where(x => x.UserName == _config.DefaultUserName).FirstOrDefault();
@@ -49,8 +44,8 @@ namespace Users.Infrastructure.Seeders
                     user.CreateUser(_config.DefaultUserName, _config.DefaultUserEmail, _config.defaultUserPassword, _config.PaswordExpiryMonths, "System.");
                     await context.Repository<User>().AddAsync(user);
                     
-                    var adminrole = roles.Where(x => x.RoleName == AdminRoleName).FirstOrDefault();
-                    var customerrole = roles.Where(x => x.RoleName == CustomerRoleName).FirstOrDefault();
+                    var adminrole = roles.Where(x => x.RoleName == NameConstants.AdminRoleName).FirstOrDefault();
+                    var customerrole = roles.Where(x => x.RoleName == NameConstants.CustomerRoleName).FirstOrDefault();
                     
                     var userroles = new List<UserRoleJoin>() 
                     { 
@@ -76,14 +71,14 @@ namespace Users.Infrastructure.Seeders
                 {
                     new AddressType()
                     {
-                        AddressTypeName = BillingAddressType,
+                        AddressTypeName = NameConstants.BillingAddressType,
                         MaxAddressPerUser = config.Value.MaxAddressPerUser,
                         CreatedBy = "System",
                         CreatedDate = DateTime.UtcNow
                     },
                     new AddressType()
                     {
-                        AddressTypeName = ShippingAddressType,
+                        AddressTypeName = NameConstants.ShippingAddressType,
                         MaxAddressPerUser = config.Value.MaxAddressPerUser,
                         CreatedBy = "System",
                         CreatedDate = DateTime.UtcNow
@@ -97,14 +92,14 @@ namespace Users.Infrastructure.Seeders
                 {
                     new Role()
                     {
-                        RoleName = AdminRoleName,
+                        RoleName = NameConstants.AdminRoleName,
                         RoleDescription = "Role for Administrators.",
                         CreatedBy = "System",
                         CreatedDate = DateTime.UtcNow
                     },
                     new Role()
                     {
-                        RoleName = CustomerRoleName,
+                        RoleName = NameConstants.CustomerRoleName,
                         RoleDescription = "Role for Customers.",
                         CreatedBy = "System",
                         CreatedDate = DateTime.UtcNow
