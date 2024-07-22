@@ -45,7 +45,7 @@ namespace Basket.API.Controllers
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.InternalServerError)]
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.Unauthorized)]
         [SwaggerOperation(Tags = new[] {NameConstants.BasketQuerySwaggerName})]
-        [Authorize(Roles = "Customer")]
+        [Authorize(Roles = "Customer, Admin")]
         public async Task<ActionResult> GetShoppingCartByName(string username)
         {
             var result = await _mediator.Send(new GetBasketByUserNameQuery

@@ -23,7 +23,7 @@ namespace Ordering.Application.Handlers
         {
             var result = await _unitOfWork.GetOrdersByUserName(request.UserName, request.PageIndex, request.PageSize);
 
-            if(result != null || result.Count > 0)
+            if(result?.Count > 0)
             {
                 return result;
             }

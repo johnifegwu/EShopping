@@ -41,11 +41,11 @@ services:
       MSSQL_PID: 'Developer' 
       MSSQL_TCP_PORT: 1433 
     ports: 
-      - "1455:1433"
+      - "1433:1433"
     volumes:
-      - ./data:/var/opt/mssql/data
-      - ./log:/var/opt/mssql/log
-      - ./secrets:/var/opt/mssql/secrets
+      - ./datamain:/var/opt/mssql/data
+      - ./logmain:/var/opt/mssql/log
+      - ./secretsmain:/var/opt/mssql/secrets
     networks:
       - eshopproxybackend
 
@@ -185,7 +185,7 @@ services:
      - "8005:8005" 
     build:
       context: .
-      dockerfile: Users/Users.API/Dockerfile
+      dockerfile: Services/Users/Users.API/Dockerfile
     networks:
       - eshopproxybackend
 

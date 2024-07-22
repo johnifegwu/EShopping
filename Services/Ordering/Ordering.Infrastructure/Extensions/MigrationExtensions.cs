@@ -14,7 +14,10 @@ namespace Ordering.Infrastructure.Extensions
             using OrderingDbContext dbContext =
                 scope.ServiceProvider.GetRequiredService<OrderingDbContext>();
 
-            dbContext.Database.Migrate();
+            if (dbContext.Database.CanConnectAsync().Result)
+            {
+                dbContext.Database.Migrate();
+            }
         }
     }
 }
