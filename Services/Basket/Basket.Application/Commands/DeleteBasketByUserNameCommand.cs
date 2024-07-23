@@ -4,6 +4,6 @@ namespace Basket.Application.Commands
 {
     public class DeleteBasketByUserNameCommand : IRequest<bool>
     {
-        public string UserName { get; set; } = default!;
+        public string? UserName { get; set; } = default!;
     }
 }

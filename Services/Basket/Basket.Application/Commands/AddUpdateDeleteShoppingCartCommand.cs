@@ -12,7 +12,7 @@ namespace Basket.Application.Commands
     /// </summary>
     public class AddUpdateDeleteShoppingCartItemCommand : IRequest<ShoppingCartResponse>
     {
-        public string UserName { get; set; } = default!;
+        public string? UserName { get; set; } = default!;
         public ShoppingCartItem ShoppingCartItem { get; set; } = default!;
     }
 }

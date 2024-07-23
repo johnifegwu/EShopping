@@ -5,11 +5,7 @@ namespace Users.Application.Requests
     {
         public string UserName { get; set; } = default!;
         public string UserEmail { get; set; } = default!;
-        public string PasswordSalt { get; set; } = default!;
-        public string PasswordHash { get; set; } = default!;
-        public DateTime? PasswordExpiryDate { get; set; }
-        public string? PasswordRecoveryUID { get; set; }
-        public DateTime? PasswordRecoveryUIDExpiry { get; set; }
+        public string Password { get; set; } = default!;
         public List<AddressRequest>? Addresses { get; set; }
     }
 }

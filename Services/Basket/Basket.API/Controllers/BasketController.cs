@@ -5,6 +5,7 @@ using Basket.Application.Responses;
 using Basket.Application.RpcClients;
 using Basket.Core.Entities;
 using Discount.Grpc.Protos;
+using eShopping.Security;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -35,10 +36,9 @@ namespace Basket.API.Controllers
         /// <summary>
         /// Gets all the shopping cart items for the given user.
         /// </summary>
-        /// <param name="username">Current user.</param>
         /// <returns>ShoppingCartResponse</returns>
         [HttpGet]
-        [Route("[action]/{username}", Name = "GetShoppingCartByName")]
+        [Route("GetShoppingCartByName")]
         [ProducesResponseType(typeof(ShoppingCartResponse), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.BadRequest)]
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.NotFound)]
@@ -46,11 +46,11 @@ namespace Basket.API.Controllers
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.Unauthorized)]
         [SwaggerOperation(Tags = new[] {NameConstants.BasketQuerySwaggerName})]
         [Authorize(Roles = "Customer, Admin")]
-        public async Task<ActionResult> GetShoppingCartByName(string username)
+        public async Task<ActionResult> GetShoppingCartByName()
         {
             var result = await _mediator.Send(new GetBasketByUserNameQuery
             {
-                UserName = username
+                UserName = User.GetUserClaims().UserName
             });
 
             return Ok(result);
@@ -65,11 +65,10 @@ namespace Basket.API.Controllers
         /// Updates the users Shopping cart with the provided item if the quantity is greater than zero.
         /// or removes the given item from the shopping cart if the quantity is less than one.
         /// </summary>
-        /// <param name="username">Current user.</param>
         /// <param name="cartItem" cref="ShoppingCartItem">Shopping Cart Item.</param>
         /// <returns cref="ShoppingCartResponse">ShoppingCartResponse</returns>
         [HttpPost]
-        [Route("[action]/{username}", Name = "AddUpdateDeleteShoppingCartItem")]
+        [Route("AddUpdateDeleteShoppingCartItem")]
         [ProducesResponseType(typeof(ShoppingCartResponse), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.BadRequest)]
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.NotFound)]
@@ -77,13 +76,11 @@ namespace Basket.API.Controllers
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.Unauthorized)]
         [SwaggerOperation(Tags = new[] {NameConstants.BasketCommandSwaggerName})]
         [Authorize(Roles = "Customer")]
-        public async Task<ActionResult> AddUpdateDeleteShoppingCartItem(
-            string username,
-            [FromBody]ShoppingCartItem cartItem)
+        public async Task<ActionResult> AddUpdateDeleteShoppingCartItem([FromBody]ShoppingCartItem cartItem)
         {
             var result = await _mediator.Send(new AddUpdateDeleteShoppingCartItemCommand
             {
-                UserName = username,
+                UserName = User.GetUserClaims().UserName,
                 ShoppingCartItem = cartItem
             });
 
@@ -95,11 +92,10 @@ namespace Basket.API.Controllers
         /// Create a new shopping cart in the system for the given user 
         /// or updates it if one already exist.
         /// </summary>
-        /// <param name="username">Current User.</param>
         /// <param name="cart">Shopping Cart object.</param>
         /// <returns cref="ShoppingCartResponse>ShoppingCartResponse</returns>
         [HttpPost]
-        [Route("[action]/{username}", Name = "CreateOrUpdateShoppingCart")]
+        [Route("CreateOrUpdateShoppingCart")]
         [ProducesResponseType(typeof(ShoppingCartResponse), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.BadRequest)]
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.NotFound)]
@@ -107,13 +103,11 @@ namespace Basket.API.Controllers
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.Unauthorized)]
         [SwaggerOperation(Tags = new[] {NameConstants.BasketCommandSwaggerName})]
         [Authorize(Roles = "Customer")]
-        public async Task<ActionResult> CreateOrUpdateShoppingCart(
-            string username, 
-            [FromBody]ShoppingCart cart)
+        public async Task<ActionResult> CreateOrUpdateShoppingCart([FromBody]ShoppingCart cart)
         {
             var result = await _mediator.Send(new CreateOrUpdateShoppingCartCommand
             {
-                UserName = username,
+                UserName = User.GetUserClaims().UserName,
                 ShoppingCart = cart
             });
 
@@ -123,10 +117,9 @@ namespace Basket.API.Controllers
         /// <summary>
         /// Removes the basket that belongs to the provided user from the system if it exist.
         /// </summary>
-        /// <param name="username">Current user.</param>
         /// <returns>bool</returns>
         [HttpDelete]
-        [Route("[action]/{username}", Name = "DeleteBasket")]
+        [Route("DeleteBasket")]
         [ProducesResponseType(typeof(bool), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.BadRequest)]
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.NotFound)]
@@ -134,11 +127,11 @@ namespace Basket.API.Controllers
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.Unauthorized)]
         [SwaggerOperation(Tags = new[] {NameConstants.BasketCommandSwaggerName})]
         [Authorize(Roles = "Customer")]
-        public async Task<ActionResult> DeleteBasket(string username)
+        public async Task<ActionResult> DeleteBasket()
         {
             var result = await _mediator.Send(new DeleteBasketByUserNameCommand
             {
-                UserName = username
+                UserName = User.GetUserClaims().UserName
             });
 
             return Ok(result);

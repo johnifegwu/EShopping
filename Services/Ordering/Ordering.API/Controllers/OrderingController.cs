@@ -46,13 +46,10 @@ namespace Ordering.API.Controllers
             [FromQuery]int pageindex,
             [FromQuery]int pagesize)
         {
-            // Extract user claims
-            var userClaims = User.GetUser();
 
             var result = await _mediator.Send(new GetOrdersByUserNameQuery
             {
-                CurrentUserName = userClaims.UserName,
-                CurrentUserRole = (userClaims.AdminRole != null) ? userClaims.AdminRole : userClaims.CustomerRole,
+                CurrentUser = User.GetUserClaims(),
                 UserName = userName,
                 PageIndex = pageindex,
                 PageSize = pagesize

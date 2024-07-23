@@ -1,4 +1,6 @@
-﻿using MediatR;
+﻿using eShopping.Security;
+using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Net;
@@ -51,6 +53,54 @@ namespace Users.API.Controllers
             return Ok(restult);
         }
 
+
+        /// <summary>
+        /// Creates a new user with Customer role in the system.
+        /// </summary>
+        /// <param name="payload">Create User Request object.</param>
+        /// <returns cref="UserResponse">User Response object.</returns>
+        [HttpPost]
+        [Route("CreateUser")]
+        [ProducesResponseType(typeof(List<UserResponse>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.InternalServerError)]
+        [SwaggerOperation(Tags = new[] { NameConstants.UsersQuerySwaggerName })]
+        public async Task<ActionResult> CreateUser([FromBody]NewUserRequest payload)
+        {
+            var result = await _mediator.Send(new CreateUserCommand
+            {
+                IsAdminUser = false,
+                Payload = payload
+            });
+
+            return Ok(result);
+        }
+
+        /// <summary>
+        /// Creates a new Admin User with Adminand Customer roles in the system.
+        /// </summary>
+        /// <param name="payload">Create User Request object.</param>
+        /// <returns cref="UserResponse">User Response object.</returns>
+        [HttpPost]
+        [Route("CreateAdminUser")]
+        [ProducesResponseType(typeof(List<UserResponse>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.InternalServerError)]
+        [SwaggerOperation(Tags = new[] { NameConstants.UsersQuerySwaggerName })]
+        [Authorize(Roles = "Admin")]
+        public async Task<ActionResult> CreateAdminUser([FromBody] NewUserRequest payload)
+        {
+            var result = await _mediator.Send(new CreateUserCommand
+            {
+                CurrentUser = User.GetUserClaims(),
+                IsAdminUser = false,
+                Payload = payload
+            });
+
+            return Ok(result);
+        }
 
         #endregion
 

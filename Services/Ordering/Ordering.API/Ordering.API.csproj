@@ -29,7 +29,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Libraries\eShopping.ExceptionHandling\eShopping.AspNetCore.ExceptionHandling.csproj" />
-    <ProjectReference Include="..\..\..\Libraries\eShopping.Security\eShopping.Security.csproj" />
     <ProjectReference Include="..\Ordering.Application\Ordering.Application.csproj" />
     <ProjectReference Include="..\Ordering.Infrastructure\Ordering.Infrastructure.csproj" />
   </ItemGroup>
