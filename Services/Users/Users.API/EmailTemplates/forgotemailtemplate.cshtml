@@ -1,0 +1,16 @@
+﻿@model eShopping.MailMan.Models.ForgotPasswordModel
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Forgot Password : eShopping</title>
+</head>
+<body>
+    <h1>Hello, @Model.UserName</h1>
+    <p>Welcome to our Change Password service!</p>
+    <p>Please click <a href="@Model.ChangePasswordUrl">here</a> to change your password.</p>
+    <p>Use the below link if the above did not work.<br />
+        @Model.ChangePasswordUrl
+    </p>
+</body>
+</html>

@@ -79,9 +79,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Users.Core", "Services\User
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Users.Infrastructure", "Services\Users\Users.Infrastructure\Users.Infrastructure.csproj", "{8D956F16-AF4F-420D-B941-14C617D662DF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eShopping.Constants", "Libraries\eShopping.Constants\eShopping.Constants.csproj", "{3773792A-E3BB-4558-B777-3719B31E83EB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eShopping.Constants", "Libraries\eShopping.Constants\eShopping.Constants.csproj", "{3773792A-E3BB-4558-B777-3719B31E83EB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eShopping.Security", "Libraries\eShopping.Security\eShopping.Security.csproj", "{0C8AAAD8-8167-4ABE-B2CB-1F6E027DB652}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eShopping.Security", "Libraries\eShopping.Security\eShopping.Security.csproj", "{0C8AAAD8-8167-4ABE-B2CB-1F6E027DB652}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eShopping.MailMan", "Libraries\eShopping.MailMan\eShopping.MailMan.csproj", "{28EA888B-EBC8-4D57-9C26-FA0366A2798C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -217,6 +219,10 @@ Global
 		{0C8AAAD8-8167-4ABE-B2CB-1F6E027DB652}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0C8AAAD8-8167-4ABE-B2CB-1F6E027DB652}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0C8AAAD8-8167-4ABE-B2CB-1F6E027DB652}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28EA888B-EBC8-4D57-9C26-FA0366A2798C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28EA888B-EBC8-4D57-9C26-FA0366A2798C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28EA888B-EBC8-4D57-9C26-FA0366A2798C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28EA888B-EBC8-4D57-9C26-FA0366A2798C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -258,6 +264,7 @@ Global
 		{8D956F16-AF4F-420D-B941-14C617D662DF} = {08B000A7-FAD9-4E63-A202-BBC3D6ECBB7E}
 		{3773792A-E3BB-4558-B777-3719B31E83EB} = {9E8E6F41-17E2-487E-A1F3-165E63694C21}
 		{0C8AAAD8-8167-4ABE-B2CB-1F6E027DB652} = {9E8E6F41-17E2-487E-A1F3-165E63694C21}
+		{28EA888B-EBC8-4D57-9C26-FA0366A2798C} = {9E8E6F41-17E2-487E-A1F3-165E63694C21}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8C725E23-CD54-4600-9DE7-67837E486BA6}

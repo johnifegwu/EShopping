@@ -1,5 +1,8 @@
 using Asp.Versioning;
 using eShopping.ExceptionHandling;
+using eShopping.MailMan.Interfaces;
+using eShopping.MailMan.Models;
+using eShopping.MailMan.Services;
 using eShopping.Models;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -28,8 +31,13 @@ builder.Services.AddApiVersioning(o =>
 //Add Exception handlers
 builder.Services.AddExceptionHadlers();
 
-//Add default config
+//Add config
 builder.Services.Configure<DefaultConfig>(builder.Configuration.GetSection("configs"));
+
+//Add EmailSettings
+builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
+builder.Services.AddScoped<IEmailService, EmailService>();
+
 //Add Exception handlers
 builder.Services.AddExceptionHadlers();
 

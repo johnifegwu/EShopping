@@ -7,5 +7,7 @@
 
         public const string BillingAddressType = "Billing Address";
         public const string ShippingAddressType = "Shipping Address";
+
+        public const string ForgotEmailTemplate = "forgotemailtemplate";
     }
 }

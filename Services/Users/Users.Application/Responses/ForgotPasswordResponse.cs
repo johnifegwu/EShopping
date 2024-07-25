@@ -5,5 +5,6 @@ namespace Users.Application.Responses
     {
         public string GUID { get; set; } = default!;
         public DateTime GUIDExpiryDate { get; set; }
+        public string UserName { get; set; } = default!;
     }
 }

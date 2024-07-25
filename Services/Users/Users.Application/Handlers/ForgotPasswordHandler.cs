@@ -2,7 +2,6 @@
 using Data.Repositories;
 using eShopping.Exceptions;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using Users.Application.Commands;
 using Users.Application.Extensions;
 using Users.Application.Responses;
@@ -41,6 +40,7 @@ namespace Users.Application.Handlers
             {
                 GUID = guid,
                 GUIDExpiryDate = expiryDate,
+                UserName = user.UserName
             };
         }
     }
