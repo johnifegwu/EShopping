@@ -2,6 +2,7 @@
 using eShopping.Constants;
 using FluentValidation;
 using Users.Application.Commands;
+using Users.Application.Validators.SubValidators;
 
 namespace Users.Application.Validators
 {
