@@ -6,6 +6,6 @@ namespace Users.Application.Requests
         public string UserName { get; set; } = default!;
         public string UserEmail { get; set; } = default!;
         public string Password { get; set; } = default!;
-        public List<AddressRequest>? Addresses { get; set; }
+        public List<CreateUserAddressRequest>? Addresses { get; set; }
     }
 }

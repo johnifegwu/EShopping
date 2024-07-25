@@ -78,7 +78,7 @@ namespace Users.API.Controllers
         }
 
         /// <summary>
-        /// Creates a new Admin User with Adminand Customer roles in the system.
+        /// Creates a new Admin User with Admin and Customer roles in the system.
         /// </summary>
         /// <param name="payload">Create User Request object.</param>
         /// <returns cref="UserResponse">User Response object.</returns>

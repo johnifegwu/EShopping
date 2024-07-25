@@ -11,8 +11,9 @@ namespace Ordering.Application.Mappers
         public UsersMappingProfile()
         {
             //Setup mapping for responses
-            CreateMap<UserAddress, AddressRequest>().ReverseMap();
+            CreateMap<UserAddress, CreateUserAddressRequest>().ReverseMap();
             CreateMap<User, UserResponse>().ReverseMap();
+            CreateMap<UserAddress, UserAddressResponse>().ReverseMap();
         }
     }
 }

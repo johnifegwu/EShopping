@@ -42,6 +42,12 @@ namespace Users.Application.Handlers
                 }
             }
 
+            //Check Max User Addresses
+            if(request.Payload.Addresses != null && request.Payload.Addresses.Count > _config.MaxAddressPerUser)
+            {
+                throw new MaximumAddressException($"You are only allowed to have not more than {_config.MaxAddressPerUser} addresses.");
+            }
+
             //Fetch roles and address type
             var roles = await _unitOfWork.Repository<Role>().Read().ToListAsync();
             var addressTypes = await _unitOfWork.Repository<AddressType>().Read().ToListAsync();
@@ -82,6 +88,8 @@ namespace Users.Application.Handlers
                 {
                     item.UserId = user.Id;
                     item.AddressTypeId = (addressTypes.FirstOrDefault(x => x.Id == item.AddressTypeId) != null) ? item.AddressTypeId : addressTypes.FirstOrDefault().Id;
+                    item.CreatedBy = user.UserName; 
+                    item.CreatedDate = DateTime.UtcNow;
                 }
 
                 await _unitOfWork.Repository<UserAddress>().AddRangeAsync(addresses);

@@ -2,7 +2,6 @@
 using eShopping.Constants;
 using FluentValidation;
 using Users.Application.Commands;
-using Users.Application.Requests;
 
 namespace Users.Application.Validators
 {
@@ -31,39 +30,8 @@ namespace Users.Application.Validators
             .Matches("[0-9]").WithMessage("Password must contain at least one numeric character.")
             .Matches("[^a-zA-Z0-9]").WithMessage("Password must contain at least one special character.");
 
-            RuleForEach(x => x.Payload.Addresses).SetValidator(new AddressRequestValidator());
+            RuleForEach(x => x.Payload.Addresses).SetValidator(new CreateUserAddressRequestValidator());
         }
     }
 
-    public class AddressRequestValidator : AbstractValidator<AddressRequest>
-    {
-        public AddressRequestValidator()
-        {
-            RuleFor(x => x.AddressTypeId)
-                .GreaterThan(0).WithMessage("AddressTypeId must be greater than 0.");
-
-            RuleFor(x => x.AddressLine1)
-                .NotEmpty().WithMessage("AddressLine1 must not be empty.");
-
-            RuleFor(x => x.AddressLine2)
-                .NotEmpty().When(x => !string.IsNullOrEmpty(x.AddressLine2))
-                .WithMessage("AddressLine2 must not be empty if provided.");
-
-            RuleFor(x => x.City)
-                .NotEmpty().When(x => !string.IsNullOrEmpty(x.City))
-                .WithMessage("City must not be empty if provided.");
-
-            RuleFor(x => x.State)
-                .NotEmpty().When(x => !string.IsNullOrEmpty(x.State))
-                .WithMessage("State must not be empty if provided.");
-
-            RuleFor(x => x.ZipCode)
-                .NotEmpty().When(x => !string.IsNullOrEmpty(x.ZipCode))
-                .WithMessage("ZipCode must not be empty if provided.");
-
-            RuleFor(x => x.Country)
-                .NotEmpty().When(x => !string.IsNullOrEmpty(x.Country))
-                .WithMessage("Country must not be empty if provided.");
-        }
-    }
 }
