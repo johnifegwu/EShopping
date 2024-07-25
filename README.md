@@ -1,3 +1,4 @@
 
 eShopping Microservices
-![eShopping Architecture](https://github.com/user-attachments/assets/8fb61e4f-f517-4145-ad35-a7a7c5dc2c92)
+
+![eShopping Architecture (1)](https://github.com/user-attachments/assets/6b09c313-792e-4807-a0a5-f43675592e11)
