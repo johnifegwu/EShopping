@@ -1,7 +1,10 @@
 ﻿
 using Data.Repositories;
 using eShopping.Exceptions;
+using eShopping.MailMan.Interfaces;
+using eShopping.Models;
 using MediatR;
+using Microsoft.Extensions.Logging;
 using Ordering.Application.Commands;
 using Ordering.Application.Extensions;
 using Ordering.Application.Mappers;
@@ -14,10 +17,14 @@ namespace Ordering.Application.Handlers
     public class ShippOrderHandler : IRequestHandler<ShippOrderCommand, OrderResponse>
     {
         private readonly IUnitOfWorkCore _unitOfWork;
+        private readonly IEmailService _emailService;
+        private readonly ILogger<ShippOrderHandler> _logger;
 
-        public ShippOrderHandler(IUnitOfWorkCore unitOfWork)
+        public ShippOrderHandler(IUnitOfWorkCore unitOfWork, IEmailService emailService, ILogger<ShippOrderHandler> logger)
         {
             this._unitOfWork = unitOfWork;
+            this._emailService = emailService;
+            this._logger = logger;
         }
 
         public async Task<OrderResponse> Handle(ShippOrderCommand request, CancellationToken cancellationToken)
@@ -40,6 +47,24 @@ namespace Ordering.Application.Handlers
             order.LastModifiedBy = request.UserName;
             order.LastModifiedDate = DateTime.UtcNow;
             await _unitOfWork.Repository<Order>().UpdateAsync(order, cancellationToken);
+            
+            try
+            {
+                //Notifiy Customer
+                var emailModel = new OrderEmailModel()
+                {
+                    OrderId = order.Id,
+                    CustomerEmail = request.OwnerEmail,
+                    CustomerName = request.OwnerUserName
+                };
+
+                await _emailService.SendEmailAsync(emailModel.CustomerEmail, $"Order number {order.Id} has been shipped : eShopping", eShopping.Constants.NameConstants.OrderShippedEmailTemplate, emailModel);
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+            }
 
             return OrderingMapper.Mapper.Map<OrderResponse>(order);
         }

@@ -1,10 +1,8 @@
 ﻿using Data.Repositories;
 using eShopping.Exceptions;
 using eShopping.Models;
-using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.Data;
 using System.IdentityModel.Tokens.Jwt;
@@ -17,7 +15,6 @@ namespace Users.Application.Extensions
 {
     public static class UserExtensions
     {
-        private const int ExpiryDurationDays = 90;
 
         /// <summary>
         /// Authenticates the user and returns a bearer token and other details.
@@ -161,7 +158,7 @@ namespace Users.Application.Extensions
                 issuer: config.JWTIssuer,
                 audience: config.JWTAudience,
                 claims: claims,
-                expires: DateTime.Now.AddMonths(config.PaswordExpiryMonths),
+                expires: DateTime.Now.AddMonths(config.BearerTokenExpiryMonths),
                 signingCredentials: credentials);
 
             var bearer = new JwtSecurityTokenHandler().WriteToken(token);

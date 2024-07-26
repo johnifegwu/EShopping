@@ -14,6 +14,7 @@ namespace Ordering.Application.Mappers
             CreateMap<UserAddress, CreateUserAddressRequest>().ReverseMap();
             CreateMap<User, UserResponse>().ReverseMap();
             CreateMap<UserAddress, UserAddressResponse>().ReverseMap();
+            CreateMap<AddressType, AddressTypeResponse>().ReverseMap();
         }
     }
 }

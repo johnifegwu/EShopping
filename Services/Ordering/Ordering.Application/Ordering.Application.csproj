@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Libraries\eShopping.Constants\eShopping.Constants.csproj" />
+    <ProjectReference Include="..\..\..\Libraries\eShopping.MailMan\eShopping.MailMan.csproj" />
     <ProjectReference Include="..\Ordering.Core\Ordering.Core.csproj" />
   </ItemGroup>
 

@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.OpenApi.Models;
+using eShopping.MailMan.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +26,9 @@ builder.Services.AddApiVersioning(o =>
 
 //Add Exception handlers
 builder.Services.AddExceptionHadlers();
+
+//Add emailService
+builder.Services.AddEmailService(builder.Configuration, "EmailSettings");
 
 var conString = builder.Configuration["ConnectionStrings:OrderingDbConnection"];
 builder.Services.AddHealthChecks().AddSqlServer(conString, "Catalog Sql Server Helth Check", tags: new[] { "infra" });

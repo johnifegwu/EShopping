@@ -12,6 +12,7 @@
         public string defaultUserPassword { get; set; } = default!;
         public string DiscountRpcHost { get; set; } = default!;
         public int PaswordExpiryMonths { get; set; } = 6;
+        public int BearerTokenExpiryMonths { get; set; } = 1;
         public int? MaxAddressPerUser { get; set; } = 5;
     }
 }

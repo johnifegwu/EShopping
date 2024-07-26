@@ -1,8 +1,6 @@
 using Asp.Versioning;
 using eShopping.ExceptionHandling;
-using eShopping.MailMan.Interfaces;
-using eShopping.MailMan.Models;
-using eShopping.MailMan.Services;
+using eShopping.MailMan.Extensions;
 using eShopping.Models;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -34,9 +32,8 @@ builder.Services.AddExceptionHadlers();
 //Add config
 builder.Services.Configure<DefaultConfig>(builder.Configuration.GetSection("configs"));
 
-//Add EmailSettings
-builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
-builder.Services.AddScoped<IEmailService, EmailService>();
+//Add emailService
+builder.Services.AddEmailService(builder.Configuration, "EmailSettings");
 
 //Add Exception handlers
 builder.Services.AddExceptionHadlers();

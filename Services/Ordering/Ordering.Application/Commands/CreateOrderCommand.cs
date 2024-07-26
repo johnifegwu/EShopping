@@ -11,6 +11,7 @@ namespace Ordering.Application.Commands
         /// Current user.
         /// </summary>
         public string UserName { get; set; } = default!;
+        public string UserEmail { get; set; } = default!;
         public CreateOrderRequest Payload { get; set; } = default!;
     }
 }

@@ -26,7 +26,7 @@ namespace eShopping.Security
 
         public UserClaims(ClaimsPrincipal principal)
         {
-            this.UserName = principal.Claims.FirstOrDefault(c => c.Type == "sub")?.Value;
+            this.UserName = principal.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
             this.Email = principal.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
             var roles = principal.Claims.Where(c => c.Type == ClaimTypes.Role).ToList();
             this.Roles = roles.Select(c => c.Value).ToList();

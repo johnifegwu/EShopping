@@ -3,7 +3,6 @@ using Data.Repositories;
 using eShopping.Exceptions;
 using eShopping.Models;
 using MediatR;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Users.Application.Commands;
@@ -37,8 +36,8 @@ namespace Users.Application.Handlers
                 throw new ExpiredPasswordException("GUID has expired.");
             }
 
-            user.PasswordSalt = request.Password.GenerateSalt();
-            user.PasswordHash = request.Password.HashPassword(user.PasswordSalt);
+            user.PasswordSalt = request.NewPassword.GenerateSalt();
+            user.PasswordHash = request.NewPassword.HashPassword(user.PasswordSalt);
             user.PasswordExpiryDate = DateTime.UtcNow.AddMonths(_config.PaswordExpiryMonths);
             user.CreatedBy = user.UserName;
             user.CreatedDate = DateTime.UtcNow;

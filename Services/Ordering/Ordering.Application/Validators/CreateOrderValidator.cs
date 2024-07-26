@@ -14,6 +14,9 @@ namespace Ordering.Application.Validators
             RuleFor(x => x.UserName).NotEmpty().WithMessage("Username not provided")
                 .Equal(x => x.Payload.UserName).WithMessage("You can not create order for another user.");
             
+            RuleFor(x => x.UserEmail).NotEmpty().WithMessage("Email not provided")
+                .EmailAddress().WithMessage("Email must be a valid email address.");
+
             RuleFor(x => x.Payload.OrderDetails).NotNull().WithMessage("Order details can not be null.");
             
             RuleFor(x => x.Payload.OrderDetails.Count).GreaterThan(0).WithMessage("Order details can not be empty.");

@@ -3,7 +3,6 @@ using Data.Repositories;
 using eShopping.Exceptions;
 using eShopping.Models;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Users.Application.Commands;
 using Users.Application.Extensions;

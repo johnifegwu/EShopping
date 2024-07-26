@@ -8,7 +8,7 @@ using eShopping.MailMan.Models;
 
 namespace eShopping.MailMan.Services
 {
-    public class EmailService : IEmailService
+    internal class EmailService : IEmailService
     {
         private readonly EmailSettings _emailSettings;
         private readonly RazorLightEngine _razorLightEngine;
@@ -24,7 +24,7 @@ namespace eShopping.MailMan.Services
 
         public async Task SendEmailAsync(string toEmail, string subject, string templateName, object model)
         {
-            var templatePath = $"EmailTemplates/{templateName}.cshtml";
+            var templatePath = $"{_emailSettings.EmailTemplatesFolder}/{templateName}.cshtml";
             var emailBody = await _razorLightEngine.CompileRenderAsync(templatePath, model);
 
             var message = new MimeMessage();

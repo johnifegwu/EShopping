@@ -1,16 +1,17 @@
 ﻿using eShopping.MailMan.Interfaces;
-using eShopping.MailMan.Models;
+using eShopping.Models;
 using eShopping.Security;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Org.BouncyCastle.Asn1.Ocsp;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Net;
 using Users.API.Constants;
 using Users.Application.Commands;
+using Users.Application.Queries;
 using Users.Application.Requests;
 using Users.Application.Responses;
+using Users.Core.Entities;
 
 namespace Users.API.Controllers
 {
@@ -22,15 +23,63 @@ namespace Users.API.Controllers
     {
         private readonly IMediator _mediator;
         private readonly IEmailService _emailService;
+        private readonly ILogger<UsersController> _logger;
 
-        public UsersController(IMediator mediator, IEmailService emailService)
+        public UsersController(IMediator mediator, IEmailService emailService, ILogger<UsersController> logger)
         {
             this._mediator = mediator;
             this._emailService = emailService;
+            this._logger = logger;
         }
 
         #region "Query"
 
+        /// <summary>
+        /// Gets all the Address Types in the system.
+        /// </summary>
+        /// <returns cref="AddressTypeResponse">A list of Address Type Response object.</returns>
+        [HttpGet]
+        [Route("GetAddressTypes")]
+        [ProducesResponseType(typeof(List<AddressTypeResponse>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.InternalServerError)]
+        [SwaggerOperation(Tags = new[] { NameConstants.UsersQuerySwaggerName })]
+        public async Task<ActionResult> GetAddressTypes()
+        {
+            var result = await _mediator.Send(new GetAddressTypesQuery());
+
+            return Ok(result);
+        }
+
+
+        /// <summary>
+        /// Gets all the addresses that belongs to the current user.
+        /// </summary>
+        /// <param name="pageIndex">Page index (default is 1).</param>
+        /// <param name="pageSize">Page size (default is 5).</param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("GetUserAddresses")]
+        [ProducesResponseType(typeof(List<UserAddressResponse>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.InternalServerError)]
+        [SwaggerOperation(Tags = new[] { NameConstants.UsersQuerySwaggerName })]
+        [Authorize(Roles = "Admin, Customer")]
+        public async Task<ActionResult> GetUserAddresses(
+            [FromQuery]int pageIndex = 1,
+            [FromQuery]int pageSize = 5)
+        {
+            var result = await _mediator.Send(new GetUserAddressesQuery
+            {
+                CurrentUser = User.GetUserClaims(),
+                PageIndex = pageIndex,
+                PageSize = pageSize
+            });
+
+            return Ok(result);
+        }
 
         #endregion
 
@@ -107,6 +156,30 @@ namespace Users.API.Controllers
             return Ok(result);
         }
 
+        /// <summary>
+        /// Removes the given user from the Admin role.
+        /// </summary>
+        /// <param name="username">User to be removed from admin role.</param>
+        /// <returns>Boolean value.</returns>
+        [HttpPatch]
+        [Route("[action]/{username}",Name = "RemoveUserFromadminRole")]
+        [ProducesResponseType(typeof(bool), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.InternalServerError)]
+        [SwaggerOperation(Tags = new[] { NameConstants.UsersCommandSwaggerName })]
+        [Authorize(Roles = "Admin")]
+        public async Task<ActionResult> RemoveUserFromadminRole(string username)
+        {
+            var result = await _mediator.Send(new RemoveUserFromAdminRoleCommand
+            {
+                CurrentUser = User.GetUserClaims(),
+                UserName = username
+            });
+
+            return Ok(result);
+        }
+
 
         /// <summary>
         /// Adds the given address to a collection of addresses for the given user in the system.
@@ -134,6 +207,56 @@ namespace Users.API.Controllers
 
 
         /// <summary>
+        /// Updates the provided modified address of the current user.
+        /// </summary>
+        /// <param name="payload">Modified address.</param>
+        /// <returns></returns>
+        [HttpPatch]
+        [Route("UpdateUserAddress")]
+        [ProducesResponseType(typeof(UserAddressResponse), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.InternalServerError)]
+        [SwaggerOperation(Tags = new[] { NameConstants.UsersCommandSwaggerName })]
+        [Authorize(Roles = "Customer, Admin")]
+        public async Task<ActionResult> UpdateUserAddress([FromBody] UpdateUserAddressRequest payload)
+        {
+            var result = await _mediator.Send(new UpdateUserAddressCommand
+            {
+                CurrentUser = User.GetUserClaims(),
+                Payload = payload
+            });
+
+            return Ok(result);
+        }
+
+
+        /// <summary>
+        /// Deletes the provided address of the current user from the system.
+        /// </summary>
+        /// <param name="id">Address Id.</param>
+        /// <returns>Boolean Value.</returns>
+        [HttpDelete]
+        [Route("[action]/{id}", Name = "DeleteUserAddress")]
+        [ProducesResponseType(typeof(bool), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.InternalServerError)]
+        [SwaggerOperation(Tags = new[] { NameConstants.UsersCommandSwaggerName })]
+        [Authorize(Roles = "Customer, Admin")]
+        public async Task<ActionResult> DeleteUserAddress(int id)
+        {
+            var result = await _mediator.Send(new DeleteUserAddressCommand
+            {
+                CurrentUser = User.GetUserClaims(),
+                AddressId = id
+            });
+
+            return Ok(result);
+        }
+
+
+        /// <summary>
         /// Creates a time limited Guid for which is sent to the user email
         /// as part of the link which the user will use to initiate the password change.
         /// </summary>
@@ -141,7 +264,7 @@ namespace Users.API.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("ForgotPassword")]
-        [ProducesResponseType(typeof(ForgotPasswordResponse), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(bool), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.BadRequest)]
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.NotFound)]
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.InternalServerError)]
@@ -150,14 +273,65 @@ namespace Users.API.Controllers
         {
             var result = await _mediator.Send(payload);
 
-            //Notify User via Email
-            await _emailService.SendEmailAsync(payload.Email, "Forgot Password : eShopping", eShopping.Constants.NameConstants.ForgotEmailTemplate, new ForgotPasswordModel()
+            try
             {
-                Email = payload.Email,
-                UserName = result.UserName,
-                Guid = result.GUID,
-                ChangePasswordUrl = $"https://eshopping.com/security/changepwd-by-guid/{result.GUID}"
-            });
+                //Notify User via Email
+                await _emailService.SendEmailAsync(payload.Email, "Forgot Password : eShopping", eShopping.Constants.NameConstants.ForgotEmailTemplate, new ForgotPasswordModel()
+                {
+                    Email = payload.Email,
+                    UserName = result.UserName,
+                    Guid = result.GUID,
+                    ChangePasswordUrl = $"https://eshopping.com/security/changepwd-by-guid/{result.GUID}"
+                });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+            }
+
+            return Ok(true);
+        }
+
+
+        /// <summary>
+        /// Attempts to change the users password with the Guid sent to the users email previously.
+        /// </summary>
+        /// <param name="payload">Guid and Password</param>
+        /// <returns></returns>
+        [HttpPatch]
+        [Route("ChangePasswordByGUID")]
+        [ProducesResponseType(typeof(bool), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.InternalServerError)]
+        [SwaggerOperation(Tags = new[] { NameConstants.UsersCommandSwaggerName })]
+        public async Task<ActionResult> ChangePasswordByGUID([FromBody] ChangePasswordByGUIDCommand payload)
+        {
+            var result = await _mediator.Send(payload);
+
+            return Ok(result);
+        }
+
+
+        /// <summary>
+        /// Attemps to change the password of the current user.
+        /// </summary>
+        /// <param name="payload">Old and New Passwords</param>
+        /// <returns cref="UserLoginResponse">User Login Response object</returns>
+        [HttpPatch]
+        [Route("ChangePassword")]
+        [ProducesResponseType(typeof(UserLoginResponse), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.InternalServerError)]
+        [SwaggerOperation(Tags = new[] { NameConstants.UsersCommandSwaggerName })]
+        [Authorize(Roles = "Customer, Admin")]
+        public async Task<ActionResult> ChangePassword([FromBody]ChangePasswordCommand payload)
+        {
+            //Get current user's UserName.
+            payload.UserName = User.GetUserClaims()?.UserName;
+
+            var result = await _mediator.Send(payload);
 
             return Ok(result);
         }

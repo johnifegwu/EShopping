@@ -1,0 +1,15 @@
+﻿@model eShopping.Models.OrderEmailModel
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Order Shipped : eShopping</title>
+</head>
+<body>
+    <h1>Hello, @Model.CustomerName</h1>
+    <p>We have shipped your order number @Model.OrderId.
+        <br /><br />Here are the shipping details:
+        <br />@Model.ShippingDetails
+    </p>
+</body>
+</html>

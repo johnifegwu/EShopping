@@ -83,7 +83,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eShopping.Constants", "Libr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eShopping.Security", "Libraries\eShopping.Security\eShopping.Security.csproj", "{0C8AAAD8-8167-4ABE-B2CB-1F6E027DB652}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eShopping.MailMan", "Libraries\eShopping.MailMan\eShopping.MailMan.csproj", "{28EA888B-EBC8-4D57-9C26-FA0366A2798C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eShopping.MailMan", "Libraries\eShopping.MailMan\eShopping.MailMan.csproj", "{28EA888B-EBC8-4D57-9C26-FA0366A2798C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
