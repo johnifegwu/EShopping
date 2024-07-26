@@ -9,8 +9,34 @@
     <DockerfileContext>..\..\..</DockerfileContext>
   </PropertyGroup>
 
+  <PropertyGroup>
+	<PreserveCompilationContext>true</PreserveCompilationContext>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="EmailTemplates\ordercanceledtemailtemplate.cshtml" />
+    <Content Remove="EmailTemplates\orderpaymentreceivedtemailtemplate.cshtml" />
+    <Content Remove="EmailTemplates\orderplacedtemailtemplate.cshtml" />
+    <Content Remove="EmailTemplates\ordershippedtemailtemplate.cshtml" />
+  </ItemGroup>
+
   <ItemGroup>
     <None Remove="aspnetapp.pfx" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="EmailTemplates\ordercanceledtemailtemplate.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EmailTemplates\orderpaymentreceivedtemailtemplate.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EmailTemplates\orderplacedtemailtemplate.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EmailTemplates\ordershippedtemailtemplate.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>

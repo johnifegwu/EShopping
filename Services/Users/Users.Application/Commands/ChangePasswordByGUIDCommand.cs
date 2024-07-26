@@ -1,11 +1,11 @@
 ﻿
 using MediatR;
+using Users.Application.Requests;
 
 namespace Users.Application.Commands
 {
     public class ChangePasswordByGUIDCommand : IRequest<bool>
     {
-        public string GUID { get; set; } = default!;
-        public string NewPassword { get; set; } = default!;
+        public ChangePasswordByGUIDRequest Payload { get; set; } = default!;
     }
 }

@@ -40,7 +40,7 @@ namespace Users.Application.Handlers
             address.LastModifiedDate = DateTime.UtcNow;
             address.LastModifiedBy = user.UserName;
             address.AddressLine1 = request.Payload.AddressLine1;
-            address.AddressLine2 = request.Payload.AddressLine1;
+            address.AddressLine2 = request.Payload.AddressLine2;
             address.Country = request.Payload.Country;
             address.City = request.Payload.City;
             address.State = request.Payload.State;

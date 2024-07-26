@@ -22,14 +22,10 @@ namespace Users.API.Controllers
     public class UsersController : BaseController
     {
         private readonly IMediator _mediator;
-        private readonly IEmailService _emailService;
-        private readonly ILogger<UsersController> _logger;
 
-        public UsersController(IMediator mediator, IEmailService emailService, ILogger<UsersController> logger)
+        public UsersController(IMediator mediator)
         {
             this._mediator = mediator;
-            this._emailService = emailService;
-            this._logger = logger;
         }
 
         #region "Query"
@@ -288,33 +284,20 @@ namespace Users.API.Controllers
         /// <param name="payload">Forgot Password Request object.</param>
         /// <returns></returns>
         [HttpPost]
-        [Route("ForgotPassword")]
+        [Route("[action]/{email}", Name ="ForgotPassword")]
         [ProducesResponseType(typeof(bool), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.BadRequest)]
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.NotFound)]
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.InternalServerError)]
         [SwaggerOperation(Tags = new[] { NameConstants.UsersCommandSwaggerName })]
-        public async Task<ActionResult> ForgotPassword([FromBody] ForgotPasswordCommand payload)
+        public async Task<ActionResult> ForgotPassword(string email)
         {
-            var result = await _mediator.Send(payload);
-
-            try
+            var result = await _mediator.Send(new ForgotPasswordCommand
             {
-                //Notify User via Email
-                await _emailService.SendEmailAsync(payload.Email, "Forgot Password : eShopping", eShopping.Constants.NameConstants.ForgotEmailTemplate, new ForgotPasswordModel()
-                {
-                    Email = payload.Email,
-                    UserName = result.UserName,
-                    Guid = result.GUID,
-                    ChangePasswordUrl = $"https://eshopping.com/security/changepwd-by-guid/{result.GUID}"
-                });
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex.Message, ex);
-            }
+                Email = email
+            });
 
-            return Ok(true);
+            return Ok(result);
         }
 
 
@@ -330,9 +313,12 @@ namespace Users.API.Controllers
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.NotFound)]
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.InternalServerError)]
         [SwaggerOperation(Tags = new[] { NameConstants.UsersCommandSwaggerName })]
-        public async Task<ActionResult> ChangePasswordByGUID([FromBody] ChangePasswordByGUIDCommand payload)
+        public async Task<ActionResult> ChangePasswordByGUID([FromBody] ChangePasswordByGUIDRequest payload)
         {
-            var result = await _mediator.Send(payload);
+            var result = await _mediator.Send(new ChangePasswordByGUIDCommand
+            {
+                Payload = payload
+            });
 
             return Ok(result);
         }
@@ -351,12 +337,14 @@ namespace Users.API.Controllers
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.InternalServerError)]
         [SwaggerOperation(Tags = new[] { NameConstants.UsersCommandSwaggerName })]
         [Authorize(Roles = "Customer, Admin")]
-        public async Task<ActionResult> ChangePassword([FromBody]ChangePasswordCommand payload)
+        public async Task<ActionResult> ChangePassword([FromBody]ChangePasswordRequest payload)
         {
-            //Get current user's UserName.
-            payload.UserName = User.GetUserClaims()?.UserName;
 
-            var result = await _mediator.Send(payload);
+            var result = await _mediator.Send(new ChangePasswordCommand
+            {
+                CurrentUser = User.GetUserClaims(),
+                Payload = payload
+            });
 
             return Ok(result);
         }

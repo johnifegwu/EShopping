@@ -1,5 +1,4 @@
-﻿
-using FluentValidation;
+﻿using FluentValidation;
 using Users.Application.Commands;
 
 namespace Users.Application.Validators
@@ -10,7 +9,7 @@ namespace Users.Application.Validators
         {
             RuleFor(x => x.Email)
             .NotEmpty().WithMessage("Email must not be empty.")
-            .EmailAddress().WithMessage("Email must be a valid email address.");
+            .Matches(@"^[^@\s]+@[^@\s]+\.[^@\s]+$").WithMessage("Email must be a valid email address.");
         }
     }
 }

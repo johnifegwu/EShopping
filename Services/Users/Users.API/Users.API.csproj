@@ -9,6 +9,10 @@
     <DockerfileContext>..\..\..</DockerfileContext>
   </PropertyGroup>
 
+  <PropertyGroup>
+	<PreserveCompilationContext>true</PreserveCompilationContext>
+  </PropertyGroup>
+
   <ItemGroup>
     <Content Remove="EmailTemplates\forgotemailtemplate.cshtml" />
   </ItemGroup>
@@ -34,7 +38,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Libraries\eShopping.ExceptionHandling\eShopping.AspNetCore.ExceptionHandling.csproj" />
-    <ProjectReference Include="..\..\..\Libraries\eShopping.MailMan\eShopping.MailMan.csproj" />
     <ProjectReference Include="..\Users.Application\Users.Application.csproj" />
     <ProjectReference Include="..\Users.Infrastructure\Users.Infrastructure.csproj" />
   </ItemGroup>
@@ -43,9 +46,9 @@
     <Resource Include="aspnetapp.pfx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="EmailTemplates\forgotemailtemplate.cshtml">
+    <EmbeddedResource Include="EmailTemplates\forgotemailtemplate.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>

@@ -28,7 +28,7 @@ builder.Services.AddApiVersioning(o =>
 builder.Services.AddExceptionHadlers();
 
 //Add emailService
-builder.Services.AddEmailService(builder.Configuration, "EmailSettings");
+builder.Services.AddEmailService(builder.Configuration, "EmailSettings", Assembly.GetExecutingAssembly());
 
 var conString = builder.Configuration["ConnectionStrings:OrderingDbConnection"];
 builder.Services.AddHealthChecks().AddSqlServer(conString, "Catalog Sql Server Helth Check", tags: new[] { "infra" });

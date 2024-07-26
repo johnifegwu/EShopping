@@ -3,6 +3,7 @@ using Data.Repositories;
 using eShopping.Constants;
 using eShopping.Exceptions;
 using eShopping.Models;
+using eShopping.Security;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -27,6 +28,11 @@ namespace Users.Application.Handlers
 
         public async Task<UserResponse> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
+            //Fluent Validation is failing for email and other regex
+            //So we revalidate here just incase it fails.
+            request.Payload.UserEmail.ValidateEmail();
+            request.Payload.Password.ValidatePassword();
+
             //check if UserName or Email already exist.
             var user = await _unitOfWork.Repository<User>().Read().Where(x => x.UserName == request.Payload.UserName || x.UserEmail == request.Payload.UserEmail).FirstOrDefaultAsync();
 

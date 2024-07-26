@@ -5,26 +5,24 @@ using RazorLight;
 using Microsoft.Extensions.Options;
 using eShopping.MailMan.Interfaces;
 using eShopping.MailMan.Models;
+using System.Reflection;
 
 namespace eShopping.MailMan.Services
 {
     internal class EmailService : IEmailService
     {
         private readonly EmailSettings _emailSettings;
-        private readonly RazorLightEngine _razorLightEngine;
+        private readonly IRazorLightEngine _razorLightEngine;
 
-        public EmailService(IOptions<EmailSettings> emailSettings)
+        public EmailService(IOptions<EmailSettings> emailSettings, IRazorLightEngine razorLightEngine)
         {
             _emailSettings = emailSettings.Value;
-            _razorLightEngine = new RazorLightEngineBuilder()
-                .UseEmbeddedResourcesProject(typeof(EmailService))
-                .UseMemoryCachingProvider()
-                .Build();
+            _razorLightEngine = razorLightEngine;
         }
 
         public async Task SendEmailAsync(string toEmail, string subject, string templateName, object model)
         {
-            var templatePath = $"{_emailSettings.EmailTemplatesFolder}/{templateName}.cshtml";
+            var templatePath = $"{_emailSettings.EmailTemplatesFolder}.{templateName}.cshtml";
             var emailBody = await _razorLightEngine.CompileRenderAsync(templatePath, model);
 
             var message = new MimeMessage();

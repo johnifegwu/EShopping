@@ -1,10 +1,9 @@
 ﻿
 using MediatR;
-using Users.Application.Responses;
 
 namespace Users.Application.Commands
 {
-    public class ForgotPasswordCommand : IRequest<ForgotPasswordResponse>
+    public class ForgotPasswordCommand : IRequest<bool>
     {
         public string Email { get; set; } = default!;
     }

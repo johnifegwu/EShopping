@@ -2,6 +2,7 @@
 using Data.Repositories;
 using eShopping.Exceptions;
 using eShopping.Models;
+using eShopping.Security;
 using MediatR;
 using Microsoft.Extensions.Options;
 using Users.Application.Commands;
@@ -23,7 +24,11 @@ namespace Users.Application.Handlers
         }
         public async Task<UserLoginResponse> Handle(ChangePasswordCommand request, CancellationToken cancellationToken)
         {
-            var user = await _unitOfWork.GetUser(request.UserName);
+            //Fluent Validation is failing for email and other regex
+            //So we revalidate here just incase it fails.
+            request.Payload.NewPassword.ValidatePassword();
+
+            var user = await _unitOfWork.GetUser(request.CurrentUser.UserName);
 
             if (user == null)
             {
@@ -33,13 +38,13 @@ namespace Users.Application.Handlers
             var userRoles = await _unitOfWork.GetUserRoles(user.Id);
 
             //Validate password
-            if (user.PasswordHash != request.OldPassword.HashPassword(user.PasswordSalt))
+            if (user.PasswordHash != request.Payload.OldPassword.HashPassword(user.PasswordSalt))
             {
                 throw new NotAuthorizedException("Invalid password.");
             }
 
-            user.PasswordSalt = request.NewPassword.GenerateSalt();
-            user.PasswordHash = request.NewPassword.HashPassword(user.PasswordSalt);
+            user.PasswordSalt = request.Payload.NewPassword.GenerateSalt();
+            user.PasswordHash = request.Payload.NewPassword.HashPassword(user.PasswordSalt);
             user.PasswordExpiryDate = DateTime.UtcNow.AddMonths(_config.PaswordExpiryMonths);
             user.CreatedBy = user.UserName;
             user.CreatedDate = DateTime.UtcNow;

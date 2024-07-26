@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Libraries\eShopping.Constants\eShopping.Constants.csproj" />
+    <ProjectReference Include="..\..\..\Libraries\eShopping.MailMan\eShopping.MailMan.csproj" />
     <ProjectReference Include="..\Users.Core\Users.Core.csproj" />
   </ItemGroup>
 
