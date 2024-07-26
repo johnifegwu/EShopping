@@ -149,8 +149,33 @@ namespace Users.API.Controllers
             var result = await _mediator.Send(new CreateUserCommand
             {
                 CurrentUser = User.GetUserClaims(),
-                IsAdminUser = false,
+                IsAdminUser = true, //Set to true add this user to Admin role
                 Payload = payload
+            });
+
+            return Ok(result);
+        }
+
+
+        /// <summary>
+        /// Add the given user to the admin role.
+        /// </summary>
+        /// <param name="username">User to be removed from admin role.</param>
+        /// <returns>Boolean Value.</returns>
+        [HttpPost]
+        [Route("[action]/{username}", Name = "AddUserToAdminRole")]
+        [ProducesResponseType(typeof(bool), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.InternalServerError)]
+        [SwaggerOperation(Tags = new[] { NameConstants.UsersCommandSwaggerName })]
+        [Authorize(Roles = "Admin")]
+        public async Task<ActionResult> AddUserToAdminRole(string username)
+        {
+            var result = await _mediator.Send(new AddUserToAdminRoleCommand
+            {
+                CurrentUser = User.GetUserClaims(),
+                UserName = username
             });
 
             return Ok(result);
@@ -162,7 +187,7 @@ namespace Users.API.Controllers
         /// <param name="username">User to be removed from admin role.</param>
         /// <returns>Boolean value.</returns>
         [HttpPatch]
-        [Route("[action]/{username}",Name = "RemoveUserFromadminRole")]
+        [Route("[action]/{username}",Name = "RemoveUserFromAdminRole")]
         [ProducesResponseType(typeof(bool), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.BadRequest)]
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.NotFound)]
