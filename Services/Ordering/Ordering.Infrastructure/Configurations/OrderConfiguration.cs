@@ -14,7 +14,9 @@ namespace Ordering.Infrastructure.Configurations
             entity.HasKey(x => x.Id).HasName("PK_order");
             entity.Property(x => x.Id).HasColumnName("order_id").ValueGeneratedOnAdd();
             entity.Property(x => x.UserName).HasColumnName("user_name").HasMaxLength(255);
-            entity.Property(x => x.TotalPrice).HasColumnName("total_pricae").HasColumnType("decimal(18,4)");
+            entity.Property(x => x.OrderGuid).HasColumnName("order_guid").HasMaxLength(255);
+            entity.Property(x => x.TotalPrice).HasColumnName("total_price").HasColumnType("decimal(18,4)");
+            entity.Property(x => x.Currency).HasColumnName("currency").HasDefaultValue("USD").HasMaxLength(3);
             entity.Property(x => x.FirstName).HasColumnName("first_name").HasMaxLength(255);
             entity.Property(x => x.LastName).HasColumnName("last_name").HasMaxLength(255);
             entity.Property(x => x.EmailAddress).HasColumnName("email_address").HasMaxLength(255);

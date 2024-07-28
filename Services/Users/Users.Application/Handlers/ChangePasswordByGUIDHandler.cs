@@ -42,7 +42,7 @@ namespace Users.Application.Handlers
             }
 
             user.PasswordSalt = request.Payload.NewPassword.GenerateSalt();
-            user.PasswordHash = request.Payload.NewPassword.HashPassword(user.PasswordSalt);
+            user.PasswordHash = request.Payload.NewPassword.HasStringValue(user.PasswordSalt);
             user.PasswordExpiryDate = DateTime.UtcNow.AddMonths(_config.PaswordExpiryMonths);
             user.CreatedBy = user.UserName;
             user.CreatedDate = DateTime.UtcNow;

@@ -16,7 +16,6 @@ namespace Ordering.Application.Mappers
             //Setup mapping for requests
             CreateMap<Order, CreateOrderRequest>().ReverseMap();
             CreateMap<OrderDetail, CreateOrderDetail>().ReverseMap();
-            CreateMap<Order, UpdateOrderRequest>().ReverseMap();
         }
     }
 }

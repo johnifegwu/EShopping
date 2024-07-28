@@ -7,6 +7,8 @@ using Ordering.Application.Responses;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Net;
 using eShopping.Security;
+using Ordering.Application.Requests;
+using Ordering.Application.Commands;
 
 namespace Ordering.API.Controllers
 {
@@ -96,6 +98,35 @@ namespace Ordering.API.Controllers
                 IsShipped = isshipped,
                 PageIndex = pageIndex,
                 PageSize = pagesize
+            });
+
+            return Ok(result);
+        }
+
+        #endregion
+
+        #region "Ordering Commands"
+
+        /// <summary>
+        /// Creates the provided order for the given customer in the system.
+        /// </summary>
+        /// <param name="payload" cref="CreateOrderRequest">Create Order Request object.</param>
+        /// <returns cref="OrderResponse">Order Response object.</returns>
+        [HttpPost]
+        [Route("CreateCustomerOrder")]
+        [ProducesResponseType(typeof(OrderResponse), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.InternalServerError)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.Unauthorized)]
+        [SwaggerOperation(Tags = new[] { NameConstants.OrderingQuerySwaggerName })]
+        [Authorize(Roles = "Customer, Admin")]
+        public async Task<ActionResult> CreateCustomerOrder([FromBody] CreateOrderRequest payload)
+        {
+            var result = await _mediator.Send(new CreateOrderCommand
+            {
+                CurrentUser = User.GetUserClaims(),
+                Payload = payload
             });
 
             return Ok(result);

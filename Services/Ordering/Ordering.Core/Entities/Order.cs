@@ -5,22 +5,24 @@ namespace Ordering.Core.Entities
 {
     public class Order : BaseEntity
     {
-        public string? UserName {  get; set; }
-        public decimal? TotalPrice { get; set; }
-        public string? FirstName {  get; set; }
-        public string? LastName { get; set; }
-        public string? EmailAddress { get; set; }
-        public string? AddressLine1 { get; set; }
+        public string UserName { get; set; } = default!;
+        public string OrderGuid { get; set; } = default!;
+        public decimal TotalPrice { get; set; }
+        public string Currency { get; set; } = "USD";
+        public string FirstName { get; set; } = default!;
+        public string LastName { get; set; } = default!;
+        public string EmailAddress { get; set; } = default!;
+        public string AddressLine1 { get; set; } = default!;
         public string? AddressLine2 { get; set; }
-        public string? City { get; set; }
+        public string City { get; set; } = default!;
         public string? State { get; set; }
-        public string? ZipCode { get; set; }
-        public string? Country { get; set; }
-        public string? CardName { get; set; }
-        public string? CardNumber { get; set; }
-        public string? CardType { get; set; }
-        public string? Expiration {  get; set; }
-        public string? CVV { get; set; }
+        public string ZipCode { get; set; } = default!;
+        public string Country { get; set; } = default!;
+        public string CardName { get; set; } = default!;
+        public string CardNumber { get; set; } = default!;
+        public string CardType { get; set; } = default!;
+        public string Expiration {  get; set; } = default!;
+        public string CVV { get; set; } = default!;
         public int? PaymentMethod { get; set; }
         public bool? IsPaid { get; set; } = false;
         public string? PaymentReference {  get; set; }
@@ -30,6 +32,11 @@ namespace Ordering.Core.Entities
         public bool? IsShipped { get; set; } = false;
         public string? ShippingDetails {  get; set; }
         public List<OrderDetail>? OrderDetails { get; set; }
+
+        public Order()
+        {
+            this.OrderGuid = new Guid().ToString();
+        }
 
         public void UpdateChildWithId()
         {

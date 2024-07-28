@@ -11,18 +11,63 @@ namespace Ordering.Application.Validators
         {
             RuleFor(x => x.Payload).NotNull().WithMessage("Order can not be null.");
 
-            RuleFor(x => x.UserName).NotEmpty().WithMessage("Username not provided")
-                .Equal(x => x.Payload.UserName).WithMessage("You can not create order for another user.");
-            
-            RuleFor(x => x.UserEmail).NotEmpty().WithMessage("Email not provided")
-                .EmailAddress().WithMessage("Email must be a valid email address.");
+            RuleFor(x => x.CurrentUser.UserName)
+            .NotEmpty().WithMessage("UserName is required.");
 
-            RuleFor(x => x.Payload.OrderDetails).NotNull().WithMessage("Order details can not be null.");
-            
-            RuleFor(x => x.Payload.OrderDetails.Count).GreaterThan(0).WithMessage("Order details can not be empty.");
-            
-            // RuleForEach to validate each element in the OrderDetails list
-            RuleForEach(o => o.Payload.OrderDetails).SetValidator(new OrderDetailValidator());
+            RuleFor(x => x.CurrentUser.UserName == x.Payload.UserName).NotEqual(false)
+                .WithMessage("You can not creat order for another customer.");
+
+            RuleFor(x => x.Payload.OrderGuid)
+                .NotEmpty().WithMessage("OrderGuid is required.");
+
+            RuleFor(x => x.Payload.TotalPrice)
+                .GreaterThan(0).WithMessage("TotalPrice must be greater than zero.");
+
+            RuleFor(x => x.Payload.Currency)
+                .NotEmpty().WithMessage("Currency is required.")
+                .Length(3).WithMessage("Currency must be a 3-letter ISO code.");
+
+            RuleFor(x => x.Payload.FirstName)
+                .NotEmpty().WithMessage("FirstName is required.");
+
+            RuleFor(x => x.Payload.LastName)
+                .NotEmpty().WithMessage("LastName is required.");
+
+            RuleFor(x => x.Payload.EmailAddress)
+                .NotEmpty().WithMessage("EmailAddress is required.")
+                .EmailAddress().WithMessage("EmailAddress must be a valid email address.");
+
+            RuleFor(x => x.Payload.AddressLine1)
+                .NotEmpty().WithMessage("AddressLine1 is required.");
+
+            RuleFor(x => x.Payload.City)
+                .NotEmpty().WithMessage("City is required.");
+
+            RuleFor(x => x.Payload.ZipCode)
+                .NotEmpty().WithMessage("ZipCode is required.");
+
+            RuleFor(x => x.Payload.Country)
+                .NotEmpty().WithMessage("Country is required.");
+
+            RuleFor(x => x.Payload.CardName)
+                .NotEmpty().WithMessage("CardName is required.");
+
+            RuleFor(x => x.Payload.CardNumber)
+                .NotEmpty().WithMessage("CardNumber is required.")
+                .CreditCard().WithMessage("CardNumber must be a valid credit card number.");
+
+            RuleFor(x => x.Payload.CardType)
+                .NotEmpty().WithMessage("CardType is required.");
+
+            RuleFor(x => x.Payload.Expiration)
+                .NotEmpty().WithMessage("Expiration is required.");
+
+            RuleFor(x => x.Payload.CVV)
+                .NotEmpty().WithMessage("CVV is required.")
+                .Length(3, 4).WithMessage("CVV must be 3 or 4 digits.");
+
+            RuleForEach(x => x.Payload.OrderDetails)
+                .SetValidator(new OrderDetailValidator());
         }
     }
 
@@ -30,13 +75,20 @@ namespace Ordering.Application.Validators
     {
         public OrderDetailValidator()
         {
-            RuleFor(od => od.ProductId).NotEmpty().WithMessage("Product Id not provided.");
+            RuleFor(x => x.OrderId)
+            .GreaterThan(0).WithMessage("OrderId must be greater than zero.");
 
-            RuleFor(od => od.Price)
-                .GreaterThan(0).WithMessage("Price must be greater than zero.");
+            RuleFor(x => x.ProductId)
+                .NotEmpty().WithMessage("ProductId is required.");
 
-            RuleFor(od => od.Quantity)
+            RuleFor(x => x.ProductName)
+                .NotEmpty().WithMessage("ProductName is required.");
+
+            RuleFor(x => x.Quantity)
                 .GreaterThan(0).WithMessage("Quantity must be greater than zero.");
+
+            RuleFor(x => x.Price)
+                .GreaterThan(0).WithMessage("Price must be greater than zero.");
         }
     }
 }

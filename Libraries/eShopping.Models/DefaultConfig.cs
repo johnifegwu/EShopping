@@ -13,6 +13,9 @@
         public string DiscountRpcHost { get; set; } = default!;
         public int PaswordExpiryMonths { get; set; } = 6;
         public int BearerTokenExpiryMonths { get; set; } = 1;
+        public string StripeApiKey {  get; set; } = default!;
         public int? MaxAddressPerUser { get; set; } = 5;
+        public string EncryptionKey {  get; set; } = default!;
+        public string EncryptionSecret { get; set;} = default!;
     }
 }

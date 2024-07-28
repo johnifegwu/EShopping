@@ -38,13 +38,13 @@ namespace Users.Application.Handlers
             var userRoles = await _unitOfWork.GetUserRoles(user.Id);
 
             //Validate password
-            if (user.PasswordHash != request.Payload.OldPassword.HashPassword(user.PasswordSalt))
+            if (user.PasswordHash != request.Payload.OldPassword.HasStringValue(user.PasswordSalt))
             {
                 throw new NotAuthorizedException("Invalid password.");
             }
 
             user.PasswordSalt = request.Payload.NewPassword.GenerateSalt();
-            user.PasswordHash = request.Payload.NewPassword.HashPassword(user.PasswordSalt);
+            user.PasswordHash = request.Payload.NewPassword.HasStringValue(user.PasswordSalt);
             user.PasswordExpiryDate = DateTime.UtcNow.AddMonths(_config.PaswordExpiryMonths);
             user.CreatedBy = user.UserName;
             user.CreatedDate = DateTime.UtcNow;

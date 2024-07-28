@@ -63,6 +63,24 @@ namespace Ordering.Application.Extensions
             return order;
         }
 
+        /// <summary>
+        /// Gets customer Order by Guid.
+        /// </summary>
+        /// <param name="_unitOfWork">IUnitOfWork object.</param>
+        /// <param name="OrderGuid">Order Guid.</param>
+        /// <param name="UserName">Username of the owner of the order to fetch.</param>
+        /// <returns>Order object.</returns>
+        public static async Task<Order> GetOrderByGuid(this IUnitOfWorkCore _unitOfWork, string OrderGuid, string UserName)
+        {
+            var order = await Task.FromResult(
+               (from o in _unitOfWork.Repository<Order>().Get()
+                where o.OrderGuid == OrderGuid && o.UserName == UserName
+                select o).FirstOrDefault()
+               );
+
+            return order;
+        }
+
 
         /// <summary>
         /// Gets Orders from the system according to the provided search parameters.
@@ -110,45 +128,6 @@ namespace Ordering.Application.Extensions
             }
 
             return new List<OrderResponse>();
-        }
-
-        /// <summary>
-        /// An extention for updating Order fields with the provided changes.
-        /// </summary>
-        /// <param name="order">Order object.</param>
-        /// <param name="request">Changes to be effected.</param>
-        /// <returns>The updated order.</returns>
-        /// <exception cref="ArgumentNullException"></exception>
-        public static async Task<Order> UpdateFromRequest(this Order order, UpdateOrderRequest request)
-        {
-            if (order == null)
-                throw new ArgumentNullException(nameof(order));
-
-            if (request == null)
-                throw new ArgumentNullException(nameof(request));
-
-            // Update order fields with request
-            order.LastModifiedBy = request.UserName;
-            order.LastModifiedDate = DateTime.UtcNow;
-            order.UserName = request.UserName;
-            order.TotalPrice = request.TotalPrice;
-            order.FirstName = request.FirstName;
-            order.LastName = request.LastName;
-            order.EmailAddress = request.EmailAddress;
-            order.AddressLine1 = request.AddressLine1;
-            order.AddressLine2 = request.AddressLine2;
-            order.City = request.City;
-            order.State = request.State;
-            order.ZipCode = request.ZipCode;
-            order.Country = request.Country;
-            order.CardName = request.CardName;
-            order.CardNumber = request.CardNumber;
-            order.CardType = request.CardType;
-            order.Expiration = request.Expiration;
-            order.CVV = request.CVV;
-            order.PaymentMethod = request.PaymentMethod;
-
-            return order;
         }
     }
 

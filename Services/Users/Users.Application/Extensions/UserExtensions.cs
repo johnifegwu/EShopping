@@ -1,6 +1,7 @@
 ﻿using Data.Repositories;
 using eShopping.Exceptions;
 using eShopping.Models;
+using eShopping.Security;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
@@ -56,7 +57,7 @@ namespace Users.Application.Extensions
             }
 
             //Validate password
-            if (user.PasswordHash != password.HashPassword(user.PasswordSalt))
+            if (user.PasswordHash != password.HasStringValue(user.PasswordSalt))
             {
                 throw new NotAuthorizedException("Invalid password.");
             }
@@ -182,7 +183,7 @@ namespace Users.Application.Extensions
         public static User CreateUser(this User user, string userName, string userEmail, string password, int PaswordExpiryMonths, string CreatedBy)
         {
             var salt = password.GenerateSalt();
-            var hashedPassword = password.HashPassword(salt);
+            var hashedPassword = password.HasStringValue(salt);
 
             user.UserName = userName;
             user.UserEmail = userEmail;
