@@ -1,4 +1,5 @@
 ﻿
+using eShopping.Constants;
 using FluentValidation;
 using Ordering.Application.Commands;
 
@@ -8,8 +9,9 @@ namespace Ordering.Application.Validators
     {
         public DeleteOrderValidation()
         {
+            RuleFor(x => (x.CurrentUser == null || x.CurrentUser.IsInRole(NameConstants.AdminRoleName) == false)).Equal(true).WithMessage("Un-Authorized, access denied.");
             RuleFor(x => x.OrderId).GreaterThan(0).WithMessage("Order Id must be greater than zero");
-            RuleFor(x => x.UserName).NotEmpty().WithMessage("User name not provided.");
+            RuleFor(x => x.OrderUserName).NotEmpty().WithMessage("Order owners UserName is required.");
         }
     }
 }

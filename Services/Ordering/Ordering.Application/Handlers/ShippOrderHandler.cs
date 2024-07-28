@@ -44,7 +44,7 @@ namespace Ordering.Application.Handlers
 
             //Mark order as shipped
             order.IsShipped = true;
-            order.LastModifiedBy = request.UserName;
+            order.LastModifiedBy = request.CurrentUser.UserName;
             order.LastModifiedDate = DateTime.UtcNow;
             await _unitOfWork.Repository<Order>().UpdateAsync(order, cancellationToken);
             

@@ -1,4 +1,5 @@
 ﻿
+using eShopping.Security;
 using MediatR;
 using Ordering.Application.Responses;
 
@@ -14,7 +15,7 @@ namespace Ordering.Application.Commands
         /// <summary>
         /// Current User.
         /// </summary>
-        public string UserName { get; set; } = default!;
+        public UserClaims CurrentUser { get; set; } = default!;
 
         /// <summary>
         /// Username of the owner of this order.

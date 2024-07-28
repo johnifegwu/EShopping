@@ -61,6 +61,33 @@ namespace Ordering.API.Controllers
         }
 
         /// <summary>
+        /// Gets the given order from the system by order guid.
+        /// </summary>
+        /// <param name="orderguid">Order Guid.</param>
+        /// <returns cref="OrderResponse">OrderResponse object.</returns>
+        [HttpGet]
+        [Route("[action]/{orderguid}", Name = "GetOrdersByOrderGuid")]
+        [ProducesResponseType(typeof(OrderResponse), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.InternalServerError)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.Unauthorized)]
+        [SwaggerOperation(Tags = new[] { NameConstants.OrderingQuerySwaggerName })]
+        [Authorize(Roles = "Admin")]
+        public async Task<ActionResult> GetOrdersByOrderGuid(
+            string orderguid)
+        {
+
+            var result = await _mediator.Send(new GetOrderByGuidQuery
+            {
+                CurrentUser = User.GetUserClaims(),
+                OrderGuid = orderguid
+            });
+
+            return Ok(result);
+        }
+
+        /// <summary>
         /// Gets Orders from the system according to the provided search parameters.
         /// </summary>
         /// <param name="optionalUsername">Username (optional).</param>

@@ -5,6 +5,7 @@ using Ordering.Application.Mappers;
 using Ordering.Application.Requests;
 using Ordering.Application.Responses;
 using Ordering.Core.Entities;
+using System.Drawing.Printing;
 
 namespace Ordering.Application.Extensions
 {
@@ -70,15 +71,26 @@ namespace Ordering.Application.Extensions
         /// <param name="OrderGuid">Order Guid.</param>
         /// <param name="UserName">Username of the owner of the order to fetch.</param>
         /// <returns>Order object.</returns>
-        public static async Task<Order> GetOrderByGuid(this IUnitOfWorkCore _unitOfWork, string OrderGuid, string UserName)
+        public static async Task<OrderResponse> GetOrderByGuid(this IUnitOfWorkCore _unitOfWork, string OrderGuid)
         {
             var order = await Task.FromResult(
-               (from o in _unitOfWork.Repository<Order>().Get()
-                where o.OrderGuid == OrderGuid && o.UserName == UserName
-                select o).FirstOrDefault()
-               );
+                (from o in _unitOfWork.Repository<Order>().Read()
+                 where o.OrderGuid == OrderGuid
+                 orderby o.LastModifiedDate descending
+                 select new OrderQueryResponse
+                 {
+                     Order = o,
+                     Details = _unitOfWork.Repository<OrderDetail>().Read().Where(x => x.OrderId == o.Id).ToList()
+                 })
+                .FirstOrDefault());
 
-            return order;
+            if (order is not null)
+            {
+                order.MapOrderWithDetails();
+                return OrderingMapper.Mapper.Map<OrderResponse>(order.Order);
+            }
+
+            return null;
         }
 
 

@@ -42,7 +42,7 @@ namespace Ordering.Application.Handlers
 
             //Mark oredr as canceled
             order.IsCanceled = true;
-            order.LastModifiedBy = request.UserName;
+            order.LastModifiedBy = request.CurrentUser.UserName;
             order.LastModifiedDate = DateTime.UtcNow;
             await _unitOfWork.Repository<Order>().UpdateAsync(order, cancellationToken);
 
