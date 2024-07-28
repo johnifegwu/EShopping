@@ -18,7 +18,7 @@ namespace Ordering.Infrastructure.Persistence
         //For migrations only
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         //{
-        //    optionsBuilder.UseSqlServer("Data Source=localhost, 1433;TrustServerCertificate=true;User Id=sa;Password=Admin@12345678;");
+        //    optionsBuilder.UseSqlServer("Data Source=localhost,1433;TrustServerCertificate=true;Initial Catalog=eShopping;User Id=sa;Password=Admin@12345678;");
         //    base.OnConfiguring(optionsBuilder);
         //}
 

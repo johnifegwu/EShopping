@@ -32,6 +32,7 @@ namespace Ordering.Infrastructure.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("AddressLine1")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("address_line1");
 
@@ -40,31 +41,37 @@ namespace Ordering.Infrastructure.Migrations
                         .HasColumnName("address_line2");
 
                     b.Property<string>("CVV")
+                        .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)")
                         .HasColumnName("cvv");
 
                     b.Property<string>("CardName")
+                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)")
                         .HasColumnName("card_name");
 
                     b.Property<string>("CardNumber")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("card_number");
 
                     b.Property<string>("CardType")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("card_type");
 
                     b.Property<string>("City")
+                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)")
                         .HasColumnName("city");
 
                     b.Property<string>("Country")
+                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)")
                         .HasColumnName("country");
@@ -77,17 +84,28 @@ namespace Ordering.Infrastructure.Migrations
                         .HasColumnType("datetime2")
                         .HasColumnName("created_date");
 
+                    b.Property<string>("Currency")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(3)
+                        .HasColumnType("nvarchar(3)")
+                        .HasDefaultValue("USD")
+                        .HasColumnName("currency");
+
                     b.Property<string>("EmailAddress")
+                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)")
                         .HasColumnName("email_address");
 
                     b.Property<string>("Expiration")
+                        .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)")
                         .HasColumnName("expiration");
 
                     b.Property<string>("FirstName")
+                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)")
                         .HasColumnName("first_name");
@@ -125,9 +143,16 @@ namespace Ordering.Infrastructure.Migrations
                         .HasColumnName("last_modified_date");
 
                     b.Property<string>("LastName")
+                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)")
                         .HasColumnName("last_name");
+
+                    b.Property<string>("OrderGuid")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)")
+                        .HasColumnName("order_guid");
 
                     b.Property<int?>("PaymentMethod")
                         .HasColumnType("int")
@@ -150,16 +175,18 @@ namespace Ordering.Infrastructure.Migrations
                         .HasColumnType("nvarchar(255)")
                         .HasColumnName("state");
 
-                    b.Property<decimal?>("TotalPrice")
+                    b.Property<decimal>("TotalPrice")
                         .HasColumnType("decimal(18,4)")
-                        .HasColumnName("total_pricae");
+                        .HasColumnName("total_price");
 
                     b.Property<string>("UserName")
+                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)")
                         .HasColumnName("user_name");
 
                     b.Property<string>("ZipCode")
+                        .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)")
                         .HasColumnName("zip_code");
