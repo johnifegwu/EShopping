@@ -75,9 +75,6 @@ namespace Ordering.Application.Validators
     {
         public OrderDetailValidator()
         {
-            RuleFor(x => x.OrderId)
-            .GreaterThan(0).WithMessage("OrderId must be greater than zero.");
-
             RuleFor(x => x.ProductId)
                 .NotEmpty().WithMessage("ProductId is required.");
 

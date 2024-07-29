@@ -7,7 +7,8 @@ namespace Ordering.Core.Entities
     {
         public string UserName { get; set; } = default!;
         public string OrderGuid { get; set; } = default!;
-        public decimal TotalPrice { get; set; }
+        public decimal TotalPrice {  get; set; } = default!;
+
         public string Currency { get; set; } = "USD";
         public string FirstName { get; set; } = default!;
         public string LastName { get; set; } = default!;
@@ -31,13 +32,26 @@ namespace Ordering.Core.Entities
         public bool? IsCanceled { get; set; } = false;
         public bool? IsShipped { get; set; } = false;
         public string? ShippingDetails {  get; set; }
-        public List<OrderDetail>? OrderDetails { get; set; }
+        public List<OrderDetail>? OrderDetails { get; set; } = new List<OrderDetail>();
 
         public Order()
         {
             this.OrderGuid = new Guid().ToString();
         }
 
+        public decimal GetTotalPrice()
+        {
+            decimal result = 0;
+
+            foreach (var item in OrderDetails)
+            {
+                result += (item.Price * item.Quantity);
+            }
+
+            this.TotalPrice = result;
+
+            return result;
+        }
         public void UpdateChildWithId()
         {
             foreach (var item in OrderDetails)

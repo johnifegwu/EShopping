@@ -27,10 +27,10 @@ namespace Ordering.Infrastructure.Configurations
             entity.Property(x => x.ZipCode).HasColumnName("zip_code").HasMaxLength(20);
             entity.Property(x => x.Country).HasColumnName("country").HasMaxLength(255);
             entity.Property(x => x.CardName).HasColumnName("card_name").HasMaxLength(255);
-            entity.Property(x => x.CardNumber).HasColumnName("card_number").HasMaxLength(30);
+            entity.Property(x => x.CardNumber).HasColumnName("card_number").HasMaxLength(255);
             entity.Property(x => x.CardType).HasColumnName("card_type").HasMaxLength(30);
             entity.Property(x => x.Expiration).HasColumnName("expiration").HasMaxLength(20);
-            entity.Property(x => x.CVV).HasColumnName("cvv").HasMaxLength(20);
+            entity.Property(x => x.CVV).HasColumnName("cvv").HasMaxLength(255);
             entity.Property(x => x.PaymentMethod).HasColumnName("payment_method");
             entity.Property(x => x.IsPaid).HasColumnName("is_paid").HasDefaultValue(false);
             entity.Property(x => x.PaymentReference).HasColumnName("payment_reference").HasColumnType("nvarchar(max)");

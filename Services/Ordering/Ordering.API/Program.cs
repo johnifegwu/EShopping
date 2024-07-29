@@ -11,6 +11,9 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.OpenApi.Models;
 using eShopping.MailMan.Extensions;
+using MassTransit;
+using eShopping.MessageBrocker.Extensions;
+using eShopping.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,8 +27,25 @@ builder.Services.AddApiVersioning(o =>
     o.DefaultApiVersion = new ApiVersion(1, 0);
 });
 
+//Add config
+builder.Services.Configure<DefaultConfig>(builder.Configuration.GetSection("configs"));
+
 //Add Exception handlers
 builder.Services.AddExceptionHadlers();
+
+//Add RabbitMQ
+builder.Services.AddRabbitMQService(builder.Configuration.GetSection("MessageBrocker"));
+builder.Services.AddMassTransit(x =>
+{
+    x.UsingRabbitMq((context, cfg) =>
+    {
+        cfg.Host(new Uri($"rabbitmq://{Environment.GetEnvironmentVariable("RABBITMQ_HOST") ?? builder.Configuration["MessageBrocker:Host"]}:{Environment.GetEnvironmentVariable("RABBITMQ_PORT") ?? builder.Configuration["MessageBrocker:Port"]}"), h =>
+        {
+            h.Username(Environment.GetEnvironmentVariable("RABBITMQ_USER") ?? builder.Configuration["MessageBrocker:UserName"]);
+            h.Password(Environment.GetEnvironmentVariable("RABBITMQ_PASSWORD") ?? builder.Configuration["MessageBrocker:Password"]);
+        });
+    });
+});
 
 //Add emailService
 builder.Services.AddEmailService(builder.Configuration, "EmailSettings", Assembly.GetExecutingAssembly());

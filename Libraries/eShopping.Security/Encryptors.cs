@@ -14,7 +14,8 @@ namespace eShopping.Security
             {
                 rng.GetBytes(saltBytes);
             }
-            return Convert.ToBase64String(saltBytes);
+            str = Convert.ToBase64String(saltBytes);
+            return str;
         }
 
         public static string HasStringValue(this string stringValue, string salt)
@@ -39,8 +40,8 @@ namespace eShopping.Security
 
             using (var aes = Aes.Create())
             {
-                aes.Key = Encoding.UTF8.GetBytes(_config.EncryptionKey);
-                aes.IV = Encoding.UTF8.GetBytes(_config.EncryptionSecret);
+                aes.Key = Convert.FromBase64String(_config.EncryptionKey);
+                aes.IV = Convert.FromBase64String(_config.EncryptionSecret);
 
                 using (var encryptor = aes.CreateEncryptor(aes.Key, aes.IV))
                 using (var ms = new MemoryStream())
@@ -67,8 +68,8 @@ namespace eShopping.Security
 
             using (var aes = Aes.Create())
             {
-                aes.Key = Encoding.UTF8.GetBytes(_config.EncryptionKey);
-                aes.IV = Encoding.UTF8.GetBytes(_config.EncryptionSecret);
+                aes.Key = Convert.FromBase64String(_config.EncryptionKey);
+                aes.IV = Convert.FromBase64String(_config.EncryptionSecret);
 
                 using (var decryptor = aes.CreateDecryptor(aes.Key, aes.IV))
                 using (var ms = new MemoryStream(Convert.FromBase64String(encryptedValue)))

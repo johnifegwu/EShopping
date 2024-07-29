@@ -85,6 +85,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eShopping.Security", "Libra
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eShopping.MailMan", "Libraries\eShopping.MailMan\eShopping.MailMan.csproj", "{28EA888B-EBC8-4D57-9C26-FA0366A2798C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eShopping.MessageBrocker", "Libraries\eShopping.MessageBrocker\eShopping.MessageBrocker.csproj", "{98D3F75A-5C5A-4597-BEA1-943450E8AECD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -223,6 +225,10 @@ Global
 		{28EA888B-EBC8-4D57-9C26-FA0366A2798C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{28EA888B-EBC8-4D57-9C26-FA0366A2798C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{28EA888B-EBC8-4D57-9C26-FA0366A2798C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{98D3F75A-5C5A-4597-BEA1-943450E8AECD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98D3F75A-5C5A-4597-BEA1-943450E8AECD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98D3F75A-5C5A-4597-BEA1-943450E8AECD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98D3F75A-5C5A-4597-BEA1-943450E8AECD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -265,6 +271,7 @@ Global
 		{3773792A-E3BB-4558-B777-3719B31E83EB} = {9E8E6F41-17E2-487E-A1F3-165E63694C21}
 		{0C8AAAD8-8167-4ABE-B2CB-1F6E027DB652} = {9E8E6F41-17E2-487E-A1F3-165E63694C21}
 		{28EA888B-EBC8-4D57-9C26-FA0366A2798C} = {9E8E6F41-17E2-487E-A1F3-165E63694C21}
+		{98D3F75A-5C5A-4597-BEA1-943450E8AECD} = {9E8E6F41-17E2-487E-A1F3-165E63694C21}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8C725E23-CD54-4600-9DE7-67837E486BA6}

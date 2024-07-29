@@ -12,6 +12,9 @@ using static Discount.Grpc.Protos.DiscountProtoService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using MassTransit;
+using eShopping.MessageBrocker.MessagesConsumers;
+using eShopping.MessageBrocker.Endpoints;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,6 +30,25 @@ builder.Services.AddApiVersioning(o =>
 
 //Add Exception handlers
 builder.Services.AddExceptionHadlers();
+
+//Add RabbitMQ
+builder.Services.AddMassTransit(x =>
+{
+    x.AddConsumer<OrderBasketMessageConsumer>();
+    x.UsingRabbitMq((context, cfg) =>
+    {
+        cfg.Host(new Uri($"rabbitmq://{Environment.GetEnvironmentVariable("RABBITMQ_HOST") ?? builder.Configuration["MessageBrocker:Host"]}:{Environment.GetEnvironmentVariable("RABBITMQ_PORT") ?? builder.Configuration["MessageBrocker:Port"]}"), h =>
+        {
+            h.Username(Environment.GetEnvironmentVariable("RABBITMQ_USER") ?? builder.Configuration["MessageBrocker:UserName"]);
+            h.Password(Environment.GetEnvironmentVariable("RABBITMQ_PASSWORD") ?? builder.Configuration["MessageBrocker:Password"]);
+        });
+
+        cfg.ReceiveEndpoint(NamedEndpoints.OrderBasketQueue, e =>
+        {
+            e.ConfigureConsumer<OrderBasketMessageConsumer>(context);
+        });
+    });
+});
 
 //Add default config
 builder.Services.Configure<DefaultConfig>(builder.Configuration.GetSection("configs"));

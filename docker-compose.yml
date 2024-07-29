@@ -87,6 +87,18 @@ services:
     networks:
       - eshopproxybackend
 
+  eshopping.rabbitmq:
+    image: rabbitmq:3-management
+    container_name: eshopping.rabbitmq
+    ports:
+      - "5672:5672"  # Default RabbitMQ port
+      - "15672:15672"  # Management console port
+    environment:
+      RABBITMQ_DEFAULT_USER: eshopping
+      RABBITMQ_DEFAULT_PASS: echo@@123Titan
+    networks:
+      - eshopproxybackend
+
   gateway.api:
     image: ${DOCKER_REGISTRY-}gatwayapi
     environment:
@@ -124,17 +136,23 @@ services:
   basket.api:
     image: ${DOCKER_REGISTRY-}basketapi
     environment:
-     - ASPNETCORE_ENVIRONMENT=Development
-     - ASPNETCORE_HTTPS_PORTS=9002
-     - ASPNETCORE_HTTP_PORTS=8002
-     - ASPNETCORE_Kestrel__Certificates__Default__Password=12345678
-     - ASPNETCORE_Kestrel__Certificates__Default__Path=aspnetapp.pfx 
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_HTTPS_PORTS: 9002
+      ASPNETCORE_HTTP_PORTS: 8002
+      ASPNETCORE_Kestrel__Certificates__Default__Password: 12345678
+      ASPNETCORE_Kestrel__Certificates__Default__Path: aspnetapp.pfx 
+      RABBITMQ_HOST: eshopping.rabbitmq
+      RABBITMQ_PORT: 5672
+      RABBITMQ_USER: eshopping
+      RABBITMQ_PASSWORD: echo@@123Titan
     ports:
      - "9002:9002"
      - "8002:8002" 
     build:
       context: .
       dockerfile: Services/Basket/Basket.API/Dockerfile
+    depends_on:
+      - eshopping.rabbitmq
     networks:
       - eshopproxybackend
 
@@ -158,17 +176,23 @@ services:
   ordering.api:
     image: ${DOCKER_REGISTRY-}orderingapi
     environment:
-     - ASPNETCORE_ENVIRONMENT=Development
-     - ASPNETCORE_HTTPS_PORTS=9004
-     - ASPNETCORE_HTTP_PORTS=8004
-     - ASPNETCORE_Kestrel__Certificates__Default__Password=12345678
-     - ASPNETCORE_Kestrel__Certificates__Default__Path=aspnetapp.pfx 
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_HTTPS_PORTS: 9004
+      ASPNETCORE_HTTP_PORTS: 8004
+      ASPNETCORE_Kestrel__Certificates__Default__Password: 12345678
+      ASPNETCORE_Kestrel__Certificates__Default__Path: aspnetapp.pfx 
+      RABBITMQ_HOST: eshopping.rabbitmq
+      RABBITMQ_PORT: 5672
+      RABBITMQ_USER: eshopping
+      RABBITMQ_PASSWORD: echo@@123Titan
     ports:
      - "9004:9004"
      - "8004:8004" 
     build:
       context: .
       dockerfile: Services/Ordering/Ordering.API/Dockerfile
+    depends_on:
+      - eshopping.rabbitmq
     networks:
       - eshopproxybackend
 

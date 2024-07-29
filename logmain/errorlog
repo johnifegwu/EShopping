@@ -155,3 +155,20 @@
 2024-07-28 17:26:00.19 spid35s     Recovery is complete. This is an informational message only. No user action is required.
 2024-07-28 17:30:07.96 spid51      XE session 'telemetry_xevents' stopping.
 2024-07-28 17:30:07.99 spid51      XE session 'telemetry_xevents' started.
+2024-07-28 17:31:17.84 spid51      Attempting to load library 'xplog70.dll' into memory. This is an informational message only. No user action is required.
+2024-07-28 17:31:17.89 spid51      Using 'xplog70.dll' version '2022.160.4125' to execute extended stored procedure 'xp_msver'. This is an informational message only; no user action is required.
+2024-07-29 07:30:32.71 spid51      XE session 'telemetry_xevents' stopping.
+2024-07-29 07:30:32.73 spid51      XE session 'telemetry_xevents' started.
+2024-07-29 10:29:20.76 spid11s     [DevOpsSnapshotTelemetryTask] Evaluating the background task.
+2024-07-29 10:44:13.20 spid51      XE session 'telemetry_xevents' stopping.
+2024-07-29 10:44:13.30 spid51      XE session 'telemetry_xevents' started.
+2024-07-29 13:40:57.47 spid51      XE session 'telemetry_xevents' stopping.
+2024-07-29 13:40:57.69 spid51      XE session 'telemetry_xevents' started.
+2024-07-29 14:44:00.78 spid51      XE session 'telemetry_xevents' stopping.
+2024-07-29 14:44:00.85 spid51      XE session 'telemetry_xevents' started.
+2024-07-29 16:02:22.05 spid51      XE session 'telemetry_xevents' stopping.
+2024-07-29 16:02:22.16 spid51      XE session 'telemetry_xevents' started.
+2024-07-29 17:08:18.19 spid51      XE session 'telemetry_xevents' stopping.
+2024-07-29 17:08:18.31 spid51      XE session 'telemetry_xevents' started.
+2024-07-29 18:08:42.86 spid51      XE session 'telemetry_xevents' stopping.
+2024-07-29 18:08:43.00 spid51      XE session 'telemetry_xevents' started.

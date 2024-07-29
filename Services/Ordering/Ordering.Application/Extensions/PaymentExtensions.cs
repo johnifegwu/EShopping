@@ -11,11 +11,15 @@ namespace Ordering.Application.Extensions
         {
             StripeConfiguration.ApiKey = config.StripeApiKey;
 
-            var token = await CreateTokenAsync(order);
+#if DEBUG
+            var token = "tok_visa"; //await CreateTokenAsync(order);
 
+#else
+            var token = await CreateTokenAsync(order);
+#endif
             var options = new ChargeCreateOptions
             {
-                Amount = (long)(order.TotalPrice * 100), // Stripe uses the smallest currency unit
+                Amount = (long)(order.GetTotalPrice() * 100), // Stripe uses the smallest currency unit
                 Currency = order.Currency.ToLower(),
                 Description = $"Order for {order.FirstName} {order.LastName} \n Order guid: {order.OrderGuid}",
                 Source = token
@@ -48,7 +52,7 @@ namespace Ordering.Application.Extensions
                     Number = order.CardNumber,
                     ExpMonth = long.Parse(order.Expiration.Split('/')[0]).ToString(),
                     ExpYear = long.Parse(order.Expiration.Split('/')[1]).ToString(),
-                    Cvc = order.CVV
+                    Cvc = order.CVV,
                 }
             };
 
