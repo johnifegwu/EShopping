@@ -52,7 +52,7 @@ namespace Ordering.API.Controllers
             var result = await _mediator.Send(new GetOrdersByUserNameQuery
             {
                 CurrentUser = User.GetUserClaims(),
-                UserName = userName,
+                OwnerUserName = userName,
                 PageIndex = pageindex,
                 PageSize = pagesize
             });
@@ -146,11 +146,88 @@ namespace Ordering.API.Controllers
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.NotFound)]
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.InternalServerError)]
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.Unauthorized)]
-        [SwaggerOperation(Tags = new[] { NameConstants.OrderingQuerySwaggerName })]
+        [SwaggerOperation(Tags = new[] { NameConstants.OrderingCommandSwaggerName })]
         [Authorize(Roles = "Customer, Admin")]
         public async Task<ActionResult> CreateCustomerOrder([FromBody] CreateOrderRequest payload)
         {
             var result = await _mediator.Send(new CreateOrderCommand
+            {
+                CurrentUser = User.GetUserClaims(),
+                Payload = payload
+            });
+
+            return Ok(result);
+        }
+
+        /// <summary>
+        /// Marks the given order as shipped.
+        /// </summary>
+        /// <param name="payload" cref="ShippOrderRequest">Shipp Order Request object.</param>
+        /// <returns cref="OrderResponse">OrderResponse object.</returns>
+        [HttpPatch]
+        [Route("ShippOrder")]
+        [ProducesResponseType(typeof(OrderResponse), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.InternalServerError)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.Unauthorized)]
+        [SwaggerOperation(Tags = new[] { NameConstants.OrderingCommandSwaggerName })]
+        [Authorize(Roles = "Admin")]
+        public async Task<ActionResult> ShippOrder([FromBody] ShippOrderRequest payload)
+        {
+            var result = await _mediator.Send(new ShippOrderCommand
+            {
+                CurrentUser = User.GetUserClaims(),
+                Payload = payload
+            });
+
+            return Ok(result);
+        }
+
+
+        /// <summary>
+        /// Marks the given order as cancled.
+        /// </summary>
+        /// <param name="payload" cref="CancelOrderRequest">Cancel Order Request object.</param>
+        /// <returns cref="OrderResponse">OrderResponse object.</returns>
+        [HttpPatch]
+        [Route("CancelOrder")]
+        [ProducesResponseType(typeof(OrderResponse), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.InternalServerError)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.Unauthorized)]
+        [SwaggerOperation(Tags = new[] { NameConstants.OrderingCommandSwaggerName })]
+        [Authorize(Roles = "Admin")]
+        public async Task<ActionResult> CancelOrder([FromBody] CancelOrderRequest payload)
+        {
+            var result = await _mediator.Send(new CancelOrderCommand
+            {
+                CurrentUser = User.GetUserClaims(),
+                Payload = payload
+            });
+
+            return Ok(result);
+        }
+
+
+        /// <summary>
+        /// Marks the given order as deleted.
+        /// </summary>
+        /// <param name="payload" cref="DeleteOrderRequest">Delete Order Request object.</param>
+        /// <returns cref="bool">A boolean vaue.</returns>
+        [HttpDelete]
+        [Route("DeleteOrder")]
+        [ProducesResponseType(typeof(bool), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.InternalServerError)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.Unauthorized)]
+        [SwaggerOperation(Tags = new[] { NameConstants.OrderingCommandSwaggerName })]
+        [Authorize(Roles = "Admin")]
+        public async Task<ActionResult> DeleteOrder([FromBody] DeleteOrderRequest payload)
+        {
+            var result = await _mediator.Send(new DeleteOrderCommand
             {
                 CurrentUser = User.GetUserClaims(),
                 Payload = payload

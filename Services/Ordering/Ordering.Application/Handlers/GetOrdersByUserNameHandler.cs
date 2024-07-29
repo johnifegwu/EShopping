@@ -21,14 +21,14 @@ namespace Ordering.Application.Handlers
 
         public async Task<IList<OrderResponse>> Handle(GetOrdersByUserNameQuery request, CancellationToken cancellationToken)
         {
-            var result = await _unitOfWork.GetOrdersByUserName(request.UserName, request.PageIndex, request.PageSize);
+            var result = await _unitOfWork.GetOrdersByUserName(request.OwnerUserName, request.PageIndex, request.PageSize);
 
             if(result?.Count > 0)
             {
                 return result;
             }
 
-            throw new NotFoundException($"No order found for {request.UserName}.");
+            throw new NotFoundException($"No order found for {request.OwnerUserName}.");
         }
     }
 }

@@ -29,17 +29,17 @@ namespace Ordering.Application.Handlers
 
         public async Task<OrderResponse> Handle(ShippOrderCommand request, CancellationToken cancellationToken)
         {
-            var order = await _unitOfWork.GetOrderById(request.OrderId, request.OwnerUserName);
+            var order = await _unitOfWork.GetOrderById(request.Payload.OrderId, request.Payload.OwnerUserName);
 
             if (order == null)
             {
-                throw new OrderNotFoundException(request.OrderId, request.OwnerUserName);
+                throw new OrderNotFoundException(request.Payload.OrderId, request.Payload.OwnerUserName);
             }
 
             //check if this order has been paid for.
             if(!order.IsPaid is true)
             {
-                throw new InvalidOperationException($"Order number {request.OrderId} has not been paid for, operation has been terminated.");
+                throw new InvalidOperationException($"Order number {request.Payload.OrderId} has not been paid for, operation has been terminated.");
             }
 
             //Mark order as shipped
@@ -54,8 +54,8 @@ namespace Ordering.Application.Handlers
                 var emailModel = new OrderEmailModel()
                 {
                     OrderId = order.Id,
-                    CustomerEmail = request.OwnerEmail,
-                    CustomerName = request.OwnerUserName
+                    CustomerEmail = request.Payload.OwnerEmail,
+                    CustomerName = request.Payload.OwnerUserName
                 };
 
                 await _emailService.SendEmailAsync(emailModel.CustomerEmail, $"Order number {order.Id} has been shipped : eShopping", eShopping.Constants.NameConstants.OrderShippedEmailTemplate, emailModel);

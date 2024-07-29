@@ -18,18 +18,18 @@ namespace Ordering.Application.Handlers
         }
         public async Task<bool> Handle(DeleteOrderCommand request, CancellationToken cancellationToken)
         {
-            var order = await _unitOfWork.GetOrderById(request.OrderId, request.OrderUserName);
+            var order = await _unitOfWork.GetOrderById(request.Payload.OrderId, request.Payload.OrderUserName);
 
             if (order == null)
             {
-                throw new OrderNotFoundException(request.OrderId, request.OrderUserName);
+                throw new OrderNotFoundException(request.Payload.OrderId, request.Payload.OrderUserName);
             }
 
             if(order.IsPaid is true || order.IsShipped is true)
             {
                 if ((order.IsShipped is true))
                 {
-                    throw new OrderInProcessException(request.OrderId, true);
+                    throw new OrderInProcessException(request.Payload.OrderId, true);
                 }
                 else
                 {

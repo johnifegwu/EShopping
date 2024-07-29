@@ -1,6 +1,7 @@
 ﻿
 using eShopping.Security;
 using MediatR;
+using Ordering.Application.Requests;
 
 namespace Ordering.Application.Commands
 {
@@ -10,7 +11,6 @@ namespace Ordering.Application.Commands
         /// Current User.
         /// </summary>
         public UserClaims CurrentUser { get; set; } = default!;
-        public int OrderId { get; set; }
-        public string OrderUserName { get; set; } = default!;
+        public DeleteOrderRequest Payload { get; set; } = default!;
     }
 }

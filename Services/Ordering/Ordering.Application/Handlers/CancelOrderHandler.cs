@@ -28,16 +28,16 @@ namespace Ordering.Application.Handlers
 
         public async Task<OrderResponse> Handle(CancelOrderCommand request, CancellationToken cancellationToken)
         {
-            var order = await _unitOfWork.GetOrderById(request.OrderId, request.OwnerUserName);
+            var order = await _unitOfWork.GetOrderById(request.Payload.OrderId, request.Payload.OwnerUserName);
 
             if (order == null)
             {
-                throw new OrderNotFoundException(request.OrderId, request.OwnerUserName);
+                throw new OrderNotFoundException(request.Payload.OrderId, request.Payload.OwnerUserName);
             }
 
             if ((order.IsShipped is true))
             {
-                throw new OrderInProcessException(request.OrderId, true);
+                throw new OrderInProcessException(request.Payload.OrderId, true);
             }
 
             //Mark oredr as canceled
@@ -52,8 +52,8 @@ namespace Ordering.Application.Handlers
                 var emailModel = new OrderEmailModel()
                 {
                     OrderId = order.Id,
-                    CustomerEmail = request.OwnerEmail,
-                    CustomerName = request.OwnerUserName
+                    CustomerEmail = request.Payload.OwnerEmail,
+                    CustomerName = request.Payload.OwnerUserName
                 };
 
                 await _emailService.SendEmailAsync(emailModel.CustomerEmail, $"Order number {order.Id} Canceled : eShopping", eShopping.Constants.NameConstants.OrderCanceledEmailTemplate, emailModel);
