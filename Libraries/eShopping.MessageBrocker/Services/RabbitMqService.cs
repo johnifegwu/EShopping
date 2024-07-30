@@ -7,7 +7,7 @@ using Microsoft.Extensions.Options;
 
 namespace Ordering.Application.Services
 {
-    public class RabbitMqService : IRabbitMqService
+    internal class RabbitMqService : IRabbitMqService
     {
         private readonly IBusControl _busControl;
         private readonly MessageBrokerConfig _config;

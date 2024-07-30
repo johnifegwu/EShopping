@@ -2,7 +2,6 @@
 using eShopping.MessageBrocker.Messages;
 using Cache.Repositories;
 using Basket.Core.Entities;
-using System.Threading;
 
 namespace eShopping.MessageBrocker.MessagesConsumers
 {
