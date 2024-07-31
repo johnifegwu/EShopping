@@ -7,17 +7,19 @@ How to use:
 In program.cs add the below code snipet.
 
 //Cache.UnitOfWork.AspNetCore configuaration
+```
 builder.Services.AddCacheUnitOfWork();
-
+```
 //REDIS configurations
+```
 builder.Services.AddStackExchangeRedisCache(options =>
 {
     options.Configuration = configuration["configs:redisurl"];
     options.InstanceName = configuration["configs:environment"] + "01";
 });
-
+```
 Do the following to use CacheUnitOfWork
-
+```
  public class GetShoppingCartHandler : IRequestHandler<GetShoppingCartQuery, ShoppingCart>
  {
      private readonly ICacheUnitOfWork _cacheUnitOfWork;
@@ -34,5 +36,6 @@ Do the following to use CacheUnitOfWork
          return cart;
      }
  }
+```
 //=============================================================================
 
