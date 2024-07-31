@@ -6,7 +6,7 @@
     <Nullable>enable</Nullable>
     <Title>Dynamic Repository and UnitOfWork for In-Memory Cache such as Redis.</Title>
     <Copyright>2024 John Ifegwu</Copyright>
-    <Description>Dynamic Repository and UnitOfWork for In-Memory Cache such as Redis.</Description>
+    <Description>A Dynamic Repository and UnitOfWork for In-Memory Cache such as Redis, this enables a developer to Retrieve, Add, Append, Update or delete data from In-Memory Cache such as REDIS with a single line of code.</Description>
     <Company>John Ifegwu</Company>
     <PackageProjectUrl>https://github.com/johnifegwu/EShopping/tree/master/Libraries</PackageProjectUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
@@ -53,6 +53,8 @@ Do the following to use CacheUnitOfWork
     <PackageId>Jay.Cache.UnitOfWork.AspNetCore</PackageId>
     <PackageLicenseFile>License.txt</PackageLicenseFile>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <Version>1.0.2</Version>
+    <AssemblyVersion></AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>

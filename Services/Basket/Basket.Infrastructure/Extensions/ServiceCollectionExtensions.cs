@@ -1,4 +1,4 @@
-﻿using Cache.UnitOfWork.Extensions;
+﻿using Cache.UnitOfWork.AspNetCore.Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
