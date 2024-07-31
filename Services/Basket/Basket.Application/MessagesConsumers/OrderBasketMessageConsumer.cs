@@ -1,6 +1,6 @@
 ﻿using MassTransit;
 using eShopping.MessageBrocker.Messages;
-using Cache.Repositories;
+using Cache.Repositories.AspNetCore;
 using Basket.Core.Entities;
 
 namespace eShopping.MessageBrocker.MessagesConsumers

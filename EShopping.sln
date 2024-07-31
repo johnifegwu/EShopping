@@ -51,17 +51,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ordering.Core", "Services\O
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ordering.Infrastructure", "Services\Ordering\Ordering.Infrastructure\Ordering.Infrastructure.csproj", "{431C51F2-0781-4D98-ACC2-EB62EB5FBE36}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cache.Repositories", "Libraries\Cache.Repositories\Cache.Repositories.csproj", "{BA656F2D-0A22-4511-9BF7-8127311A1AEB}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cache.UnitOfWork", "Libraries\Cache.UnitOfWork.Redis\Cache.UnitOfWork.csproj", "{10602238-BE1B-4902-8D9B-FBAA54619FC5}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data.Repositories", "Libraries\Data.Repositories\Data.Repositories.csproj", "{D44DA951-218D-40C9-A99B-69F4392762C5}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eShopping.AspNetCore.ExceptionHandling", "Libraries\eShopping.ExceptionHandling\eShopping.AspNetCore.ExceptionHandling.csproj", "{17FBC2DA-D5C5-4ED5-B729-6AC0BC9CC5FF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eShopping.Exceptions", "Libraries\eShopping.Exceptions\eShopping.Exceptions.csproj", "{D58BEDD1-9908-4891-B42E-4BB690A85188}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cache.IRepositories", "Libraries\Cache.IRepositories\Cache.IRepositories.csproj", "{574330E3-D69C-45FF-A14F-488BC6F3589E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cache.IRepositories.AspNetCore", "Libraries\Cache.IRepositories\Cache.IRepositories.AspNetCore.csproj", "{574330E3-D69C-45FF-A14F-488BC6F3589E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Gateway", "Gateway", "{4BC4398D-CD63-4753-8D75-4FE1A7B0ECCD}"
 EndProject
@@ -85,7 +81,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eShopping.Security", "Libra
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eShopping.MailMan", "Libraries\eShopping.MailMan\eShopping.MailMan.csproj", "{28EA888B-EBC8-4D57-9C26-FA0366A2798C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eShopping.MessageBrocker", "Libraries\eShopping.MessageBrocker\eShopping.MessageBrocker.csproj", "{98D3F75A-5C5A-4597-BEA1-943450E8AECD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eShopping.MessageBrocker", "Libraries\eShopping.MessageBrocker\eShopping.MessageBrocker.csproj", "{98D3F75A-5C5A-4597-BEA1-943450E8AECD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cache.UnitOfWork.AspNetCore", "Libraries\Cache.UnitOfWork\Cache.UnitOfWork.AspNetCore.csproj", "{D298FD6E-E57C-4DB5-9C4E-5ADCEED6B0C9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -165,14 +163,6 @@ Global
 		{431C51F2-0781-4D98-ACC2-EB62EB5FBE36}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{431C51F2-0781-4D98-ACC2-EB62EB5FBE36}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{431C51F2-0781-4D98-ACC2-EB62EB5FBE36}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BA656F2D-0A22-4511-9BF7-8127311A1AEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BA656F2D-0A22-4511-9BF7-8127311A1AEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BA656F2D-0A22-4511-9BF7-8127311A1AEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BA656F2D-0A22-4511-9BF7-8127311A1AEB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{10602238-BE1B-4902-8D9B-FBAA54619FC5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{10602238-BE1B-4902-8D9B-FBAA54619FC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{10602238-BE1B-4902-8D9B-FBAA54619FC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{10602238-BE1B-4902-8D9B-FBAA54619FC5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D44DA951-218D-40C9-A99B-69F4392762C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D44DA951-218D-40C9-A99B-69F4392762C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D44DA951-218D-40C9-A99B-69F4392762C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -229,6 +219,10 @@ Global
 		{98D3F75A-5C5A-4597-BEA1-943450E8AECD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{98D3F75A-5C5A-4597-BEA1-943450E8AECD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{98D3F75A-5C5A-4597-BEA1-943450E8AECD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D298FD6E-E57C-4DB5-9C4E-5ADCEED6B0C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D298FD6E-E57C-4DB5-9C4E-5ADCEED6B0C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D298FD6E-E57C-4DB5-9C4E-5ADCEED6B0C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D298FD6E-E57C-4DB5-9C4E-5ADCEED6B0C9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -255,8 +249,6 @@ Global
 		{779BF577-A128-4096-9FA7-5BE14004DA4F} = {2EC1D861-4AF3-4705-9BAC-15BE1428700F}
 		{EB001FA6-DD96-427A-9AA7-1FDD16CF486F} = {2EC1D861-4AF3-4705-9BAC-15BE1428700F}
 		{431C51F2-0781-4D98-ACC2-EB62EB5FBE36} = {2EC1D861-4AF3-4705-9BAC-15BE1428700F}
-		{BA656F2D-0A22-4511-9BF7-8127311A1AEB} = {9E8E6F41-17E2-487E-A1F3-165E63694C21}
-		{10602238-BE1B-4902-8D9B-FBAA54619FC5} = {9E8E6F41-17E2-487E-A1F3-165E63694C21}
 		{D44DA951-218D-40C9-A99B-69F4392762C5} = {9E8E6F41-17E2-487E-A1F3-165E63694C21}
 		{17FBC2DA-D5C5-4ED5-B729-6AC0BC9CC5FF} = {9E8E6F41-17E2-487E-A1F3-165E63694C21}
 		{D58BEDD1-9908-4891-B42E-4BB690A85188} = {9E8E6F41-17E2-487E-A1F3-165E63694C21}
@@ -272,6 +264,7 @@ Global
 		{0C8AAAD8-8167-4ABE-B2CB-1F6E027DB652} = {9E8E6F41-17E2-487E-A1F3-165E63694C21}
 		{28EA888B-EBC8-4D57-9C26-FA0366A2798C} = {9E8E6F41-17E2-487E-A1F3-165E63694C21}
 		{98D3F75A-5C5A-4597-BEA1-943450E8AECD} = {9E8E6F41-17E2-487E-A1F3-165E63694C21}
+		{D298FD6E-E57C-4DB5-9C4E-5ADCEED6B0C9} = {9E8E6F41-17E2-487E-A1F3-165E63694C21}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8C725E23-CD54-4600-9DE7-67837E486BA6}

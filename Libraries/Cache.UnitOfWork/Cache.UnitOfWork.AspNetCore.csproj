@@ -1,0 +1,92 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <Title>Dynamic Repository and UnitOfWork for In-Memory Cache such as Redis.</Title>
+    <Copyright>2024 John Ifegwu</Copyright>
+    <Description>Dynamic Repository and UnitOfWork for In-Memory Cache such as Redis.</Description>
+    <Company>John Ifegwu</Company>
+    <PackageProjectUrl>https://github.com/johnifegwu/EShopping/tree/master/Libraries</PackageProjectUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/johnifegwu/EShopping/tree/master/Libraries/Cache.UnitOfWork</RepositoryUrl>
+    <PackageReleaseNotes>//=============================================================================
+Cache.UnitOfWork
+
+How to use:
+
+In program.cs add the below code snipet.
+
+//Cache.UnitOfWork configuaration
+builder.Services.AddCacheUnitOfWork();
+
+//REDIS configurations
+builder.Services.AddStackExchangeRedisCache(options =&gt;
+{
+    options.Configuration = configuration["configs:redisurl"];
+    options.InstanceName = configuration["configs:environment"] + "01";
+});
+
+Do the following to use CacheUnitOfWork
+
+ public class GetShoppingCartHandler : IRequestHandler&lt;GetShoppingCartQuery, ShoppingCart&gt;
+ {
+     private readonly ICacheUnitOfWork _cacheUnitOfWork;
+
+     public GetShoppingCartHandler(ICacheUnitOfWork cacheUnitOfWork)
+     {
+         this._cacheUnitOfWork = cacheUnitOfWork;
+     }
+  
+     public async Task&lt;ShoppingCart&gt; Handle(AddUpdateDeleteShoppingCartItemCommand request, CancellationToken cancellationToken)
+     {
+         var cart = await _cacheUnitOfWork.Repository&lt;ShoppingCart&gt;().GetAsync(request.UserName, cancellationToken);
+
+         return cart;
+     }
+ }
+//=============================================================================</PackageReleaseNotes>
+    <PackageIcon>android-chrome-128_by_128.png</PackageIcon>
+    <Authors>johnifegwu</Authors>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <PackageId>Jay.Cache.UnitOfWork.AspNetCore</PackageId>
+    <PackageLicenseFile>License.txt</PackageLicenseFile>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="License.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="C:\Users\johni\Downloads\android-chrome-128_by_128.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+	<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.1" />
+	<PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="8.0.0" />
+	<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Cache.IRepositories\Cache.IRepositories.AspNetCore.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="License.txt">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Update="README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+</Project>

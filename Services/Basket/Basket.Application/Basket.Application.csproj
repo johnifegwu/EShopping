@@ -24,6 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Libraries\Cache.UnitOfWork\Cache.UnitOfWork.AspNetCore.csproj" />
     <ProjectReference Include="..\..\..\Libraries\eShopping.MessageBrocker\eShopping.MessageBrocker.csproj" />
     <ProjectReference Include="..\Basket.Core\Basket.Core.csproj" />
   </ItemGroup>

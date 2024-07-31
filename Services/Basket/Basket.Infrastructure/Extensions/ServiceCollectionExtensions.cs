@@ -1,5 +1,4 @@
-﻿using Cache.Repositories;
-using Cache.UnitOfWork;
+﻿using Cache.UnitOfWork.Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -16,7 +15,7 @@ namespace Basket.Infrastructure.Extensions
                 options.Configuration = configuration["configs:redisurl"];
                 options.InstanceName = configuration["configs:environment"] + "01";
             });
-            services.AddTransient<ICacheUnitOfWork, CacheUnitOfWork>();
+            services.AddCacheUnitOfWork();
             //=============================================================================
         }
     }

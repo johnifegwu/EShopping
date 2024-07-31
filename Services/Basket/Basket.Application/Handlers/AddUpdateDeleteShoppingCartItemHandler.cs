@@ -4,7 +4,7 @@ using Basket.Application.Extensions;
 using Basket.Application.Mappers;
 using Basket.Application.Responses;
 using Basket.Core.Entities;
-using Cache.Repositories;
+using Cache.Repositories.AspNetCore;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using static Discount.Grpc.Protos.DiscountProtoService;

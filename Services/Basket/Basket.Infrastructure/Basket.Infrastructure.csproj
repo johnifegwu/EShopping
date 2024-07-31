@@ -13,7 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Libraries\Cache.UnitOfWork.Redis\Cache.UnitOfWork.csproj" />
     <ProjectReference Include="..\Basket.Application\Basket.Application.csproj" />
   </ItemGroup>
 

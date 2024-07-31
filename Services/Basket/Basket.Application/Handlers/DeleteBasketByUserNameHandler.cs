@@ -1,7 +1,7 @@
 ﻿
 using Basket.Application.Commands;
 using Basket.Core.Entities;
-using Cache.Repositories;
+using Cache.Repositories.AspNetCore;
 using MediatR;
 
 namespace Basket.Application.Handlers

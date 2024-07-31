@@ -1,5 +1,5 @@
 ﻿
-namespace Cache.Repositories
+namespace Cache.Repositories.AspNetCore
 {
     public interface ICacheUnitOfWork : IDisposable
     {
