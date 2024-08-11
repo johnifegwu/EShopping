@@ -11,7 +11,7 @@
     <PackageProjectUrl>https://github.com/johnifegwu/EShopping/tree/master/Libraries</PackageProjectUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/johnifegwu/EShopping/tree/master/Libraries/Cache.UnitOfWork</RepositoryUrl>
-    <PackageReleaseNotes>//=============================================================================
+    <PackageReleaseNotes>//=====================================================
 Cache.UnitOfWork
 
 How to use:
@@ -39,21 +39,21 @@ Do the following to use CacheUnitOfWork
          this._cacheUnitOfWork = cacheUnitOfWork;
      }
   
-     public async Task&lt;ShoppingCart&gt; Handle(AddUpdateDeleteShoppingCartItemCommand request, CancellationToken cancellationToken)
+     public async Task&lt;ShoppingCart&gt; Handle(GetShoppingCartQuery request, CancellationToken cancellationToken)
      {
          var cart = await _cacheUnitOfWork.Repository&lt;ShoppingCart&gt;().GetAsync(request.UserName, cancellationToken);
 
          return cart;
      }
  }
-//=============================================================================</PackageReleaseNotes>
+//=======================================================</PackageReleaseNotes>
     <PackageIcon>android-chrome-128_by_128.png</PackageIcon>
     <Authors>johnifegwu</Authors>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageId>Jay.Cache.UnitOfWork.AspNetCore</PackageId>
     <PackageLicenseFile>License.txt</PackageLicenseFile>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
-    <Version>1.0.2</Version>
+    <Version>1.0.3</Version>
     <AssemblyVersion></AssemblyVersion>
   </PropertyGroup>
 

@@ -2,11 +2,10 @@
 using Microsoft.Extensions.Caching.Distributed;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Cache.Repositories.AspNetCore;
 
 namespace Cache.Repositories.AspNetCore
 {
-    internal class CacheRepositoryCore<TEntity> : ICacheRepositoryCore<TEntity>
+    internal sealed class CacheRepositoryCore<TEntity> : ICacheRepositoryCore<TEntity>
         where TEntity : class
     {
 
@@ -80,7 +79,7 @@ namespace Cache.Repositories.AspNetCore
 
             var result = JsonConvert.DeserializeObject<TEntity>(jsonString);
 
-            if(result == null)
+            if (result == null)
                 return default!;
 
             return result;
@@ -148,7 +147,7 @@ namespace Cache.Repositories.AspNetCore
             }
 
             var result = await Task.FromResult(JsonConvert.DeserializeObject<IEnumerable<TEntity>>(jsonString));
-            
+
             if (result == null)
                 return default!;
 
@@ -163,6 +162,8 @@ namespace Cache.Repositories.AspNetCore
         /// <returns></returns>
         public TEntity Update(TEntity entity, string key)
         {
+            var jsonString = JsonConvert.SerializeObject(entity);
+
             //delete entry by key and insert entry by key
             try
             {
@@ -173,8 +174,11 @@ namespace Cache.Repositories.AspNetCore
             {
                 //do nothing
             }
-            var jsonString = JsonConvert.SerializeObject(entity);
-            _distributedCache.SetString(key, jsonString, _cacheOptions);
+            finally
+            {
+                _distributedCache.SetString(key, jsonString, _cacheOptions);
+            }
+
             return entity;
         }
 
@@ -186,6 +190,8 @@ namespace Cache.Repositories.AspNetCore
         /// <returns></returns>
         public async Task<TEntity> UpdateAsync(TEntity entity, string key, CancellationToken cancellationToken = default)
         {
+            var jsonString = await Task.FromResult(JsonConvert.SerializeObject(entity));
+
             try
             {
                 //delete entry by key
@@ -195,8 +201,11 @@ namespace Cache.Repositories.AspNetCore
             {
                 //do nothing
             }
-            var jsonString = await Task.FromResult(JsonConvert.SerializeObject(entity));
-            await _distributedCache.SetStringAsync(key, jsonString, _cacheOptions, cancellationToken);
+            finally
+            {
+                await _distributedCache.SetStringAsync(key, jsonString, _cacheOptions, cancellationToken);
+            }
+
             return entity;
         }
 
@@ -208,6 +217,8 @@ namespace Cache.Repositories.AspNetCore
         /// <returns></returns>
         public IEnumerable<TEntity> UpdateRange(IEnumerable<TEntity> entity, string key)
         {
+            var jsonString = JsonConvert.SerializeObject(entity);
+
             //delete entry by key and insert entry by key
             try
             {
@@ -218,8 +229,11 @@ namespace Cache.Repositories.AspNetCore
             {
                 //do nothing
             }
-            var jsonString = JsonConvert.SerializeObject(entity);
-            _distributedCache.SetString(key, jsonString, _cacheOptions);
+            finally
+            {
+                _distributedCache.SetString(key, jsonString, _cacheOptions);
+            }
+
             return entity;
         }
 
@@ -231,6 +245,8 @@ namespace Cache.Repositories.AspNetCore
         /// <returns></returns>
         public async Task<IEnumerable<TEntity>> UpdateRangeAsync(IEnumerable<TEntity> entity, string key, CancellationToken cancellationToken = default)
         {
+            var jsonString = await Task.FromResult(JsonConvert.SerializeObject(entity));
+
             try
             {
                 //delete entry by key
@@ -240,8 +256,11 @@ namespace Cache.Repositories.AspNetCore
             {
                 //do nothing
             }
-            var jsonString = await Task.FromResult(JsonConvert.SerializeObject(entity));
-            await _distributedCache.SetStringAsync(key, jsonString, _cacheOptions, cancellationToken);
+            finally
+            {
+                await _distributedCache.SetStringAsync(key, jsonString, _cacheOptions, cancellationToken);
+            }
+
             return entity;
         }
 
@@ -256,16 +275,6 @@ namespace Cache.Repositories.AspNetCore
         {
             //Get entry by key
             var jsonString = _distributedCache.GetString(key);
-
-            try
-            {
-                //delete entry by key
-                _distributedCache.Remove(key);
-            }
-            catch
-            {
-                //do nothing
-            }
 
             IEnumerable<TEntity>? list = null;
 
@@ -283,7 +292,19 @@ namespace Cache.Repositories.AspNetCore
 
             jsonString = JsonConvert.SerializeObject(unionList);
 
-            _distributedCache.SetString(key, jsonString, _cacheOptions);
+            try
+            {
+                //delete entry by key
+                _distributedCache.Remove(key);
+            }
+            catch
+            {
+                //do nothing
+            }
+            finally
+            {
+                _distributedCache.SetString(key, jsonString, _cacheOptions);
+            }
 
             return unionList;
         }
@@ -299,16 +320,6 @@ namespace Cache.Repositories.AspNetCore
         {
             //Get entry by key
             var jsonString = await _distributedCache.GetStringAsync(key, cancellationToken);
-
-            try
-            {
-                //delete entry by key
-                await _distributedCache.RemoveAsync(key, cancellationToken);
-            }
-            catch
-            {
-                //do nothing
-            }
 
             IEnumerable<TEntity>? list = null;
 
@@ -326,7 +337,19 @@ namespace Cache.Repositories.AspNetCore
 
             jsonString = await Task.FromResult(JsonConvert.SerializeObject(unionList));
 
-            await _distributedCache.SetStringAsync(key, jsonString, _cacheOptions, cancellationToken);
+            try
+            {
+                //delete entry by key
+                await _distributedCache.RemoveAsync(key, cancellationToken);
+            }
+            catch
+            {
+                //do nothing
+            }
+            finally
+            {
+                await _distributedCache.SetStringAsync(key, jsonString, _cacheOptions, cancellationToken);
+            }
 
             return unionList;
         }
@@ -344,16 +367,6 @@ namespace Cache.Repositories.AspNetCore
             //Get entry by key
             var jsonString = _distributedCache.GetString(key);
 
-            try
-            {
-                //delete entry by key
-                _distributedCache.Remove(key);
-            }
-            catch
-            {
-                //do nothing
-            }
-
             IEnumerable<TEntity>? list = null;
 
             if (!string.IsNullOrEmpty(jsonString))
@@ -370,7 +383,19 @@ namespace Cache.Repositories.AspNetCore
 
             jsonString = JsonConvert.SerializeObject(unionList);
 
-            _distributedCache.SetString(key, jsonString, _cacheOptions);
+            try
+            {
+                //delete entry by key
+                _distributedCache.Remove(key);
+            }
+            catch
+            {
+                //do nothing
+            }
+            finally
+            {
+                _distributedCache.SetString(key, jsonString, _cacheOptions);
+            }
 
             return unionList;
         }
@@ -388,16 +413,6 @@ namespace Cache.Repositories.AspNetCore
             //Get entry by key
             var jsonString = await _distributedCache.GetStringAsync(key, cancellationToken);
 
-            try
-            {
-                //delete entry by key
-                await _distributedCache.RemoveAsync(key);
-            }
-            catch
-            {
-                //do nothing
-            }
-
             IEnumerable<TEntity>? list = null;
 
             if (!string.IsNullOrEmpty(jsonString))
@@ -414,7 +429,19 @@ namespace Cache.Repositories.AspNetCore
 
             jsonString = await Task.FromResult(JsonConvert.SerializeObject(unionList));
 
-            await _distributedCache.SetStringAsync(key, jsonString, _cacheOptions, cancellationToken);
+            try
+            {
+                //delete entry by key
+                await _distributedCache.RemoveAsync(key);
+            }
+            catch
+            {
+                //do nothing
+            }
+            finally
+            {
+                await _distributedCache.SetStringAsync(key, jsonString, _cacheOptions, cancellationToken);
+            }
 
             return unionList;
         }
@@ -430,16 +457,6 @@ namespace Cache.Repositories.AspNetCore
         {
             //Get entry by key
             var jsonString = _distributedCache.GetString(key);
-
-            try
-            {
-                //delete entry by key
-                _distributedCache.Remove(key);
-            }
-            catch
-            {
-                //do nothing
-            }
 
             IEnumerable<TEntity>? list = null;
 
@@ -458,7 +475,19 @@ namespace Cache.Repositories.AspNetCore
 
             jsonString = JsonConvert.SerializeObject(swapedList);
 
-            _distributedCache.SetString(key, jsonString, _cacheOptions);
+            try
+            {
+                //delete entry by key
+                _distributedCache.Remove(key);
+            }
+            catch
+            {
+                //do nothing
+            }
+            finally
+            {
+                _distributedCache.SetString(key, jsonString, _cacheOptions);
+            }
 
             return swapedList;
         }
@@ -474,16 +503,6 @@ namespace Cache.Repositories.AspNetCore
         {
             //Get entry by key
             var jsonString = await _distributedCache.GetStringAsync(key, cancellationToken);
-
-            try
-            {
-                //delete entry by key
-                await _distributedCache.RemoveAsync(key, cancellationToken);
-            }
-            catch
-            {
-                //do nothing
-            }
 
             IEnumerable<TEntity>? list = null;
 
@@ -502,7 +521,65 @@ namespace Cache.Repositories.AspNetCore
 
             jsonString = await Task.FromResult(JsonConvert.SerializeObject(swapedList));
 
-            await _distributedCache.SetStringAsync(key, jsonString, _cacheOptions, cancellationToken);
+            try
+            {
+                //delete entry by key
+                await _distributedCache.RemoveAsync(key, cancellationToken);
+            }
+            catch
+            {
+                //do nothing
+            }
+            finally
+            {
+                await _distributedCache.SetStringAsync(key, jsonString, _cacheOptions, cancellationToken);
+            }
+
+            return swapedList;
+        }
+
+        /// <summary>
+        /// Swaps multiple entities from a list of enities.
+        /// </summary>
+        /// <param name="entities">Entities.</param>
+        /// <param name="IdFieldName">Id field name.</param>
+        /// <param name="key">Cache key.</param>
+        /// <returns></returns>
+        public async Task<IEnumerable<TEntity>> SwapRangeAsync(IEnumerable<TEntity> entities, string IdFieldName, string key, CancellationToken cancellationToken = default)
+        {
+            //Get entry by key
+            var jsonString = await _distributedCache.GetStringAsync(key, cancellationToken);
+
+            IEnumerable<TEntity>? list = null;
+
+            if (!string.IsNullOrEmpty(jsonString))
+            {
+                list = await Task.FromResult(JsonConvert.DeserializeObject<IEnumerable<TEntity>>(jsonString));
+            }
+
+            //Swap item in list here.
+            IEnumerable<TEntity> swapedList = entities;
+
+            if (list != null)
+            {
+                swapedList = await Task.FromResult(SwapRange(list, entities, IdFieldName));
+            }
+
+            jsonString = await Task.FromResult(JsonConvert.SerializeObject(swapedList));
+
+            try
+            {
+                //delete entry by key
+                await _distributedCache.RemoveAsync(key, cancellationToken);
+            }
+            catch
+            {
+                //do nothing
+            }
+            finally
+            {
+                await _distributedCache.SetStringAsync(key, jsonString, _cacheOptions, cancellationToken);
+            }
 
             return swapedList;
         }
@@ -519,16 +596,6 @@ namespace Cache.Repositories.AspNetCore
         {
             //Get entry by key
             var jsonString = _distributedCache.GetString(key);
-
-            try
-            {
-                //delete entry by key
-                _distributedCache.Remove(key);
-            }
-            catch
-            {
-                //do nothing
-            }
 
             IEnumerable<TEntity>? list = null;
 
@@ -547,15 +614,53 @@ namespace Cache.Repositories.AspNetCore
 
             jsonString = JsonConvert.SerializeObject(swapList);
 
-            _distributedCache.SetString(key, jsonString, _cacheOptions);
+            try
+            {
+                //delete entry by key
+                _distributedCache.Remove(key);
+            }
+            catch
+            {
+                //do nothing
+            }
+            finally
+            {
+                _distributedCache.SetString(key, jsonString, _cacheOptions);
+            }
 
             return swapList;
         }
 
-        public async Task<IEnumerable<TEntity>> SwapRangeAsync(TEntity entity, string ClassName, string IdFieldName, string key, CancellationToken cancellationToken = default)
+        /// <summary>
+        /// Swaps one entity from a list of enities.
+        /// </summary>
+        /// <param name="entity">Entity.</param>
+        /// <param name="ClassName">Child entity name (where IdFieldName is equal to Entity.ChildClass.IdFieldName).</param>
+        /// <param name="IdFieldName">Id field name.</param>
+        /// <param name="key">Cache key.</param>
+        /// <returns></returns>
+        public async Task<IEnumerable<TEntity>> SwapOneAsync(TEntity entity, string ClassName, string IdFieldName, string key, CancellationToken cancellationToken = default)
         {
             //Get entry by key
             var jsonString = await _distributedCache.GetStringAsync(key, cancellationToken);
+
+            IEnumerable<TEntity>? list = null;
+
+            if (!string.IsNullOrEmpty(jsonString))
+            {
+                list = JsonConvert.DeserializeObject<IEnumerable<TEntity>>(jsonString);
+            }
+
+            //Swap item in list here.
+            IEnumerable<TEntity> swapList = new List<TEntity> { entity };
+
+            if (list != null)
+            {
+                swapList = Swap(list, entity, ClassName, IdFieldName);
+            }
+
+            jsonString = JsonConvert.SerializeObject(swapList);
+
 
             try
             {
@@ -566,6 +671,26 @@ namespace Cache.Repositories.AspNetCore
             {
                 //do nothing
             }
+            finally
+            {
+                await _distributedCache.SetStringAsync(key, jsonString, _cacheOptions, cancellationToken);
+            }
+
+            return swapList;
+        }
+
+        /// <summary>
+        /// Swaps multiple entities from a list of enities.
+        /// </summary>
+        /// <param name="entities">Entities.</param>
+        /// <param name="ClassName">Child entity name (where IdFieldName is equal to Entity.ChildClass.IdFieldName).</param>
+        /// <param name="IdFieldName">Id field name.</param>
+        /// <param name="key">Cache key.</param>
+        /// <returns></returns>
+        public async Task<IEnumerable<TEntity>> SwapRangeAsync(IEnumerable<TEntity> entities, string ClassName, string IdFieldName, string key, CancellationToken cancellationToken = default)
+        {
+            //Get entry by key
+            var jsonString = await _distributedCache.GetStringAsync(key, cancellationToken);
 
             IEnumerable<TEntity>? list = null;
 
@@ -575,16 +700,28 @@ namespace Cache.Repositories.AspNetCore
             }
 
             //Swap item in list here.
-            IEnumerable<TEntity> swapedList = new List<TEntity> { entity };
+            IEnumerable<TEntity> swapedList = entities;
 
             if (list != null)
             {
-                swapedList = await Task.FromResult(Swap(list, entity, ClassName, IdFieldName));
+                swapedList = await Task.FromResult(SwapRange(list, entities, ClassName, IdFieldName));
             }
 
             jsonString = await Task.FromResult(JsonConvert.SerializeObject(swapedList));
 
-            await _distributedCache.SetStringAsync(key, jsonString, _cacheOptions, cancellationToken);
+            try
+            {
+                //delete entry by key
+                await _distributedCache.RemoveAsync(key, cancellationToken);
+            }
+            catch
+            {
+                //do nothing
+            }
+            finally
+            {
+                await _distributedCache.SetStringAsync(key, jsonString, _cacheOptions, cancellationToken);
+            }
 
             return swapedList;
         }
@@ -611,6 +748,48 @@ namespace Cache.Repositories.AspNetCore
             await _distributedCache.RemoveAsync(key, cancellationToken);
 
             return true;
+        }
+
+        private IEnumerable<TEntity> SwapRange(IEnumerable<TEntity> list, IEnumerable<TEntity> entities, string ClassName, string IdFieldName)
+        {
+            var entity_json = JsonConvert.SerializeObject(entities);
+
+            var filterValues = entities.Select(x =>
+            {
+                var x_json = JsonConvert.SerializeObject(x);
+                return JObject.Parse(x_json)[ClassName][IdFieldName].ToString();
+            });
+
+            var newList = list.Where(x =>
+            {
+                var x_json = JsonConvert.SerializeObject(x);
+                return !filterValues.Contains(JObject.Parse(x_json)[ClassName][IdFieldName].ToString());
+            }).ToList();
+
+            newList.AddRange(entities);
+
+            return newList;
+        }
+
+        private IEnumerable<TEntity> SwapRange(IEnumerable<TEntity> list, IEnumerable<TEntity> entities, string IdFieldName)
+        {
+            var entity_json = JsonConvert.SerializeObject(entities);
+
+            var filterValues = entities.Select(x =>
+            {
+                var x_json = JsonConvert.SerializeObject(x);
+                return JObject.Parse(x_json)[IdFieldName].ToString();
+            });
+
+            var newList = list.Where(x =>
+            {
+                var x_json = JsonConvert.SerializeObject(x);
+                return !filterValues.Contains(JObject.Parse(x_json)[IdFieldName].ToString());
+            }).ToList();
+
+            newList.AddRange(entities);
+
+            return newList;
         }
 
         private IEnumerable<TEntity> Swap(IEnumerable<TEntity> list, TEntity entity, string IdFieldName)

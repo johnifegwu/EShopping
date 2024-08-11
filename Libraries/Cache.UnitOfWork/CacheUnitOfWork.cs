@@ -4,7 +4,7 @@ using Microsoft.Extensions.Caching.Distributed;
 
 namespace Cache.UnitOfWork.AspNetCore
 {
-    internal class CacheUnitOfWork : ICacheUnitOfWork
+    internal sealed class CacheUnitOfWork : ICacheUnitOfWork
     {
         private static readonly object _createRepositoryLock = new object();
 
@@ -16,8 +16,8 @@ namespace Cache.UnitOfWork.AspNetCore
         public CacheUnitOfWork(IDistributedCache distributedCache)
         {
             _distributedCache = distributedCache;
-            var sevendays = DateTime.UtcNow.AddDays(365);
-            var totalseconds = sevendays.Subtract(DateTime.UtcNow).TotalSeconds;
+            var days = DateTime.UtcNow.AddDays(365);
+            var totalseconds = days.Subtract(DateTime.UtcNow).TotalSeconds;
             _cacheOptions = new DistributedCacheEntryOptions();
             _cacheOptions.SetAbsoluteExpiration(TimeSpan.FromSeconds(totalseconds));
             _cacheOptions.SlidingExpiration = null;

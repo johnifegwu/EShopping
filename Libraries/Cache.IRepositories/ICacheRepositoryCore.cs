@@ -66,6 +66,15 @@ namespace Cache.Repositories.AspNetCore
         Task<IEnumerable<TEntity>> SwapOneAsync(TEntity entity, string IdFieldName, string key, CancellationToken cancellationToken = default);
 
         /// <summary>
+        /// Swaps multiple entities from a list of enities.
+        /// </summary>
+        /// <param name="entities">Entities.</param>
+        /// <param name="IdFieldName">Id field name.</param>
+        /// <param name="key">Cache key.</param>
+        /// <returns></returns>
+        Task<IEnumerable<TEntity>> SwapRangeAsync(IEnumerable<TEntity> entities, string IdFieldName, string key, CancellationToken cancellationToken = default);
+
+        /// <summary>
         /// Swaps one entity from a list of enities.
         /// </summary>
         /// <param name="entity">Entity.</param>
@@ -83,45 +92,55 @@ namespace Cache.Repositories.AspNetCore
         /// <param name="IdFieldName">Id field name.</param>
         /// <param name="key">Cache key.</param>
         /// <returns></returns>
-        Task<IEnumerable<TEntity>> SwapRangeAsync(TEntity entity, string ClassName, string IdFieldName, string key, CancellationToken cancellationToken = default);
+        Task<IEnumerable<TEntity>> SwapOneAsync(TEntity entity, string ClassName, string IdFieldName, string key, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Appends Union a range of entities to the cache.
+        /// Swaps multiple entities from a list of enities.
         /// </summary>
-        /// <param name="entity">Entity.</param>
-        /// <param name="IdFieldName">Id field name.</param>
-        /// <param name="key">Cache key.</param>
-        /// <returns></returns>
-        IEnumerable<TEntity> AppendUnionRange(IEnumerable<TEntity> entity, string IdFieldName, string key);
-
-        /// <summary>
-        /// Appends Union a range of entities to the cache.
-        /// </summary>
-        /// <param name="entity">Entity.</param>
-        /// <param name="IdFieldName">Id field name.</param>
-        /// <param name="key">Cache key.</param>
-        /// <returns></returns>
-        Task<IEnumerable<TEntity>> AppendUnionRangeAsync(IEnumerable<TEntity> entity, string IdFieldName, string key, CancellationToken cancellationToken = default);
-
-        /// <summary>
-        /// Appends Union a range of entities to the cache.
-        /// </summary>
-        /// <param name="entity">Entity.</param>
+        /// <param name="entities">Entities.</param>
         /// <param name="ClassName">Child entity name (where IdFieldName is equal to Entity.ChildClass.IdFieldName).</param>
         /// <param name="IdFieldName">Id field name.</param>
         /// <param name="key">Cache key.</param>
         /// <returns></returns>
-        IEnumerable<TEntity> AppendUnionRange(IEnumerable<TEntity> entity, string ClassName, string IdFieldName, string key);
+        Task<IEnumerable<TEntity>> SwapRangeAsync(IEnumerable<TEntity> entities, string ClassName, string IdFieldName, string key, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Appends Union a range of entities to the cache.
         /// </summary>
-        /// <param name="entity">Entity.</param>
+        /// <param name="entities">Entities.</param>
+        /// <param name="IdFieldName">Id field name.</param>
+        /// <param name="key">Cache key.</param>
+        /// <returns></returns>
+        IEnumerable<TEntity> AppendUnionRange(IEnumerable<TEntity> entities, string IdFieldName, string key);
+
+        /// <summary>
+        /// Appends Union a range of entities to the cache.
+        /// </summary>
+        /// <param name="entities">Entities.</param>
+        /// <param name="IdFieldName">Id field name.</param>
+        /// <param name="key">Cache key.</param>
+        /// <returns></returns>
+        Task<IEnumerable<TEntity>> AppendUnionRangeAsync(IEnumerable<TEntity> entities, string IdFieldName, string key, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Appends Union a range of entities to the cache.
+        /// </summary>
+        /// <param name="entities">Entities.</param>
         /// <param name="ClassName">Child entity name (where IdFieldName is equal to Entity.ChildClass.IdFieldName).</param>
         /// <param name="IdFieldName">Id field name.</param>
         /// <param name="key">Cache key.</param>
         /// <returns></returns>
-        Task<IEnumerable<TEntity>> AppendUnionRangeAsync(IEnumerable<TEntity> entity, string ClassName, string IdFieldName, string key, CancellationToken cancellationToken = default);
+        IEnumerable<TEntity> AppendUnionRange(IEnumerable<TEntity> entities, string ClassName, string IdFieldName, string key);
+
+        /// <summary>
+        /// Appends Union a range of entities to the cache.
+        /// </summary>
+        /// <param name="entities">Entity.</param>
+        /// <param name="ClassName">Child entity name (where IdFieldName is equal to Entity.ChildClass.IdFieldName).</param>
+        /// <param name="IdFieldName">Id field name.</param>
+        /// <param name="key">Cache key.</param>
+        /// <returns></returns>
+        Task<IEnumerable<TEntity>> AppendUnionRangeAsync(IEnumerable<TEntity> entities, string ClassName, string IdFieldName, string key, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Adds an entity to the cache.
@@ -158,18 +177,18 @@ namespace Cache.Repositories.AspNetCore
         /// <summary>
         /// Replaces an entity in the cache.
         /// </summary>
-        /// <param name="entity">Entity.</param>
+        /// <param name="entities">Entities.</param>
         /// <param name="key">Cache key.</param>
         /// <returns></returns>
-        IEnumerable<TEntity> UpdateRange(IEnumerable<TEntity> entity, string key);
+        IEnumerable<TEntity> UpdateRange(IEnumerable<TEntity> entities, string key);
 
         /// <summary>
         /// Replaces an entity in the cache.
         /// </summary>
-        /// <param name="entity">Entity.</param>
+        /// <param name="entities">Entities.</param>
         /// <param name="key">Cache key.</param>
         /// <returns></returns>
-        Task<IEnumerable<TEntity>> UpdateRangeAsync(IEnumerable<TEntity> entity, string key, CancellationToken cancellationToken = default);
+        Task<IEnumerable<TEntity>> UpdateRangeAsync(IEnumerable<TEntity> entities, string key, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Removes the cached data from the system.
