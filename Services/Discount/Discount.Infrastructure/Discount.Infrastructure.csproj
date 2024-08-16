@@ -15,7 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Libraries\Data.Repositories\Data.Repositories.csproj" />
     <ProjectReference Include="..\Discount.Application\Discount.Application.csproj" />
   </ItemGroup>
 

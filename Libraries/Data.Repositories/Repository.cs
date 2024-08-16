@@ -1,13 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
+﻿using EFCore.UnitOfWorkCore.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace Data.Repositories
 {
     public class Repository<T> : IRepository<T> where T : class
     {
-        private DbContext context;
+        private IJayDbContext context;
 
-        public Repository(DbContext context)
+        public Repository(IJayDbContext context)
         {
             this.context = context;
         }

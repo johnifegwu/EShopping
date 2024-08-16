@@ -1,0 +1,80 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Title>Dynamic Repository and UnitOfWork for EntityFrameworkCore.</Title>
+    <Version>1.0.0</Version>
+    <Authors>johnifegwu</Authors>
+    <Company>John Ifegwu</Company>
+    <Description>A dynamic repository and UnitOfWork implementation for Entity Framework Core, 
+incorporating IDisposable to enhance the scalability and efficiency of your CRUD operations. 
+Jay.EFCore.UnitOfWork works with EF Core for SQL Server, 
+Azure SQL Database, SQLite, Azure Cosmos DB, MySQL, PostgreSQL and MongoDB.</Description>
+    <Copyright>2024 John Ifegwu</Copyright>
+    <PackageIcon>android-chrome-128_by_128.png</PackageIcon>
+    <PackageReleaseNotes>//=====================================================
+Jay.EFCore.UnitOfWork
+
+A dynamic repository and UnitOfWork implementation for Entity Framework Core, 
+incorporating IDisposable to enhance the scalability and efficiency of your CRUD operations. 
+Jay.EFCore.UnitOfWork works with EF Core for SQL Server, 
+Azure SQL Database, SQLite, Azure Cosmos DB, MySQL, PostgreSQL and MongoDB.
+
+How to use:
+
+In program.cs add the below code snipet.
+
+//Nuget installation
+Install Jay.EFCore.UnitOfWork
+
+//EFCore configurations
+var conString = builder.Configuration["ConnectionStrings:ProductDbConnection"];
+builder.Services.AddDbContextPool&lt;ProductDbContext&gt;(options =&gt; options.UseSqlServer(conString));
+builder.Services.AddTransient&lt;IJayDbContext, ProductDbContext&gt;();
+
+//Jay.EFCore.UnitOfWork configuaration
+services.AddEFCoreUnitOfWork();
+
+Do the following to use Jay.EFCore.UnitOfWork
+
+ public class CreateProductHandler : IRequestHandler&lt;CreateProductCommand, Product&gt;
+ {
+     private readonly IUnitOfWorkCore _unitOfWork;
+
+     public CreateProductHandler(IUnitOfWorkCore unitOfWork)
+     {
+         _unitOfWork = unitOfWork;
+     }
+
+     public async Task&lt;Product&gt; Handle(CreateProductCommand request, CancellationToken cancellationToken)
+     {
+         //Create new Product
+         retur await _unitOfWork.Repository&lt;Product&gt;().AddAsync(request.Product, cancellationToken);
+     }
+ }
+//=======================================================</PackageReleaseNotes>
+  </PropertyGroup>
+
+  <ItemGroup>
+	<FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="C:\Users\johni\Downloads\android-chrome-128_by_128.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+	<PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.8" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Data.Repositories\Data.Repositories.csproj" />
+  </ItemGroup>
+
+</Project>

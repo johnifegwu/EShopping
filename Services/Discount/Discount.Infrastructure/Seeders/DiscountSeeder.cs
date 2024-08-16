@@ -9,7 +9,7 @@ namespace Discount.Infrastructure.Seeders
         public async Task Seed()
         {
             ////==================================================================================
-            var canconnect = await context.GetContext().Database.CanConnectAsync();
+            var canconnect = await context.GetDatabase().CanConnectAsync();
 
             if (canconnect)
             {

@@ -1,13 +1,12 @@
 ﻿using Catalog.Core.Configurations;
 using Catalog.Core.Entities;
-using Catalog.Infrastructure.Configurations;
+using EFCore.UnitOfWorkCore.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using MongoDB.Driver;
-using static Catalog.Infrastructure.Seeders.CatalogSeeder;
 
 namespace Catalog.Infrastructure.Persistence
 {
-    internal class CatalogDbContext : DbContext
+    internal class CatalogDbContext : DbContext, IJayDbContext
     {
         public CatalogDbContext(DbContextOptions<CatalogDbContext> options) : base(options)
         {

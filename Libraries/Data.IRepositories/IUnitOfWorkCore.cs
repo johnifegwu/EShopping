@@ -1,11 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿
+using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace Data.Repositories
 {
     public interface IUnitOfWorkCore : IDisposable
     {
-        DbContext GetContext();
         IRepository<T> Repository<T>() where T : class;
+        DatabaseFacade GetDatabase();
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     }
 }

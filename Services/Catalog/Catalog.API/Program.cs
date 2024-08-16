@@ -28,7 +28,7 @@ builder.Services.AddApiVersioning(o =>
 builder.Services.AddExceptionHadlers();
 
 var conString = builder.Configuration["ConnectionStrings:CatalogDbConnection"];
-builder.Services.AddHealthChecks().AddMongoDb(conString, "Catalog MongoDb Helth Check", HealthStatus.Degraded);
+//builder.Services.AddHealthChecks().AddMongoDb(conString, "Catalog MongoDb Helth Check", HealthStatus.Degraded);
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -132,11 +132,11 @@ app.UseAuthentication(); // Add the authentication middleware
 
 app.UseAuthorization(); // Add the authorization middleware
 
-app.MapHealthChecks("/health", new HealthCheckOptions
-{
-    Predicate = _ => true,
-    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
-});
+//app.MapHealthChecks("/health", new HealthCheckOptions
+//{
+//    Predicate = _ => true,
+//    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+//});
 
 app.MapControllers();
 

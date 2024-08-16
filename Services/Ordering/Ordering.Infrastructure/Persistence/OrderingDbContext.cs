@@ -1,11 +1,12 @@
 ﻿
+using EFCore.UnitOfWorkCore.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Ordering.Core.Entities;
 using Ordering.Infrastructure.Configurations;
 
 namespace Ordering.Infrastructure.Persistence
 {
-    internal class OrderingDbContext : DbContext
+    internal class OrderingDbContext : DbContext, IJayDbContext
     {
         public OrderingDbContext(DbContextOptions<OrderingDbContext> options) : base(options)
         {

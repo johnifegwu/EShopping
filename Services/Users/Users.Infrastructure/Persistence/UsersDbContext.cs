@@ -1,11 +1,12 @@
 ﻿
+using EFCore.UnitOfWorkCore.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Users.Core.Entities;
 using Users.Infrastructure.Configurations;
 
 namespace Users.Infrastructure.Persistence
 {
-    internal class UsersDbContext : DbContext
+    internal sealed class UsersDbContext : DbContext, IJayDbContext
     {
         public UsersDbContext(DbContextOptions<UsersDbContext> options) : base(options) { }
 

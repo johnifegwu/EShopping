@@ -16,13 +16,13 @@ builder.Services.AddGrpc();
 
 // Add depencies
 //=====================================================================================================
+builder.Services.AddInfrastructure(builder.Configuration);
 var mediatRAssemblies = new[]
 {
   Assembly.GetAssembly(typeof(Coupon)), // Core
   Assembly.GetAssembly(typeof(CreateCouponCommand)) // Application
 };
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(mediatRAssemblies!));
-builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddAutoMapper(typeof(Program));
 builder.WebHost.ConfigureKestrel(options =>
 {

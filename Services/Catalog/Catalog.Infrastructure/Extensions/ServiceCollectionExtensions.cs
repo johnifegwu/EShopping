@@ -1,7 +1,7 @@
 ﻿using Catalog.Infrastructure.Persistence;
-using Catalog.Infrastructure.Repositories;
 using Catalog.Infrastructure.Seeders;
-using Data.Repositories;
+using EFCore.UnitOfWorkCore.Extentions;
+using EFCore.UnitOfWorkCore.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,8 +19,9 @@ namespace Catalog.Infrastructure.Extensions
             var client = new MongoClient(conString);
             var db = client.GetDatabase(dbName);
             services.AddDbContextPool<CatalogDbContext>(options => options.UseMongoDB(db.Client, db.DatabaseNamespace.DatabaseName));
-            services.AddTransient<IUnitOfWorkCore, UnitOfWorkCatalog>();
+            services.AddTransient<IJayDbContext, CatalogDbContext>();
             services.AddScoped<ICatalogSeeder, CatalogSeeder>();
+            services.AddEFCoreUnitOfWork();
         }
     }
 }

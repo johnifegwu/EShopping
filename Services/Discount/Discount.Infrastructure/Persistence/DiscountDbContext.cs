@@ -1,11 +1,12 @@
 ﻿
 using Discount.Core.Entities;
 using Discount.Infrastructure.Configurations;
+using EFCore.UnitOfWorkCore.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace Discount.Infrastructure.Persistence
 {
-    internal class DiscountDbContext : DbContext
+    internal class DiscountDbContext : DbContext, IJayDbContext
     {
 
         public DiscountDbContext(DbContextOptions<DiscountDbContext> options) : base(options)

@@ -13,7 +13,7 @@ namespace Users.Infrastructure.Seeders
         public async Task Seed()
         {
             ////==================================================================================
-            var canconnect = await context.GetContext().Database.CanConnectAsync();
+            var canconnect = await context.GetDatabase().CanConnectAsync();
             var _config = config.Value;
 
             if (canconnect)

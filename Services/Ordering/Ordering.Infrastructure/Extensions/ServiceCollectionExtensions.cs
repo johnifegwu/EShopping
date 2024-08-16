@@ -1,10 +1,9 @@
-﻿
-using Data.Repositories;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Ordering.Infrastructure.Persistence;
-using Ordering.Infrastructure.Repositories;
+using EFCore.UnitOfWorkCore.Extentions;
+using EFCore.UnitOfWorkCore.Interfaces;
 
 namespace Ordering.Infrastructure.Extensions
 {
@@ -14,7 +13,8 @@ namespace Ordering.Infrastructure.Extensions
         {
             var conString = configuration["ConnectionStrings:OrderingDbConnection"];
             services.AddDbContextPool<OrderingDbContext>(options => options.UseSqlServer(conString));
-            services.AddTransient<IUnitOfWorkCore, UnitOfWorkOrdering>();
+            services.AddTransient<IJayDbContext, OrderingDbContext>();
+            services.AddEFCoreUnitOfWork();
         }
     }
 }
