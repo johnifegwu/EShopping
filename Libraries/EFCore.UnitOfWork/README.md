@@ -22,7 +22,29 @@ builder.Services.AddTransient<IJayDbContext, ProductDbContext>();
 
 //Jay.EFCore.UnitOfWork configuaration
 ```
-services.AddEFCoreUnitOfWork();
+builder.Services.AddEFCoreUnitOfWork();
+```
+
+//Make sure your DbContext class implemetenst IJayDbContext
+```
+internal class ProductDbContext : DbContext, IJayDbContext
+{
+    public ProductDbContext(DbContextOptions<ProductDbContext> options) : base(options)
+    {
+    }
+
+    public DbSet<Product> Products { get; init; }
+    public DbSet<ProductBrand> ProductBrands { get; init; }
+    public DbSet<ProductType> ProductTypes { get; init; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(ProductConfiguration).Assembly);
+    }
+
+}
 ```
 
 Do the following to use Jay.EFCore.UnitOfWork

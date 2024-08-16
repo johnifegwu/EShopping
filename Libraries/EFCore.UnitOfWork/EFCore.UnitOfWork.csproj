@@ -6,7 +6,7 @@
     <Nullable>enable</Nullable>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Title>A dynamic repository and UnitOfWork implementation for Entity Framework Core</Title>
-    <Version>1.0.0</Version>
+    <Version>1.0.1</Version>
     <Authors>johnifegwu</Authors>
     <Company>John Ifegwu</Company>
     <Description>A dynamic repository and UnitOfWork implementation for Entity Framework Core, 
@@ -38,7 +38,27 @@ builder.Services.AddDbContextPool&lt;ProductDbContext&gt;(options =&gt; options.
 builder.Services.AddTransient&lt;IJayDbContext, ProductDbContext&gt;();
 
 //Jay.EFCore.UnitOfWork configuaration
-services.AddEFCoreUnitOfWork();
+builder.Services.AddEFCoreUnitOfWork();
+
+//Make sure your DbContext class implemetenst IJayDbContext
+internal class ProductDbContext : DbContext, IJayDbContext
+{
+    public ProductDbContext(DbContextOptions&lt;ProductDbContext&gt; options) : base(options)
+    {
+    }
+
+    public DbSet&lt;Product&gt; Products { get; init; }
+    public DbSet&lt;ProductBrand&gt; ProductBrands { get; init; }
+    public DbSet&lt;ProductType&gt; ProductTypes { get; init; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(ProductConfiguration).Assembly);
+    }
+
+}
 
 Do the following to use Jay.EFCore.UnitOfWork
 
