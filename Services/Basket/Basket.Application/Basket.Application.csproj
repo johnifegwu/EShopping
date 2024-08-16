@@ -9,6 +9,7 @@
   <ItemGroup>
 	<PackageReference Include="AutoMapper" Version="13.0.1" />
 	<PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
+	<PackageReference Include="Jay.Cache.UnitOfWork.AspNetCore" Version="1.0.4" />
 	<PackageReference Include="MassTransit.RabbitMQ" Version="8.2.3" />
 	<PackageReference Include="Google.Protobuf" Version="3.27.2" />
 	<PackageReference Include="Grpc.Net.Client" Version="2.65.0" />
@@ -24,7 +25,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Libraries\Cache.UnitOfWork\Cache.UnitOfWork.AspNetCore.csproj" />
     <ProjectReference Include="..\..\..\Libraries\eShopping.MessageBrocker\eShopping.MessageBrocker.csproj" />
     <ProjectReference Include="..\Basket.Core\Basket.Core.csproj" />
   </ItemGroup>

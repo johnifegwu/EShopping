@@ -6,7 +6,7 @@
     <Nullable>enable</Nullable>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Title>A dynamic repository and UnitOfWork implementation for Entity Framework Core</Title>
-    <Version>1.0.1</Version>
+    <Version>1.0.2</Version>
     <Authors>johnifegwu</Authors>
     <Company>John Ifegwu</Company>
     <Description>A dynamic repository and UnitOfWork implementation for Entity Framework Core, 
@@ -101,11 +101,8 @@ Do the following to use Jay.EFCore.UnitOfWork
   </ItemGroup>
 
   <ItemGroup>
-	<PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.8" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Data.Repositories\Data.Repositories.csproj" />
+	  <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.8" />
+	  <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="8.0.8" />
   </ItemGroup>
 
   <ItemGroup>

@@ -11,7 +11,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Libraries\Data.IRepositories\Data.IRepositories.csproj" />
     <ProjectReference Include="..\..\..\Libraries\eShopping.Exceptions\eShopping.Exceptions.csproj" />
     <ProjectReference Include="..\..\..\Libraries\eShopping.Models\eShopping.Models.csproj" />
     <ProjectReference Include="..\..\..\Libraries\eShopping.Security\eShopping.Security.csproj" />

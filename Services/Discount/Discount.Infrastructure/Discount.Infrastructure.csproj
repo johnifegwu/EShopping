@@ -8,14 +8,12 @@
 
   <ItemGroup>
 	 <PackageReference Include="Grpc.AspNetCore" Version="2.63.0" />
-	 <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
-	 <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
+	 <PackageReference Include="Jay.EFCore.UnitOfWork" Version="1.0.2" />
      <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.4" />
-	 <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.6" />
+	 <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.8" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Libraries\EFCore.UnitOfWork\EFCore.UnitOfWork.csproj" />
     <ProjectReference Include="..\Discount.Application\Discount.Application.csproj" />
   </ItemGroup>
 

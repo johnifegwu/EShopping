@@ -9,6 +9,7 @@
   <ItemGroup>
 	<PackageReference Include="AutoMapper" Version="13.0.1" />
 	<PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
+	<PackageReference Include="Jay.EFCore.UnitOfWork" Version="1.0.2" />
 	<PackageReference Include="MassTransit.RabbitMQ" Version="8.2.3" />
 	<PackageReference Include="MediatR" Version="12.3.0" />
 	<PackageReference Include="Stripe.net" Version="45.5.0" />

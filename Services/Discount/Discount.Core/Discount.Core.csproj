@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Libraries\Data.IRepositories\Data.IRepositories.csproj" />
     <ProjectReference Include="..\..\..\Libraries\eShopping.Exceptions\eShopping.Exceptions.csproj" />
   </ItemGroup>
 
