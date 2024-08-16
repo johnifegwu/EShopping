@@ -60,6 +60,7 @@ Do the following to use Jay.EFCore.UnitOfWork
 //=======================================================</PackageReleaseNotes>
     <PackageLicenseFile>License.txt</PackageLicenseFile>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <RepositoryUrl>https://github.com/johnifegwu/EShopping/tree/master/Libraries/EFCore.UnitOfWork</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>

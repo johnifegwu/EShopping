@@ -11,6 +11,7 @@
 	</ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Libraries\EFCore.UnitOfWork\EFCore.UnitOfWork.csproj" />
     <ProjectReference Include="..\Users.Application\Users.Application.csproj" />
   </ItemGroup>
 
