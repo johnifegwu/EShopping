@@ -13,11 +13,13 @@ COPY ["Services/Ordering/Ordering.API/Ordering.API.csproj", "Services/Ordering/O
 COPY ["Libraries/eShopping.ExceptionHandling/eShopping.AspNetCore.ExceptionHandling.csproj", "Libraries/eShopping.ExceptionHandling/"]
 COPY ["Libraries/eShopping.Exceptions/eShopping.Exceptions.csproj", "Libraries/eShopping.Exceptions/"]
 COPY ["Services/Ordering/Ordering.Application/Ordering.Application.csproj", "Services/Ordering/Ordering.Application/"]
+COPY ["Libraries/eShopping.Constants/eShopping.Constants.csproj", "Libraries/eShopping.Constants/"]
+COPY ["Libraries/eShopping.MailMan/eShopping.MailMan.csproj", "Libraries/eShopping.MailMan/"]
+COPY ["Libraries/eShopping.MessageBrocker/eShopping.MessageBrocker.csproj", "Libraries/eShopping.MessageBrocker/"]
 COPY ["Services/Ordering/Ordering.Core/Ordering.Core.csproj", "Services/Ordering/Ordering.Core/"]
-COPY ["Libraries/Data.IRepositories/Data.IRepositories.csproj", "Libraries/Data.IRepositories/"]
 COPY ["Libraries/eShopping.Models/eShopping.Models.csproj", "Libraries/eShopping.Models/"]
+COPY ["Libraries/eShopping.Security/eShopping.Security.csproj", "Libraries/eShopping.Security/"]
 COPY ["Services/Ordering/Ordering.Infrastructure/Ordering.Infrastructure.csproj", "Services/Ordering/Ordering.Infrastructure/"]
-COPY ["Libraries/Data.Repositories/Data.Repositories.csproj", "Libraries/Data.Repositories/"]
 RUN dotnet restore "./Services/Ordering/Ordering.API/Ordering.API.csproj"
 COPY . .
 WORKDIR "/src/Services/Ordering/Ordering.API"

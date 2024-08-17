@@ -14,10 +14,10 @@ COPY ["Libraries/eShopping.ExceptionHandling/eShopping.AspNetCore.ExceptionHandl
 COPY ["Libraries/eShopping.Exceptions/eShopping.Exceptions.csproj", "Libraries/eShopping.Exceptions/"]
 COPY ["Services/Catalog/Catalog.Application/Catalog.Application.csproj", "Services/Catalog/Catalog.Application/"]
 COPY ["Services/Catalog/Catalog.Core/Catalog.Core.csproj", "Services/Catalog/Catalog.Core/"]
-COPY ["Libraries/Data.IRepositories/Data.IRepositories.csproj", "Libraries/Data.IRepositories/"]
 COPY ["Libraries/eShopping.Models/eShopping.Models.csproj", "Libraries/eShopping.Models/"]
+COPY ["Libraries/eShopping.Security/eShopping.Security.csproj", "Libraries/eShopping.Security/"]
+COPY ["Libraries/eShopping.Constants/eShopping.Constants.csproj", "Libraries/eShopping.Constants/"]
 COPY ["Services/Catalog/Catalog.Infrastructure/Catalog.Infrastructure.csproj", "Services/Catalog/Catalog.Infrastructure/"]
-COPY ["Libraries/Data.Repositories/Data.Repositories.csproj", "Libraries/Data.Repositories/"]
 RUN dotnet restore "./Services/Catalog/Catalog.API/Catalog.API.csproj"
 COPY . .
 WORKDIR "/src/Services/Catalog/Catalog.API"

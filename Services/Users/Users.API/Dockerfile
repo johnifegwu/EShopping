@@ -12,15 +12,13 @@ WORKDIR /src
 COPY ["Services/Users/Users.API/Users.API.csproj", "Services/Users/Users.API/"]
 COPY ["Libraries/eShopping.ExceptionHandling/eShopping.AspNetCore.ExceptionHandling.csproj", "Libraries/eShopping.ExceptionHandling/"]
 COPY ["Libraries/eShopping.Exceptions/eShopping.Exceptions.csproj", "Libraries/eShopping.Exceptions/"]
-COPY ["Libraries/eShopping.MailMan/eShopping.MailMan.csproj", "Libraries/eShopping.MailMan/"]
 COPY ["Services/Users/Users.Application/Users.Application.csproj", "Services/Users/Users.Application/"]
 COPY ["Libraries/eShopping.Constants/eShopping.Constants.csproj", "Libraries/eShopping.Constants/"]
+COPY ["Libraries/eShopping.MailMan/eShopping.MailMan.csproj", "Libraries/eShopping.MailMan/"]
 COPY ["Services/Users/Users.Core/Users.Core.csproj", "Services/Users/Users.Core/"]
-COPY ["Libraries/Data.IRepositories/Data.IRepositories.csproj", "Libraries/Data.IRepositories/"]
 COPY ["Libraries/eShopping.Models/eShopping.Models.csproj", "Libraries/eShopping.Models/"]
 COPY ["Libraries/eShopping.Security/eShopping.Security.csproj", "Libraries/eShopping.Security/"]
 COPY ["Services/Users/Users.Infrastructure/Users.Infrastructure.csproj", "Services/Users/Users.Infrastructure/"]
-COPY ["Libraries/Data.Repositories/Data.Repositories.csproj", "Libraries/Data.Repositories/"]
 RUN dotnet restore "./Services/Users/Users.API/Users.API.csproj"
 COPY . .
 WORKDIR "/src/Services/Users/Users.API"

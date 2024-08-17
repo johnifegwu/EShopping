@@ -13,12 +13,12 @@ COPY ["Services/Basket/Basket.API/Basket.API.csproj", "Services/Basket/Basket.AP
 COPY ["Libraries/eShopping.ExceptionHandling/eShopping.AspNetCore.ExceptionHandling.csproj", "Libraries/eShopping.ExceptionHandling/"]
 COPY ["Libraries/eShopping.Exceptions/eShopping.Exceptions.csproj", "Libraries/eShopping.Exceptions/"]
 COPY ["Services/Basket/Basket.Application/Basket.Application.csproj", "Services/Basket/Basket.Application/"]
+COPY ["Libraries/eShopping.MessageBrocker/eShopping.MessageBrocker.csproj", "Libraries/eShopping.MessageBrocker/"]
 COPY ["Services/Basket/Basket.Core/Basket.Core.csproj", "Services/Basket/Basket.Core/"]
-COPY ["Libraries/Cache.IRepositories/Cache.IRepositories.csproj", "Libraries/Cache.IRepositories/"]
 COPY ["Libraries/eShopping.Models/eShopping.Models.csproj", "Libraries/eShopping.Models/"]
+COPY ["Libraries/eShopping.Security/eShopping.Security.csproj", "Libraries/eShopping.Security/"]
+COPY ["Libraries/eShopping.Constants/eShopping.Constants.csproj", "Libraries/eShopping.Constants/"]
 COPY ["Services/Basket/Basket.Infrastructure/Basket.Infrastructure.csproj", "Services/Basket/Basket.Infrastructure/"]
-COPY ["Libraries/Cache.UnitOfWork.Redis/Cache.UnitOfWork.csproj", "Libraries/Cache.UnitOfWork.Redis/"]
-COPY ["Libraries/Cache.Repositories/Cache.Repositories.csproj", "Libraries/Cache.Repositories/"]
 RUN dotnet restore "./Services/Basket/Basket.API/Basket.API.csproj"
 COPY . .
 WORKDIR "/src/Services/Basket/Basket.API"
