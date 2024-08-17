@@ -25,7 +25,7 @@ builder.Services.AddTransient<IJayDbContext, ProductDbContext>();
 builder.Services.AddEFCoreUnitOfWork();
 ```
 
-//Make sure your DbContext class implemetenst IJayDbContext
+//Make sure your DbContext class implements IJayDbContext
 ```
 internal class ProductDbContext : DbContext, IJayDbContext
 {

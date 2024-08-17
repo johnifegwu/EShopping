@@ -6,7 +6,7 @@
     <Nullable>enable</Nullable>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Title>A dynamic repository and UnitOfWork implementation for Entity Framework Core</Title>
-    <Version>1.0.2</Version>
+    <Version>1.0.3</Version>
     <Authors>johnifegwu</Authors>
     <Company>John Ifegwu</Company>
     <Description>A dynamic repository and UnitOfWork implementation for Entity Framework Core, 
@@ -40,7 +40,7 @@ builder.Services.AddTransient&lt;IJayDbContext, ProductDbContext&gt;();
 //Jay.EFCore.UnitOfWork configuaration
 builder.Services.AddEFCoreUnitOfWork();
 
-//Make sure your DbContext class implemetenst IJayDbContext
+//Make sure your DbContext class implements IJayDbContext
 internal class ProductDbContext : DbContext, IJayDbContext
 {
     public ProductDbContext(DbContextOptions&lt;ProductDbContext&gt; options) : base(options)
