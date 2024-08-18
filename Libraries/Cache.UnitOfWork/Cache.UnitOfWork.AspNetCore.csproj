@@ -56,6 +56,7 @@ Do the following to use CacheUnitOfWork
     <Version>1.0.5</Version>
     <AssemblyVersion></AssemblyVersion>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <PackageTags>Redis;DistributedCache</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
