@@ -3,6 +3,9 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace Data.Repositories
 {
+    /// <summary>
+    /// IUnit of Work Core.
+    /// </summary>
     public interface IUnitOfWorkCore : IDisposable
     {
         /// <summary>

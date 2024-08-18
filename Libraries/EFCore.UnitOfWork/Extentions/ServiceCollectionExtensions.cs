@@ -4,6 +4,9 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace EFCore.UnitOfWorkCore.Extentions
 {
+    /// <summary>
+    /// ServiceCollection Extensions.
+    /// </summary>
     public static class ServiceCollectionExtensions
     {
         /// <summary>

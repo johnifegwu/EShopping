@@ -1,6 +1,11 @@
 ﻿
 namespace Cache.Repositories.AspNetCore
 {
+
+    /// <summary>
+    /// ICache Repository Core.
+    /// </summary>
+    /// <typeparam name="TEntity">Entity class</typeparam>
     public interface ICacheRepositoryCore<TEntity>
         where TEntity : class
     {
@@ -16,6 +21,7 @@ namespace Cache.Repositories.AspNetCore
         /// Gets an entity from the cache.
         /// </summary>
         /// <param name="key">Cache key.</param>
+        /// <param name="cancellationToken">Cancellation Token.</param>
         /// <returns></returns>
         Task<TEntity> GetAsync(string key, CancellationToken cancellationToken = default);
 
@@ -30,12 +36,14 @@ namespace Cache.Repositories.AspNetCore
         /// Gets a list of entities from the Cache.
         /// </summary>
         /// <param name="key">Cache key.</param>
+        /// <param name="cancellationToken">Cancellation Token.</param>
         /// <returns></returns>
         Task<IEnumerable<TEntity>> GetRangeAsync(string key, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Adds a list of entities to the Cache.
         /// </summary>
+        /// <param name="entity">Entity.</param>
         /// <param name="key">Cache key.</param>
         /// <returns></returns>
         IEnumerable<TEntity> AddRange(IEnumerable<TEntity> entity, string key);
@@ -43,9 +51,11 @@ namespace Cache.Repositories.AspNetCore
         /// <summary>
         /// Adds a list of entities to the Cache.
         /// </summary>
+        /// <param name="entities">Entities to be added.</param>
         /// <param name="key">Cache key.</param>
+        /// <param name="cancellationToken">Cancellation Token.</param>
         /// <returns></returns>
-        Task<IEnumerable<TEntity>> AddRangeAsync(IEnumerable<TEntity> entity, string key, CancellationToken cancellationToken = default);
+        Task<IEnumerable<TEntity>> AddRangeAsync(IEnumerable<TEntity> entities, string key, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Swaps one entity from a list of enities.
@@ -62,6 +72,7 @@ namespace Cache.Repositories.AspNetCore
         /// <param name="entity">Entity.</param>
         /// <param name="IdFieldName">Id field name.</param>
         /// <param name="key">Cache key.</param>
+        /// <param name="cancellationToken">Cancellation Token.</param>
         /// <returns></returns>
         Task<IEnumerable<TEntity>> SwapOneAsync(TEntity entity, string IdFieldName, string key, CancellationToken cancellationToken = default);
 
@@ -71,6 +82,7 @@ namespace Cache.Repositories.AspNetCore
         /// <param name="entities">Entities.</param>
         /// <param name="IdFieldName">Id field name.</param>
         /// <param name="key">Cache key.</param>
+        /// <param name="cancellationToken">Cancellation Token.</param>
         /// <returns></returns>
         Task<IEnumerable<TEntity>> SwapRangeAsync(IEnumerable<TEntity> entities, string IdFieldName, string key, CancellationToken cancellationToken = default);
 
@@ -91,6 +103,7 @@ namespace Cache.Repositories.AspNetCore
         /// <param name="ClassName">Child entity name (where IdFieldName is equal to Entity.ChildClass.IdFieldName).</param>
         /// <param name="IdFieldName">Id field name.</param>
         /// <param name="key">Cache key.</param>
+        /// <param name="cancellationToken">Cancellation Token.</param>
         /// <returns></returns>
         Task<IEnumerable<TEntity>> SwapOneAsync(TEntity entity, string ClassName, string IdFieldName, string key, CancellationToken cancellationToken = default);
 
@@ -101,6 +114,7 @@ namespace Cache.Repositories.AspNetCore
         /// <param name="ClassName">Child entity name (where IdFieldName is equal to Entity.ChildClass.IdFieldName).</param>
         /// <param name="IdFieldName">Id field name.</param>
         /// <param name="key">Cache key.</param>
+        /// <param name="cancellationToken">Cancellation Token.</param>
         /// <returns></returns>
         Task<IEnumerable<TEntity>> SwapRangeAsync(IEnumerable<TEntity> entities, string ClassName, string IdFieldName, string key, CancellationToken cancellationToken = default);
 
@@ -119,6 +133,7 @@ namespace Cache.Repositories.AspNetCore
         /// <param name="entities">Entities.</param>
         /// <param name="IdFieldName">Id field name.</param>
         /// <param name="key">Cache key.</param>
+        /// <param name="cancellationToken">Cancellation Token.</param>
         /// <returns></returns>
         Task<IEnumerable<TEntity>> AppendUnionRangeAsync(IEnumerable<TEntity> entities, string IdFieldName, string key, CancellationToken cancellationToken = default);
 
@@ -139,6 +154,7 @@ namespace Cache.Repositories.AspNetCore
         /// <param name="ClassName">Child entity name (where IdFieldName is equal to Entity.ChildClass.IdFieldName).</param>
         /// <param name="IdFieldName">Id field name.</param>
         /// <param name="key">Cache key.</param>
+        /// <param name="cancellationToken">Cancellation Token.</param>
         /// <returns></returns>
         Task<IEnumerable<TEntity>> AppendUnionRangeAsync(IEnumerable<TEntity> entities, string ClassName, string IdFieldName, string key, CancellationToken cancellationToken = default);
 
@@ -155,6 +171,7 @@ namespace Cache.Repositories.AspNetCore
         /// </summary>
         /// <param name="entity">Entity to be cached.</param>
         /// <param name="key">Cache key.</param>
+        /// <param name="cancellationToken">Cancellation Token.</param>
         /// <returns></returns>
         Task<TEntity> AddAsync(TEntity entity, string key, CancellationToken cancellationToken = default);
 
@@ -171,6 +188,7 @@ namespace Cache.Repositories.AspNetCore
         /// </summary>
         /// <param name="entity">Entity.</param>
         /// <param name="key">Cache key.</param>
+        /// <param name="cancellationToken">Cancellation Token.</param>
         /// <returns></returns>
         Task<TEntity> UpdateAsync(TEntity entity, string key, CancellationToken cancellationToken = default);
 
@@ -187,6 +205,7 @@ namespace Cache.Repositories.AspNetCore
         /// </summary>
         /// <param name="entities">Entities.</param>
         /// <param name="key">Cache key.</param>
+        /// <param name="cancellationToken">Cancellation Token.</param>
         /// <returns></returns>
         Task<IEnumerable<TEntity>> UpdateRangeAsync(IEnumerable<TEntity> entities, string key, CancellationToken cancellationToken = default);
 
@@ -200,6 +219,7 @@ namespace Cache.Repositories.AspNetCore
         /// Removes the cached data from the system.
         /// </summary>
         /// <param name="key">Cache key.</param>
+        /// <param name="cancellationToken">Cancellation Token.</param>
         Task<bool> DeleteAsync(string key, CancellationToken cancellationToken = default);
     }
 }

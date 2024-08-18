@@ -1,8 +1,17 @@
 ﻿
 namespace Cache.Repositories.AspNetCore
 {
+    /// <summary>
+    /// ICache Unit of Work.
+    /// </summary>
     public interface ICacheUnitOfWork : IDisposable
     {
+
+        /// <summary>
+        /// Repository.
+        /// </summary>
+        /// <typeparam name="TEntity">Entity class.</typeparam>
+        /// <returns></returns>
         ICacheRepositoryCore<TEntity> Repository<TEntity>() where TEntity : class;
 
         /// <summary>

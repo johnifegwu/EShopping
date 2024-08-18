@@ -1,6 +1,10 @@
 ﻿
 namespace Data.Repositories
 {
+    /// <summary>
+    /// IRepository.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public interface IRepository<T> where T : class
     {
         /// <summary>
@@ -45,17 +49,95 @@ namespace Data.Repositories
         /// <param name="PageSize">Page size, must be at least one.</param>
         /// <returns></returns>
         Task<IEnumerable<T>> GetAllAsync(int PageIndex, int PageSize);
+
+        /// <summary>
+        /// Fetch by Id.
+        /// </summary>
+        /// <typeparam name="TId">Id type.</typeparam>
+        /// <param name="id">Id value.</param>
+        /// <param name="cancellationToken">Cancellation Token.</param>
+        /// <returns></returns>
         Task<T?> GetByIdAsync<TId>(TId id, CancellationToken cancellationToken = default) where TId : notnull;
+
+        /// <summary>
+        /// Adds an entity to the database.
+        /// </summary>
+        /// <param name="entity">Entity to be added.</param>
+        /// <returns></returns>
         T Add(T entity);
+
+        /// <summary>
+        /// Adds an entity to the database.
+        /// </summary>
+        /// <param name="entity">Entity to be added.</param>
+        /// <param name="cancellationToken">Cancellation Token.</param>
+        /// <returns></returns>
         Task<T> AddAsync(T entity, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Adds a range of entities to the database.
+        /// </summary>
+        /// <param name="entities">Entities to be added.</param>
+        /// <param name="cancellationToken">Cancellation Token.</param>
+        /// <returns></returns>
         Task<IEnumerable<T>> AddRangeAsync(IEnumerable<T> entities, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Removes an entity from the database.
+        /// </summary>
+        /// <param name="entity">Entity to be removed.</param>
+        /// <returns></returns>
         int Delete(T entity);
+
+        /// <summary>
+        /// Removes an entity from the database.
+        /// </summary>
+        /// <param name="entity">Entity to be removed.</param>
+        /// <param name="cancellationToken">Cancellation Token.</param>
+        /// <returns></returns>
         Task<int> DeleteAsync(T entity, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Removes a range of entities from the database.
+        /// </summary>
+        /// <param name="entities">Entities to be added.</param>
+        /// <param name="cancellationToken">Cancellation Token.</param>
+        /// <returns></returns>
         Task<int> DeleteRangeAsync(IEnumerable<T> entities, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Updates the given entity in the database.
+        /// </summary>
+        /// <param name="entity">Entity to be updated.</param>
+        /// <returns></returns>
         T Update(T entity);
+
+        /// <summary>
+        /// Updates the given entity in the database.
+        /// </summary>
+        /// <param name="entity">Entity to be updated.</param>
+        /// <param name="cancellationToken">Cancellation Token.</param>
+        /// <returns></returns>
         Task<T> UpdateAsync(T entity, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Updates the given entities in the database.
+        /// </summary>
+        /// <param name="entities">Entities to be updated.</param>
+        /// <param name="cancellationToken">Cancellation Token.</param>
+        /// <returns></returns>
         Task<IEnumerable<T>> UpdateRangeAsync(IEnumerable<T> entities, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Persists all changes to the database.
+        /// </summary>
+        /// <returns></returns>
         int SaveChanges();
+
+        /// <summary>
+        /// Persists all changes to the database.
+        /// </summary>
+        /// <param name="cancellationToken">Cancellation Token.</param>
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     }
 }
