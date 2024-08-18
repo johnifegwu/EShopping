@@ -18,11 +18,19 @@ namespace EFCore.UnitOfWorkCore
             this._context =  context;
         }
 
+        /// <summary>
+        /// Gets the DbContext Database Facade.
+        /// </summary>
+        /// <returns></returns>
         public DatabaseFacade GetDatabase()
         {
             return _context.Database;
         }
 
+        /// <summary>
+        /// Dynamic Repository.
+        /// </summary>
+        /// <typeparam name="T">Type</typeparam>
         public IRepository<T> Repository<T>() where T : class
         {
             if (!_repositories.ContainsKey(typeof(T)))
@@ -43,6 +51,19 @@ namespace EFCore.UnitOfWorkCore
             _repositories.Add(typeof(T), new Repository<T>(_context));
         }
 
+        /// <summary>
+        /// Persists all changes to the database.
+        /// </summary>
+        /// <returns></returns>
+        public int SaveChanges()
+        {
+            return _context.SaveChanges();
+        }
+
+        /// <summary>
+        /// Persists all changes to the database.
+        /// </summary>
+        /// <param name="cancellationToken">Cancellation Token.</param>
         public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             return await _context.SaveChangesAsync(cancellationToken);

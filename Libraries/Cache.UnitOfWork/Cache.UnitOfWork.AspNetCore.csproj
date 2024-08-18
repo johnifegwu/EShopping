@@ -53,8 +53,9 @@ Do the following to use CacheUnitOfWork
     <PackageId>Jay.Cache.UnitOfWork.AspNetCore</PackageId>
     <PackageLicenseFile>License.txt</PackageLicenseFile>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
-    <Version>1.0.4</Version>
+    <Version>1.0.5</Version>
     <AssemblyVersion></AssemblyVersion>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
