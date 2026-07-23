@@ -12,7 +12,14 @@ namespace Ordering.Infrastructure.Extensions
         public static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
             var conString = configuration["ConnectionStrings:OrderingDbConnection"];
-            services.AddDbContextPool<OrderingDbContext>(options => options.UseSqlServer(conString));
+            services.AddDbContextPool<OrderingDbContext>(options => options.UseSqlServer(conString, sqlOptions =>
+            {
+                sqlOptions.EnableRetryOnFailure(
+                    maxRetryCount: 5,
+                    maxRetryDelay: TimeSpan.FromSeconds(30),
+                    errorNumbersToAdd: null);
+                sqlOptions.CommandTimeout(30);
+            }));
             services.AddTransient<IJayDbContext, OrderingDbContext>();
             services.AddEFCoreUnitOfWork();
         }
