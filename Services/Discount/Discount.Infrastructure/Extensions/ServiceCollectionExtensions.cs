@@ -13,7 +13,14 @@ namespace Discount.Infrastructure.Extensions
         public static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
             var conString = configuration["ConnectionStrings:DiscountDbConnection"];
-            services.AddDbContextPool<DiscountDbContext>(options => options.UseNpgsql(conString));
+            services.AddDbContextPool<DiscountDbContext>(options => options.UseNpgsql(conString, npgsqlOptions =>
+            {
+                npgsqlOptions.EnableRetryOnFailure(
+                    maxRetryCount: 5,
+                    maxRetryDelay: TimeSpan.FromSeconds(30),
+                    errorCodesToAdd: null); // Notice: Npgsql uses 'errorCodesToAdd' (strings) instead of integers
+                npgsqlOptions.CommandTimeout(30);
+            }));
             services.AddTransient<IJayDbContext, DiscountDbContext>();
             services.AddScoped<IDiscountSeeder, DiscountSeeder>();
             services.AddEFCoreUnitOfWork();
