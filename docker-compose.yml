@@ -6,7 +6,7 @@ services:
     container_name: discount.database
     image: postgres:latest
     volumes:
-      - ./postgres_data:/var/lib/postgresql/data
+      - pgdata:/var/lib/postgresql
     environment:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: 12345678
@@ -19,16 +19,18 @@ services:
   catalog.database:
     image: mongo:latest
     container_name: catalog.database
+    hostname: catalog.database
     environment:
-     - MONGO_DB=eShopping
-     - MONGO_USER=admin
-     - MONGO_PASSWORD=12345678 
-    volumes:
-     - ./mongo/data:/data/db
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=12345678
+      - MONGO_INITDB_DATABASE=eShopping
     ports:
-     - 27017:27017
+      - "27017:27017"
+    volumes:
+      - mongodata:/data/db
     networks:
       - eshopproxybackend
+
 
   ordering.database:
     container_name: ordering.database
@@ -221,4 +223,9 @@ networks:
 volumes:
   portainer_data:
   mysql_data:
+  pgdata:
+  mongodata:
+  #sqldata:
+  #sqllog:
+  #sqlsecrets:
 

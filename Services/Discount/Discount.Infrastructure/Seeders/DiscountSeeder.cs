@@ -13,7 +13,7 @@ namespace Discount.Infrastructure.Seeders
 
             if (canconnect)
             {
-                var coupon = context.Repository<Coupon>().Read().First();
+                var coupon = context.Repository<Coupon>().Read()?.FirstOrDefault();
 
                 if (coupon == null)
                 {

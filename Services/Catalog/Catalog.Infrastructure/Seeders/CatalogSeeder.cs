@@ -12,8 +12,8 @@ namespace Catalog.Infrastructure.Seeders
         {
             try
             {
-                var productType = context.Repository<ProductType>().Read().First();
-                var productBrand = context.Repository<ProductBrand>().Read().First();
+                var productType = context.Repository<ProductType>().Read().FirstOrDefault();
+                var productBrand = context.Repository<ProductBrand>().Read().FirstOrDefault();
 
                 //Initialize Catalog database here after checking if no record exist.
                 if (productType == null)
@@ -35,7 +35,7 @@ namespace Catalog.Infrastructure.Seeders
                 {
                     try
                     {
-                        var product = context.Repository<Product>().Read().First();
+                        var product = context.Repository<Product>().Read().FirstOrDefault();
 
                         if (product == null)
                         {

@@ -20,6 +20,8 @@ namespace Catalog.Infrastructure.Persistence
         {
             base.OnModelCreating(modelBuilder);
 
+            base.Database.AutoTransactionBehavior = AutoTransactionBehavior.Never;
+
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ProductConfiguration).Assembly);
         }
 
